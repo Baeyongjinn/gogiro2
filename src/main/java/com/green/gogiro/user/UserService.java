@@ -44,6 +44,7 @@ public class UserService {
 
     public UserInfoVo selUserInfo(int iuser){
         UserEntity entity = mapper.userEntity(iuser);
+
         if(entity == null){
             throw new CategoryNotFoundException(NULL_USER_ERROR);
         }
