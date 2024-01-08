@@ -2,9 +2,7 @@ package com.green.gogiro.user;
 
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.errortest.CategoryNotFoundException;
-import com.green.gogiro.user.model.UserSigninDto;
-import com.green.gogiro.user.model.UserSignupDto;
-import com.green.gogiro.user.model.UserUpdDto;
+import com.green.gogiro.user.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
@@ -45,4 +43,7 @@ public class UserService {
         return new ResVo(result);
     }
 
+    public UserInfoVo selUserInfo(int iuser){
+        return mapper.selUserInfo(iuser);
+    }
 }

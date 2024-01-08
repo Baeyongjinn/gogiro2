@@ -31,5 +31,17 @@
         </if>
         where iuser = #{iuser}
     </update>
+    <select id="selUserInfo">
+        SELECT
+            email,
+            name,
+            nickname,
+            birth,
+            gender,
+            address,
+            pic
+        FROM t_user
+        where iuser= #{iuser}
+    </select>
 
 </mapper>

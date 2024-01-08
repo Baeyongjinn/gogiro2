@@ -1,8 +1,6 @@
 package com.green.gogiro.user;
 
-import com.green.gogiro.user.model.UserSigninDto;
-import com.green.gogiro.user.model.UserSignupDto;
-import com.green.gogiro.user.model.UserUpdDto;
+import com.green.gogiro.user.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -14,4 +12,5 @@ public interface UserMapper {
 
     int updateUser(UserUpdDto dto);
 
+    UserInfoVo selUserInfo(int iuser);
 }
