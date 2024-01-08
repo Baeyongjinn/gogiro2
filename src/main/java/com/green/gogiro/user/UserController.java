@@ -3,6 +3,7 @@ package com.green.gogiro.user;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.user.model.UserSigninDto;
 import com.green.gogiro.user.model.UserSignupDto;
+import com.green.gogiro.user.model.UserUpdDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,4 +23,8 @@ public class UserController {
         return service.signin(dto);
     }
 
+    @PutMapping("/edit")
+    public ResVo updateUser(@RequestBody UserUpdDto dto) {
+        return service.updateUser(dto);
+    }
 }

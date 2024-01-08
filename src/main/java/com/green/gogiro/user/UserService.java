@@ -4,6 +4,7 @@ import com.green.gogiro.common.ResVo;
 import com.green.gogiro.errortest.CategoryNotFoundException;
 import com.green.gogiro.user.model.UserSigninDto;
 import com.green.gogiro.user.model.UserSignupDto;
+import com.green.gogiro.user.model.UserUpdDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
@@ -37,6 +38,11 @@ public class UserService {
             throw new CategoryNotFoundException(SIGNIN_UPW_ERROR);
         }
         return new ResVo(1);
+    }
+
+    public ResVo updateUser(UserUpdDto dto) {
+        int result = mapper.updateUser(dto);
+        return new ResVo(result);
     }
 
 }

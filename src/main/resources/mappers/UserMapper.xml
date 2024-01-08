@@ -22,4 +22,12 @@
         WHERE email = #{email}
     </select>
 
+    <update id="updateUser">
+        update t_user
+        set nickname = #{nickname},
+        address = #{address},
+        pic = #{pic}
+        where iuser = #{iuser}
+    </update>
+
 </mapper>
