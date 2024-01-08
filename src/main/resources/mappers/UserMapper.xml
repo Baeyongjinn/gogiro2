@@ -26,7 +26,9 @@
         update t_user
         set nickname = #{nickname},
         address = #{address},
+        <if test="pic != ' ' and pic != null">
         pic = #{pic}
+        </if>
         where iuser = #{iuser}
     </update>
 
