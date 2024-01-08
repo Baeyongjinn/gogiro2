@@ -1,12 +1,17 @@
 package com.green.gogiro.user;
 
+import static com.green.gogiro.common.Const.*;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.errortest.CategoryNotFoundException;
+import com.green.gogiro.kakao.KakaoMapper;
+import com.green.gogiro.kakao.KakaoService;
 import com.green.gogiro.user.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Parameter;
 
 import static com.green.gogiro.errortest.ErrorCode.*;
 
@@ -16,12 +21,18 @@ import static com.green.gogiro.errortest.ErrorCode.*;
 public class UserService {
     private final UserMapper mapper;
 
+
     public ResVo signup(UserSignupDto dto){
+        String checkNickname = mapper.checkNickname(dto.getNickname());
+        if(checkNickname != null){
+            throw new CategoryNotFoundException("이미 존재 하는 닉네임 입니다");
+        }
         String hashedPw = BCrypt.hashpw(dto.getUpw(),BCrypt.gensalt());
         dto.setUpw(hashedPw);
         mapper.signupUser(dto);
         int result = dto.getIuser();
         log.info("dto: {}",dto);
+        //iuser값 return
         return new ResVo(result);
     }
 
@@ -34,12 +45,16 @@ public class UserService {
         if (!(BCrypt.checkpw(dto.getUpw(),check))) {
             throw new CategoryNotFoundException(SIGNIN_UPW_ERROR);
         }
-        return new ResVo(1);
+        return new ResVo(SUCCESS);
     }
 
     public ResVo updateUser(UserUpdDto dto) {
-        int result = mapper.updateUser(dto);
-        return new ResVo(result);
+        UserEntity entity = mapper.userEntity(dto.getIuser());
+        if(entity == null) {
+            throw new CategoryNotFoundException(NULL_USER_ERROR);
+        }
+        mapper.updateUser(dto);
+        return new ResVo(SUCCESS);
     }
 
     public UserInfoVo selUserInfo(int iuser){
@@ -50,4 +65,5 @@ public class UserService {
         }
         return mapper.selUserInfo(iuser);
     }
+
 }

@@ -6,8 +6,10 @@
         SET
         email = #{email},
         upw = #{upw},
-        name = #{nm},
+        name = #{name},
+        <if test="nickname != ' '">
         nickname = #{nickname},
+        </if>
         birth = #{birth},
         gender = #{gender},
         address = #{address}
@@ -52,6 +54,12 @@
         , created_at as createdAt
         FROM t_user
         WHERE iuser = #{iuser}
+    </select>
+
+    <select id="checkNickname">
+        SELECT nickname
+        FROM t_user
+        WHERE nickname = #{nickname}
     </select>
 
 </mapper>

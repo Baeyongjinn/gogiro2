@@ -1,5 +1,8 @@
 package com.green.gogiro.errortest;
 
+
+
+
 public class ErrorCode {
 
     public static final  String NULL_USER_ERROR = "존재하지 않는 유저 입니다";
