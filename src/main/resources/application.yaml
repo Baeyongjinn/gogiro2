@@ -2,9 +2,9 @@
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/gogiro
-    username: root
-    password: green502
+    url: jdbc:mariadb://192.168.0.144/db_even_last_1
+    username: even_last_1
+    password: army
 
 mybatis:
   mapper-locations: mappers/**/*.xml
