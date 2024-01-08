@@ -13,4 +13,6 @@ public interface UserMapper {
     int updateUser(UserUpdDto dto);
 
     UserInfoVo selUserInfo(int iuser);
+
+    UserEntity userEntity(int iuser);
 }

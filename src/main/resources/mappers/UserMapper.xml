@@ -27,21 +27,31 @@
         set nickname = #{nickname},
         address = #{address},
         <if test="pic != ' ' and pic != null">
-        pic = #{pic}
+            pic = #{pic}
         </if>
         where iuser = #{iuser}
     </update>
     <select id="selUserInfo">
         SELECT
-            email,
-            name,
-            nickname,
-            birth,
-            gender,
-            address,
-            pic
+        email,
+        name,
+        nickname,
+        birth,
+        gender,
+        address,
+        pic
         FROM t_user
         where iuser= #{iuser}
+    </select>
+
+
+    <!-- entity용 -->
+    <select id="userEntity">
+        SELECT iuser, email, upw, name, nickname
+        , birth, gender, address, pic
+        , created_at as createdAt
+        FROM t_user
+        WHERE iuser = #{iuser}
     </select>
 
 </mapper>

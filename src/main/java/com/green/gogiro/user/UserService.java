@@ -8,8 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import static com.green.gogiro.errortest.ErrorCode.SIGNIN_UID_ERROR;
-import static com.green.gogiro.errortest.ErrorCode.SIGNIN_UPW_ERROR;
+import static com.green.gogiro.errortest.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -44,6 +43,10 @@ public class UserService {
     }
 
     public UserInfoVo selUserInfo(int iuser){
+        UserEntity entity = mapper.userEntity(iuser);
+        if(entity == null){
+            throw new CategoryNotFoundException(NULL_USER_ERROR);
+        }
         return mapper.selUserInfo(iuser);
     }
 }
