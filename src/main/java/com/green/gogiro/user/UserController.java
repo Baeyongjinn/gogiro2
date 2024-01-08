@@ -1,12 +1,10 @@
 package com.green.gogiro.user;
 
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.user.model.UserSigninDto;
 import com.green.gogiro.user.model.UserSignupDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,6 +15,11 @@ public class UserController {
     @PostMapping("/signup")
     public ResVo signup(@RequestBody UserSignupDto dto) {
         return service.signup(dto);
+    }
+
+    @PostMapping("/signin")
+    public ResVo signin(@RequestBody UserSigninDto dto){
+        return service.signin(dto);
     }
 
 }

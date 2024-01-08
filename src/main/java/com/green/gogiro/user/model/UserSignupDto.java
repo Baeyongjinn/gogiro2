@@ -12,6 +12,7 @@ public class UserSignupDto {
     private String nm;
     private String nickname;
     private String birth;
+    private String gender;
     private String address;
     private String pic;
 }
