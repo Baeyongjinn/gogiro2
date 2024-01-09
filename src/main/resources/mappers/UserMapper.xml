@@ -7,9 +7,7 @@
         email = #{email},
         upw = #{upw},
         name = #{name},
-        <if test="nickname != ' '">
         nickname = #{nickname},
-        </if>
         birth = #{birth},
         gender = #{gender},
         address = #{address}

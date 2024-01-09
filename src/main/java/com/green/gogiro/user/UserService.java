@@ -23,6 +23,13 @@ public class UserService {
 
 
     public ResVo signup(UserSignupDto dto){
+        String checkNickname = mapper.checkNickname(dto.getNickname());
+        if(checkNickname != null){
+            throw new CategoryNotFoundException("이미 존재 하는 닉네임 입니다");
+        }
+        if(!dto.getUpw().equals(dto.getCheckUpw())){
+            throw new CategoryNotFoundException("비밀번호가 일치하지 않습니다.");
+        }
         String hashedPw = BCrypt.hashpw(dto.getUpw(),BCrypt.gensalt());
         dto.setUpw(hashedPw);
         mapper.signupUser(dto);
