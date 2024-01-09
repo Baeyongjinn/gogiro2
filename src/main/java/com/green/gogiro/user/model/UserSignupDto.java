@@ -14,8 +14,8 @@ public class UserSignupDto {
     private String email;
     @Schema(title = "비밀번호")
     private String upw;
-    @Schema(title = "비밀번호 확인")
-    private String checkUpw;
+//    @Schema(title = "비밀번호 확인")
+//    private String checkUpw;
     @Schema(title = "이름")
     private String name;
     @Schema(title = "닉네임")
