@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.gogiro.community.CommunityMapper">
+
+    <insert id="insCommunity" useGeneratedKeys="true" keyProperty="iboard">
+        insert into t_community
+        set iuser = #{iuser},
+        title = #{title},
+        contents = #{contents}
+    </insert>
+
+    <insert id="insCommunityPics">
+        INSERT INTO t_commu_pics
+        ( iboard, pic )
+        VALUES
+        <foreach collection="pics" item="pic" separator=",">
+            ( #{iboard}, #{pic} )
+        </foreach>
+    </insert>
+
+    <delete id="delCommunity">
+        delete from t_community
+        where iuser = #{iuser}
+        and iboard = #{iboard}
+    </delete>
+
+    <delete id="delpicCommunity">
+        delete from t_commu_pics
+        where iboard = #{iboard}
+    </delete>
+
+</mapper>
