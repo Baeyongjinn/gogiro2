@@ -13,7 +13,7 @@
         birth = #{birth},
         gender = #{gender},
         address = #{address}
-        <if test="pic != null and pic != '' ">
+        <if test="pic != null and pic != ' nn'">
             ,pic = #{pic}
         </if>
     </insert>
