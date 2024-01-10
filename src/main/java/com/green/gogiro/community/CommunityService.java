@@ -20,7 +20,7 @@ public class CommunityService {
     }
 
     public ResVo delCommunity(CommunityDelDto dto) {
-        mapper.delpicCommunity(dto.getIboard());
+        mapper.delPicCommunity(dto.getIboard());
         int result = mapper.delCommunity(dto);
         return new ResVo(result);
     }

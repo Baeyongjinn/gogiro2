@@ -24,7 +24,7 @@
         and iboard = #{iboard}
     </delete>
 
-    <delete id="delpicCommunity">
+    <delete id="delPicCommunity">
         delete from t_commu_pics
         where iboard = #{iboard}
     </delete>
