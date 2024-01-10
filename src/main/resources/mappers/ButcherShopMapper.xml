@@ -12,7 +12,7 @@
         SELECT ibutcher, pic
         FROM t_butcher_pic
         WHERE ibutcher in (
-        <foreach collection="pk" item="ibutcher"  separator=",">
+        <foreach collection="pk" item="ibutcher" separator=",">
             #{ibutcher}
         </foreach>
         )
@@ -30,8 +30,38 @@
         INSERT INTO t_but_review_pic
         (ireview,pic)
         VALUES
-            <foreach collection="pics" item="pic" open="(" close=")" separator="),( ">
-                #{ireview}, #{pic}
-            </foreach>
+        <foreach collection="pics" item="pic" open="(" close=")" separator="),( ">
+            #{ireview}, #{pic}
+        </foreach>
     </insert>
+
+    <select id="selButcherShopDetail">
+        SELECT A.ibutcher, A.NAME, A.location, A.information, ifnull(AVG(C.star),0) AS star,A.`x`, A.`y`
+        FROM t_butcher_shop AS A
+        JOIN t_but_menu AS B
+        ON A.ibutcher = B.ibutcher
+        JOIN t_but_review C
+        ON C.ibutcher = A.ibutcher
+        WHERE A.ibutcher = #{ibutcher}
+    </select>
+
+    <select id="selMenuDetail">
+        SELECT ibutcher,menu,price,pic
+        FROM t_but_menu
+        WHERE ibutcher = #{ibutcher}
+    </select>
+
+    <select id="selReviewDetail">
+        SELECT a.ireview,c.nickname,a.star,a.review
+        FROM t_but_review a
+        JOIN t_user c
+        ON a.iuser = c.iuser
+        WHERE a.ibutcher = #{ibutcher}
+    </select>
+
+    <select id="selReviewPicDetail">
+        SELECT a.ireview, a.pic
+        FROM t_but_review_pic a
+        WHERE ireview = #{ireview}
+    </select>
 </mapper>

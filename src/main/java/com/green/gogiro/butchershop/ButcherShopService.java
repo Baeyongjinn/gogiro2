@@ -1,9 +1,6 @@
 package com.green.gogiro.butchershop;
 
-import com.green.gogiro.butchershop.model.ButcherPicsVo;
-import com.green.gogiro.butchershop.model.ButcherReviewDto;
-import com.green.gogiro.butchershop.model.ButcherSelDto;
-import com.green.gogiro.butchershop.model.ButcherSelVo;
+import com.green.gogiro.butchershop.model.*;
 import com.green.gogiro.common.ResVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,5 +40,30 @@ public class ButcherShopService {
         mapper.insButcherReview(dto);
         mapper.insButcherReviewPic(dto);
         return new ResVo(dto.getIreview());
+    }
+
+    public List<ButcherShopDetailVo> getShopDetail(int ibutcher){
+        List<ButcherShopDetailVo> list = mapper.selButcherShopDetail(ibutcher);
+        List<Integer> pk= new ArrayList<>();
+        Map<Integer,ButcherShopDetailVo> butMap = new HashMap<>();
+        for(ButcherShopDetailVo vo : list){
+            pk.add(vo.getIbutcher());
+            butMap.put(vo.getIbutcher(),vo);
+            List<DetailMenu> menus= mapper.selMenuDetail(vo.getIbutcher());
+            vo.setMenus(menus);
+            List<ReviewDetail> reviews= mapper.selReviewDetail(vo.getIbutcher());
+            for(ReviewDetail review: reviews){
+                List<ReviewPicVo> reviewPics= mapper.selReviewPicDetail(review.getIreview());
+                for(ReviewPicVo picVo: reviewPics){
+                    review.getPic().add(picVo.getPic());
+                }
+            }
+            vo.setReviews(reviews);
+        }
+        List<ButcherPicsVo> butcherPics= mapper.selButcherShopPics(pk);
+        for(ButcherPicsVo vo: butcherPics){
+            butMap.get(vo.getIbutcher()).getPics().add(vo.getPic());
+        }
+        return list;
     }
 }

@@ -1,9 +1,6 @@
 package com.green.gogiro.butchershop;
 
-import com.green.gogiro.butchershop.model.ButcherPicsVo;
-import com.green.gogiro.butchershop.model.ButcherReviewDto;
-import com.green.gogiro.butchershop.model.ButcherSelDto;
-import com.green.gogiro.butchershop.model.ButcherSelVo;
+import com.green.gogiro.butchershop.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,4 +15,12 @@ public interface ButcherShopMapper {
     int insButcherReview(ButcherReviewDto dto);
 
     int insButcherReviewPic(ButcherReviewDto dto);
+
+    List<ButcherShopDetailVo> selButcherShopDetail(int ibutcher);
+
+    List<DetailMenu> selMenuDetail(int ibutcher);
+
+    List<ReviewDetail> selReviewDetail(int ibutcher);
+
+    List<ReviewPicVo> selReviewPicDetail(int ireview);
 }
