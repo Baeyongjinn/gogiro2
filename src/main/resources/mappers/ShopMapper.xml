@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.gogiro.shop.ShopMapper">
+
+    <select id="selShopAll">
+        SELECT ishop, name, location, x, y
+        FROM t_shop
+        LIMIT #{startIdx}, #{rowCount}
+    </select>
+
+    <select id="selShopPics">
+        SELECT ishop, pic
+        FROM t_shop_pic
+        WHERE ishop in (
+        <foreach collection="pk" item="ishop"  separator=",">
+            #{ishop}
+        </foreach>
+        )
+    </select>
+
+    <insert id="postShopReview" useGeneratedKeys="true" keyProperty="ireview">
+        INSERT INTO
+        t_shop_review
+        SET
+        ishop = #{ishop},
+        iuser = #{iuser},
+        star = #{star},
+        review = #{review}
+    </insert>
+
+    <insert id="postShopReviewPic">
+        INSERT INTO
+        t_shop_review_pic
+        (ireview, pic)
+        VALUES
+        <foreach collection="pics" item="pic" open="(" close=")" separator="),( ">
+            #{ireview}, #{pic}
+        </foreach>
+    </insert>
+
+
+
+</mapper>
