@@ -18,6 +18,34 @@
         </foreach>
     </insert>
 
+    <update id="updCommunity">
+        update t_community
+        set title = #{title},
+        contents = #{contents}
+        where iboard = #{iboard}
+        and iuser = #{iuser}
+    </update>
+
+    <update id="updPicCommunity">
+        update t_commu_pics
+        set pic = #{pic}
+        where iboard = #{iboard}
+    </update>
+
+    <select id="selCommunity">
+        SELECT a.iboard, a.iuser, b.nickname AS writerName, a.title, a.contents
+        FROM t_community a
+        JOIN t_user b
+        ON a.iuser = b.iuser
+        limit #{startIdx}, #{rowCount}
+    </select>
+
+    <select id="selpicCommunity">
+        select pic
+        from t_commu_pics
+        where iboard = #{iboard}
+    </select>
+
     <delete id="delCommunity">
         delete from t_community
         where iuser = #{iuser}
