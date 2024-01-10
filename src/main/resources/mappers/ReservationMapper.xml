@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.gogiro.reservation.ReservationMapper">
+    <insert id="insReservation">
+        INSERT INTO
+        t_reservation
+        SET
+            iuser= #{iuser},
+            ishop= #{ishop},
+            date= #{date},
+            request= #{request}
+    </insert>
+    <insert id="insPickup" useGeneratedKeys="true" keyProperty="ipickup">
+        INSERT INTO
+        t_pickup
+        SET
+            iuser= #{iuser},
+            ibutcher= #{ibutcher},
+            date= #{date},
+            request= #{request}
+    </insert>
+    <insert id="insPickupMenu">
+        INSERT INTO
+        t_pickup_menu
+        SET
+            ipickup= #{ipickup},
+            ibut_menu= #{ibutcherMenu},
+            count= #{count}
+    </insert>
+    <select id="selReservation">
+        SELECT
+            0 AS checkShop,
+            ireser,
+            ishop,
+            date,
+            request,
+            confirm
+        FROM t_reservation
+        UNION
+        SELECT
+            1 AS checkShop,
+            ipickup AS ireser,
+            ibutcher AS ishop,
+            date,
+            request,
+            confirm
+        FROM t_pickup
+        WHERE iuser= #{iuser};
+    </select>
+    <delete id="delReservation">
+        DELETE
+        FROM t_reservation
+        WHERE ireser= #{ireser}
+        AND iuser= #{iuser}
+    </delete>
+    <delete id="delPickup">
+        DELETE
+        FROM t_pickup
+        WHERE ipickup= #{ipickup}
+        AND iuser= #{iuser}
+    </delete>
+</mapper>
