@@ -2,7 +2,6 @@ package com.green.gogiro.user;
 
 import static com.green.gogiro.common.Const.*;
 import com.green.gogiro.common.ResVo;
-import com.green.gogiro.errortest.CategoryNotFoundException;
 import com.green.gogiro.kakao.KakaoMapper;
 import com.green.gogiro.kakao.KakaoService;
 import com.green.gogiro.user.model.*;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Parameter;
 
-import static com.green.gogiro.errortest.ErrorCode.*;
+
 
 @Slf4j
 @Service
@@ -24,12 +23,7 @@ public class UserService {
 
     public ResVo signup(UserSignupDto dto){
         String checkNickname = mapper.checkNickname(dto.getNickname());
-        if(checkNickname != null){
-            throw new CategoryNotFoundException("이미 존재 하는 닉네임 입니다");
-        }
-        if(!dto.getUpw().equals(dto.getCheckUpw())){
-            throw new CategoryNotFoundException("비밀번호가 일치하지 않습니다.");
-        }
+
         String hashedPw = BCrypt.hashpw(dto.getUpw(),BCrypt.gensalt());
         dto.setUpw(hashedPw);
         mapper.signupUser(dto);
@@ -43,10 +37,10 @@ public class UserService {
     public ResVo signin(UserSigninDto dto){
         String check = mapper.signinUser(dto.getEmail());
         if(check == null){
-            throw new CategoryNotFoundException(SIGNIN_UID_ERROR);
+            new ResVo(3);
         }
         if (!(BCrypt.checkpw(dto.getUpw(),check))) {
-            throw new CategoryNotFoundException(SIGNIN_UPW_ERROR);
+            new ResVo(2);
         }
         return new ResVo(SUCCESS);
     }
@@ -54,7 +48,7 @@ public class UserService {
     public ResVo updateUser(UserUpdDto dto) {
         UserEntity entity = mapper.userEntity(dto.getIuser());
         if(entity == null) {
-            throw new CategoryNotFoundException(NULL_USER_ERROR);
+            new ResVo(0);
         }
         mapper.updateUser(dto);
         return new ResVo(SUCCESS);
@@ -62,10 +56,6 @@ public class UserService {
 
     public UserInfoVo selUserInfo(int iuser){
         UserEntity entity = mapper.userEntity(iuser);
-
-        if(entity == null){
-            throw new CategoryNotFoundException(NULL_USER_ERROR);
-        }
         return mapper.selUserInfo(iuser);
     }
 
