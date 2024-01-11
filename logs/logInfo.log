@@ -1611,3 +1611,5 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 [2024-01-11 15:03:01 [32mINFO [0;39m http-nio-8080-exec-5] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-1 - Starting...[0;39m
 [2024-01-11 15:03:01 [32mINFO [0;39m http-nio-8080-exec-5] [com.zaxxer.hikari.pool.HikariPool] [36mHikariPool-1 - Added connection org.mariadb.jdbc.Connection@6f2dd44d[0;39m
 [2024-01-11 15:03:01 [32mINFO [0;39m http-nio-8080-exec-5] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-1 - Start completed.[0;39m
+[2024-01-11 15:30:41 [32mINFO [0;39m SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-1 - Shutdown initiated...[0;39m
+[2024-01-11 15:30:41 [32mINFO [0;39m SpringApplicationShutdownHook] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-1 - Shutdown completed.[0;39m
