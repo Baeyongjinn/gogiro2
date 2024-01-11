@@ -27,7 +27,7 @@
         set nickname = #{nickname},
         address = #{address},
         pic = #{pic},
-        tel= #{tel}
+        tel = #{tel}
         where iuser = #{iuser}
     </update>
     <select id="selUserInfo">
