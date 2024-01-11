@@ -29,7 +29,7 @@ public class CommunityController {
     @GetMapping()
     @Operation(summary = "커뮤니티 리스트", description = "커뮤니티 리스트 처리")
     public List<CommunitySelVo> getCommunity(CommunitySelDto dto) {
-        return service.selpicCommunity(dto);
+        return service.selCommunity(dto);
     }
 
     @DeleteMapping()

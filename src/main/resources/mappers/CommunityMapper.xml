@@ -33,7 +33,7 @@
     </update>
 
     <select id="selCommunity">
-        SELECT a.iboard, a.iuser, b.nickname AS writerName, a.title, a.contents
+        SELECT a.iboard, a.iuser, b.nickname AS writerName, a.title, a.contents, (SELECT COUNT(iboard) FROM t_community) AS count
         FROM t_community a
         JOIN t_user b
         ON a.iuser = b.iuser
