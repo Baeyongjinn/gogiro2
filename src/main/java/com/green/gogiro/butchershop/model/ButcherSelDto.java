@@ -8,6 +8,8 @@ import lombok.Data;
 public class ButcherSelDto {
     @Schema(title = "페이지", defaultValue = "1")
     private int page;
+    @Schema(title = "검색",defaultValue = " ")
+    private String search;
 
     @JsonIgnore
     private int startIdx;
