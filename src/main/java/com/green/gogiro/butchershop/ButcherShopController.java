@@ -8,6 +8,7 @@ import com.green.gogiro.butchershop.model.ButcherShopDetailVo;
 import com.green.gogiro.common.ResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class ButcherShopController {
 
     @GetMapping("/{ibutcher}")
     @Operation(summary = "정육점 상세 보기",description = "정육점 상세 보기 처리")
-    public List<ButcherShopDetailVo> getShopDetail(@PathVariable int ibutcher){
+    public List<ButcherShopDetailVo> getShopDetail(@PathVariable int ibutcher) throws Exception {
         return service.getShopDetail(ibutcher);
     }
 

@@ -69,4 +69,10 @@
         FROM t_but_review_pic a
         WHERE ireview = #{ireview}
     </select>
+
+    <select id="selButcherEntity">
+        SELECT ibutcher, name, location, x, y,created_at as createdAt
+        FROM t_butcher_shop
+        WHERE ibutcher = #{ibutcher}
+    </select>
 </mapper>
