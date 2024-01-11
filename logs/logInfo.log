@@ -4316,3 +4316,15 @@ java.lang.RuntimeException: dd
 [2024-01-11 17:19:10 [32mINFO [0;39m http-nio-8080-exec-1] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-27 - Starting...[0;39m
 [2024-01-11 17:19:10 [32mINFO [0;39m http-nio-8080-exec-1] [com.zaxxer.hikari.pool.HikariPool] [36mHikariPool-27 - Added connection org.mariadb.jdbc.Connection@48fa4e2e[0;39m
 [2024-01-11 17:19:10 [32mINFO [0;39m http-nio-8080-exec-1] [com.zaxxer.hikari.HikariDataSource] [36mHikariPool-27 - Start completed.[0;39m
+[2024-01-11 18:04:49 INFO  main] [com.green.gogiro.shop.ShopControllerTest] Starting ShopControllerTest using Java 17.0.8.1 with PID 4884 (started by Administrator in D:\2023_second\gogiro)
+[2024-01-11 18:04:49 INFO  main] [com.green.gogiro.shop.ShopControllerTest] No active profile set, falling back to 1 default profile: "default"
+[2024-01-11 18:04:51 INFO  main] [org.springframework.boot.test.mock.web.SpringBootMockServletContext] Initializing Spring TestDispatcherServlet ''
+[2024-01-11 18:04:51 INFO  main] [org.springframework.test.web.servlet.TestDispatcherServlet] Initializing Servlet ''
+[2024-01-11 18:04:51 INFO  main] [org.springframework.test.web.servlet.TestDispatcherServlet] Completed initialization in 1 ms
+[2024-01-11 18:04:51 INFO  main] [com.green.gogiro.shop.ShopControllerTest] Started ShopControllerTest in 1.633 seconds (process running for 2.326)
+[2024-01-11 18:05:06 INFO  main] [com.green.gogiro.community.CommunityControllerTest] Starting CommunityControllerTest using Java 17.0.8.1 with PID 3512 (started by Administrator in D:\2023_second\gogiro)
+[2024-01-11 18:05:06 INFO  main] [com.green.gogiro.community.CommunityControllerTest] No active profile set, falling back to 1 default profile: "default"
+[2024-01-11 18:05:07 INFO  main] [org.springframework.boot.test.mock.web.SpringBootMockServletContext] Initializing Spring TestDispatcherServlet ''
+[2024-01-11 18:05:07 INFO  main] [org.springframework.test.web.servlet.TestDispatcherServlet] Initializing Servlet ''
+[2024-01-11 18:05:07 INFO  main] [org.springframework.test.web.servlet.TestDispatcherServlet] Completed initialization in 1 ms
+[2024-01-11 18:05:07 INFO  main] [com.green.gogiro.community.CommunityControllerTest] Started CommunityControllerTest in 1.598 seconds (process running for 2.323)
