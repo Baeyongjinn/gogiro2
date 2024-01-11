@@ -62,6 +62,7 @@ public class ButcherShopService {
 
     public List<ButcherShopDetailVo> getShopDetail(int ibutcher){
         ButcherEntity entity = mapper.selButcherEntity(ibutcher);
+        //없는 가게일 경우 빈 리스트 보내기
         if(entity == null){
             List<ButcherShopDetailVo> bt = new ArrayList<>();
             return bt;
