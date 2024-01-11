@@ -1,6 +1,7 @@
 package com.green.gogiro.shop;
 
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.shop.model.ShopDetailVo;
 import com.green.gogiro.shop.model.ShopReviewDto;
 import com.green.gogiro.shop.model.ShopSelDto;
 import com.green.gogiro.shop.model.ShopSelVo;
@@ -20,6 +21,12 @@ public class ShopController {
     @Operation(summary = "고기집 리스트 보기",description = "고기집 리스트 보기 처리")
     public List<ShopSelVo> getShopList(ShopSelDto dto) {
         return service.getShopList(dto);
+    }
+
+    @GetMapping("/{ishop}")
+    @Operation(summary = "고기집 상세 보기",description = "고기집 상세 보기 처리")
+    public List<ShopDetailVo> getShopDetail(@PathVariable int ishop){
+        return service.getShopDetail(ishop);
     }
 
     @PostMapping

@@ -18,6 +18,36 @@
         )
     </select>
 
+    <select id="selShopDetail">
+        SELECT A.ishop, A.NAME, A.location, A.information, ifnull(AVG(C.star),0) AS star,A.`x`, A.`y`
+        FROM t_shop AS A
+        JOIN t_shop_menu AS B
+        ON A.ishop = B.ishop
+        JOIN t_shop_review C
+        ON C.ishop = A.ishop
+        WHERE A.ishop = #{ishop}
+    </select>
+
+    <select id="selMenuDetail">
+        SELECT ishop,menu,price,pic
+        FROM t_shop_menu
+        WHERE ishop = #{ishop}
+    </select>
+
+    <select id="selReviewDetail">
+        SELECT a.ireview,c.nickname,a.star,a.review
+        FROM t_shop_review a
+        JOIN t_user c
+        ON a.iuser = c.iuser
+        WHERE a.ishop = #{ishop}
+    </select>
+
+    <select id="selReviewPicDetail">
+        SELECT a.ireview, a.pic
+        FROM t_shop_review_pic a
+        WHERE ireview = #{ireview}
+    </select>
+
     <insert id="postShopReview" useGeneratedKeys="true" keyProperty="ireview">
         INSERT INTO
         t_shop_review

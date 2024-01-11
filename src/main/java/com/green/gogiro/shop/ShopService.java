@@ -1,10 +1,7 @@
 package com.green.gogiro.shop;
 
 import com.green.gogiro.common.ResVo;
-import com.green.gogiro.shop.model.ShopPicsVo;
-import com.green.gogiro.shop.model.ShopReviewDto;
-import com.green.gogiro.shop.model.ShopSelDto;
-import com.green.gogiro.shop.model.ShopSelVo;
+import com.green.gogiro.shop.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +31,32 @@ public class ShopService {
                 List<String> picList = shopSelVo.getPics();
                 picList.add(vo2.getPic());
             }
+        }
+        return list;
+    }
+
+    public List<ShopDetailVo> getShopDetail(int ishop){
+        List<ShopDetailVo> list = mapper.selShopDetail(ishop);
+        List<Integer> pk= new ArrayList<>();
+        Map<Integer, ShopDetailVo> Map = new HashMap<>();
+        for(ShopDetailVo vo : list){
+            pk.add(vo.getIshop());
+            Map.put(vo.getIshop(),vo);
+            List<ShopDetailMenu> menus= mapper.selMenuDetail(vo.getIshop());
+            vo.setMenus(menus);
+            List<ShopReviewDetail> reviews= mapper.selReviewDetail(vo.getIshop());
+            for(ShopReviewDetail review: reviews){
+                List<ShopReviewPicVo> reviewPics= mapper.selReviewPicDetail(review.getIreview());
+                for(ShopReviewPicVo picVo: reviewPics){
+                    review.getPic().add(picVo.getPic());
+                }
+            }
+            vo.setReviews(reviews);
+        }
+        List<ShopPicsVo> Pics= mapper.selShopPics(pk);
+
+        for(ShopPicsVo vo: Pics){
+            Map.get(vo.getIshop()).getPics().add(vo.getPic());
         }
         return list;
     }

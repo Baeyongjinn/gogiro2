@@ -1,10 +1,7 @@
 package com.green.gogiro.shop;
 
 
-import com.green.gogiro.shop.model.ShopPicsVo;
-import com.green.gogiro.shop.model.ShopReviewDto;
-import com.green.gogiro.shop.model.ShopSelDto;
-import com.green.gogiro.shop.model.ShopSelVo;
+import com.green.gogiro.shop.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,8 +12,17 @@ public interface ShopMapper {
 
     List<ShopPicsVo> selShopPics(List<Integer> pk);
 
+    List<ShopDetailVo> selShopDetail(int ishop);
+
+    List<ShopDetailMenu> selMenuDetail(int ishop);
+
+    List<ShopReviewDetail> selReviewDetail(int ishop);
+
+    List<ShopReviewPicVo> selReviewPicDetail(int ireview);
+
     int postShopReview(ShopReviewDto dto);
 
     int postShopReviewPic(ShopReviewDto dto);
+
 
 }
