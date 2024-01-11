@@ -30,7 +30,7 @@ public class CommunityService {
         return new ResVo(dto.getIboard());
     }
 
-    public List<CommunitySelVo> selpicCommunity(CommunitySelDto dto) {
+    public List<CommunitySelVo> selCommunity(CommunitySelDto dto) {
         List<CommunitySelVo> list = mapper.selCommunity(dto);
         for(CommunitySelVo vo : list) {
             List<String> pics = mapper.selpicCommunity(vo.getIboard());
