@@ -1,7 +1,6 @@
 package com.green.gogiro.community;
 
-import com.green.gogiro.community.model.CommunityDelDto;
-import com.green.gogiro.community.model.CommunityInsDto;
+import com.green.gogiro.community.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,6 +11,14 @@ public interface CommunityMapper {
     int insCommunity(CommunityInsDto dto);
 
     int insCommunityPics(CommunityInsDto dto);
+
+    int updCommunity(CommunityUpdDto dto);
+
+    int updPicCommunity(CommunityPicUpdDto dto);
+
+    List<CommunitySelVo> selCommunity(CommunitySelDto dto);
+
+    List<String> selpicCommunity(int iboard);
 
     int delCommunity(CommunityDelDto dto);
 

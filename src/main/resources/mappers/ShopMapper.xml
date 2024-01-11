@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.gogiro.shop.ShopMapper">
+
+    <select id="selShopAll">
+        SELECT ishop, name, location, x, y
+        FROM t_shop
+        LIMIT #{startIdx}, #{rowCount}
+    </select>
+
+    <select id="selShopPics">
+        SELECT ishop, pic
+        FROM t_shop_pic
+        WHERE ishop in (
+        <foreach collection="pk" item="ishop"  separator=",">
+            #{ishop}
+        </foreach>
+        )
+    </select>
+
+    <select id="selShopDetail">
+        SELECT A.ishop, A.NAME, A.location, A.information, ifnull(AVG(C.star),0) AS star,A.`x`, A.`y`
+        FROM t_shop AS A
+        JOIN t_shop_menu AS B
+        ON A.ishop = B.ishop
+        JOIN t_shop_review C
+        ON C.ishop = A.ishop
+        WHERE A.ishop = #{ishop}
+    </select>
+
+    <select id="selMenuDetail">
+        SELECT ishop,menu,price,pic
+        FROM t_shop_menu
+        WHERE ishop = #{ishop}
+    </select>
+
+    <select id="selReviewDetail">
+        SELECT a.ireview,c.nickname,a.star,a.review
+        FROM t_shop_review a
+        JOIN t_user c
+        ON a.iuser = c.iuser
+        WHERE a.ishop = #{ishop}
+    </select>
+
+    <select id="selReviewPicDetail">
+        SELECT a.ireview, a.pic
+        FROM t_shop_review_pic a
+        WHERE ireview = #{ireview}
+    </select>
+
+    <insert id="postShopReview" useGeneratedKeys="true" keyProperty="ireview">
+        INSERT INTO
+        t_shop_review
+        SET
+        ishop = #{ishop},
+        iuser = #{iuser},
+        star = #{star},
+        review = #{review}
+    </insert>
+
+    <insert id="postShopReviewPic">
+        INSERT INTO
+        t_shop_review_pic
+        (ireview, pic)
+        VALUES
+        <foreach collection="pics" item="pic" open="(" close=")" separator="),( ">
+            #{ireview}, #{pic}
+        </foreach>
+    </insert>
+
+
+
+</mapper>
