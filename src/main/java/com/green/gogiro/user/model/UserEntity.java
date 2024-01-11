@@ -13,5 +13,6 @@ public class UserEntity {
     private String gender;
     private String address;
     private String pic;
+    private String tel;
     private String createdAt;
 }

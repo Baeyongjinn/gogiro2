@@ -15,4 +15,6 @@ public class UserUpdDto {
     private String address;
     @Schema(title = "프로필 사진",defaultValue = " ")
     private String pic;
+    @Schema(title = "전화번호",defaultValue = " ")
+    private String tel;
 }

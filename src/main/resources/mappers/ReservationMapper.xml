@@ -24,7 +24,7 @@
         t_pickup_menu
         SET
             ipickup= #{ipickup},
-            ibut_menu= #{ibutcherMenu},
+            ibut_menu= #{ibutMenu},
             count= #{count}
     </insert>
     <select id="selReservation">
@@ -47,16 +47,20 @@
         FROM t_pickup
         WHERE iuser= #{iuser};
     </select>
-    <delete id="delReservation">
-        DELETE
-        FROM t_reservation
+    <update id="cancelReservation">
+        UPDATE
+        t_reservation
+        SET
+            confirm= 1
         WHERE ireser= #{ireser}
         AND iuser= #{iuser}
-    </delete>
-    <delete id="delPickup">
-        DELETE
-        FROM t_pickup
+    </update>
+    <update id="cancelPickup">
+        UPDATE
+        t_pickup
+        SET
+        confirm= 1
         WHERE ipickup= #{ipickup}
         AND iuser= #{iuser}
-    </delete>
+    </update>
 </mapper>

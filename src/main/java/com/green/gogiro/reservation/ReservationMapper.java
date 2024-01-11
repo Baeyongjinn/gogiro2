@@ -9,8 +9,8 @@ import java.util.List;
 public interface ReservationMapper {
     int insReservation(ReservationInsDto dto);
     int insPickup(PickupInsDto dto);
-    int insPickupMenu(int ipickup, int ibutcherMenu, int count);
+    int insPickupMenu(PickupMenuDto dto);
     List<ReservationList> selReservation(int iuser);
-    int delReservation(ReservationDelDto dto);
-    int delPickup(PickupDelDto dto);
+    int cancelReservation(CancelReservationDto dto);
+    int cancelPickup(CancelPickupDto dto);
 }
