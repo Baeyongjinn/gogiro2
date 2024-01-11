@@ -3,7 +3,7 @@ package com.green.gogiro.reservation.model;
 import lombok.Data;
 
 @Data
-public class ReservationDelDto {
+public class CancelPickupDto {
     private int iuser;
-    private int ireser;
+    private int ipickup;
 }

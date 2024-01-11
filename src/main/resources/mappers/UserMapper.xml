@@ -10,10 +10,10 @@
         nickname = #{nickname},
         birth = #{birth},
         gender = #{gender},
-        address = #{address}
-        <if test="pic != null and pic != ' nn'">
-            ,pic = #{pic}
-        </if>
+        address = #{address},
+        pic = #{pic},
+        tel= #{tel}
+
     </insert>
 
     <select id="signinUser">
@@ -26,9 +26,8 @@
         update t_user
         set nickname = #{nickname},
         address = #{address},
-        <if test="pic != ' ' and pic != null">
-            pic = #{pic}
-        </if>
+        pic = #{pic},
+        tel= #{tel}
         where iuser = #{iuser}
     </update>
     <select id="selUserInfo">
@@ -39,7 +38,8 @@
         birth,
         gender,
         address,
-        pic
+        pic,
+        tel
         FROM t_user
         where iuser= #{iuser}
     </select>
@@ -48,7 +48,7 @@
     <!-- entity용 -->
     <select id="userEntity">
         SELECT iuser, email, upw, name, nickname
-        , birth, gender, address, pic
+        , birth, gender, address, pic, tel
         , created_at as createdAt
         FROM t_user
         WHERE iuser = #{iuser}

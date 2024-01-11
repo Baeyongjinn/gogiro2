@@ -19,10 +19,9 @@ public class ReservationService {
 
     public ResVo postPickup(PickupInsDto dto){
         mapper.insPickup(dto);
-        for(int i=0;i<dto.getIbut_menu().size();i++){
-            mapper.insPickupMenu(dto.getIpickup(),
-                                 dto.getIbut_menu().get(i),
-                                 dto.getCount().get(i));
+        for(PickupMenuDto menu: dto.getMenus()){
+            menu.setIbutcher(dto.getIbutcher());
+            mapper.insPickupMenu(menu);
         }
         return new ResVo(1);
     }
@@ -31,11 +30,11 @@ public class ReservationService {
         return mapper.selReservation(iuser);
     }
 
-    public ResVo deleteReservation(ReservationDelDto dto){
-        return new ResVo(mapper.delReservation(dto));
+    public ResVo cancelReservation(CancelReservationDto dto){
+        return new ResVo(mapper.cancelReservation(dto));
     }
 
-    public ResVo deletePickup(PickupDelDto dto){
-        return new ResVo(mapper.delPickup(dto));
+    public ResVo cancelPickup(CancelPickupDto dto){
+        return new ResVo(mapper.cancelPickup(dto));
     }
 }

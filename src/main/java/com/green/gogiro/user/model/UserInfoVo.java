@@ -20,4 +20,6 @@ public class UserInfoVo {
     private String address;
     @Schema(title = "프로필사진")
     private String pic;
+    @Schema(title = "전화번호",defaultValue = " ")
+    private String tel;
 }
