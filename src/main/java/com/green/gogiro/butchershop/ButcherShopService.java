@@ -60,7 +60,7 @@ public class ButcherShopService {
         return new ResVo(dto.getIreview());
     }
 
-    public List<ButcherShopDetailVo> getShopDetail(int ibutcher) throws Exception {
+    public List<ButcherShopDetailVo> getShopDetail(int ibutcher){
         ButcherEntity entity = mapper.selButcherEntity(ibutcher);
         if(entity == null){
             List<ButcherShopDetailVo> bt = new ArrayList<>();
