@@ -60,4 +60,108 @@
         WHERE nickname = #{nickname}
     </select>
 
+    <select id="selReservation">
+        SELECT
+        0 AS checkShop,
+        ireser,
+        ishop,
+        date,
+        request,
+        confirm,
+        created_at AS createdAt
+        FROM t_reservation
+        WHERE iuser= #{iuser}
+        UNION
+        SELECT
+        1 AS checkShop,
+        ipickup AS ireser,
+        ibutcher AS ishop,
+        date,
+        request,
+        confirm,
+        created_at AS createdAt
+        FROM t_pickup
+        WHERE iuser= #{iuser}
+        ORDER BY createdAt
+    </select>
+    <select id="selUserReview">
+        SELECT
+            0 AS checkShop,
+            a.ireview,
+            a.ishop,
+            a.star,
+            a.review,
+            a.created_at AS createdAt
+        FROM t_shop_review a
+        WHERE iuser= #{iuser}
+        UNION
+        SELECT
+            1 AS checkShop,
+            b.ireview,
+            b.ibutcher AS ishop,
+            b.star,
+            b.review,
+            b.created_at AS createdAt
+        FROM t_but_review b
+        WHERE iuser= #{iuser}
+        ORDER BY createdAt desc;
+    </select>
+    <select id="selUserReviewPic">
+        SELECT
+            pic
+        FROM
+        <choose>
+            <when test="checkShop==0">
+                t_shop_review_pic
+            </when>
+            <otherwise>
+                t_but_review_pic
+            </otherwise>
+        </choose>
+        WHERE ireview= #{ireview}
+    </select>
+    <select id="selUserBookmark">
+        SELECT
+            a.imeat,
+            a.ishop,
+            a.name,
+            a.information,
+            a.location,
+            a.x,
+            a.y,
+            b.created_at AS createdAt,
+            if(b.count IS NULL, 0, b.count) AS count
+        FROM t_shop a
+        JOIN (SELECT
+                  ishop,
+                  COUNT(*) AS COUNT,
+                  iuser,
+                  created_at
+              FROM t_shop_bookmark
+              GROUP BY ishop) b
+        ON a.ishop= b.ishop
+        AND b.iuser= #{iuser}
+        UNION
+        SELECT
+            0 AS imeat,
+            a.ibutcher AS ishop,
+            a.name,
+            a.information,
+            a.location,
+            a.x,
+            a.y,
+            b.created_at AS createdAt,
+            if(b.count IS NULL, 0, b.count) AS count
+        FROM t_butcher_shop a
+        JOIN (SELECT
+                  ibutcher,
+                  COUNT(*) AS COUNT,
+                  iuser,
+                  created_at
+              FROM t_but_bookmark
+              GROUP BY ibutcher) b
+        ON a.ibutcher= b.ibutcher
+        AND b.iuser= #{iuser}
+        ORDER BY createdAt desc;
+    </select>
 </mapper>

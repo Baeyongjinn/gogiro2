@@ -1,9 +1,9 @@
-package com.green.gogiro.reservation.model;
+package com.green.gogiro.user.model;
 
 import lombok.Data;
 
 @Data
-public class ReservationList {
+public class ReservationVo {
     private int checkShop;//(가게구분0: 식당, 1: 정육점)
     private int ireser;//(예약pk)
     private int ishop;//(식당pk)

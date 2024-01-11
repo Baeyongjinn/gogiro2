@@ -1,5 +1,6 @@
 package com.green.gogiro.community.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.List;
