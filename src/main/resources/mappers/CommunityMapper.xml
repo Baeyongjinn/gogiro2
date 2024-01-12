@@ -26,11 +26,12 @@
         and iuser = #{iuser}
     </update>
 
-    <delete id="delByCommunityPics">
-        DELETE FROM t_commu_pics
-        WHERE iboard = #{iboard}
-    </delete>
 
+    <update id="updPicCommunity">
+        update t_commu_pics
+        set pic = #{pic}
+        where iboard = #{iboard}
+    </update>
     <select id="selCommunityCount">
         SELECT
         COUNT(*)
@@ -44,10 +45,18 @@
         limit #{startIdx}, #{rowCount}
     </select>
 
-    <select id="selPicCommunity">
+    <select id="selpicCommunity">
         select pic
         from t_commu_pics
         where iboard = #{iboard}
+    </select>
+
+    <!-- entity용 -->
+    <select id="entityCommunity">
+        SELECT *
+        FROM t_community
+        WHERE iuser = #{iuser}
+        and iboard = #{iboard}
     </select>
 
     <delete id="delCommunity">
