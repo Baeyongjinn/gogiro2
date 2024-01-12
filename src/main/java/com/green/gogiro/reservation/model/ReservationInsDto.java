@@ -8,4 +8,5 @@ public class ReservationInsDto {
     private int ishop;
     private String date;
     private String request;
+    private int headCount;
 }

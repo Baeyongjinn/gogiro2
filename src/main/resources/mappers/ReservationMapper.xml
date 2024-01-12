@@ -8,7 +8,8 @@
             iuser= #{iuser},
             ishop= #{ishop},
             date= #{date},
-            request= #{request}
+            request= #{request},
+            head_count= #{headCount}
     </insert>
     <insert id="insPickup" useGeneratedKeys="true" keyProperty="ipickup">
         INSERT INTO
