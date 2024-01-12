@@ -61,13 +61,9 @@ public class ShopService {
         for (ShopReviewPicVo pics : picVos) {
             reviewDetailMap.get(pics.getIreview()).getPic().add(pics.getPic());
         }
-        List<ShopPicsVo> butcherPics = mapper.selShopPics(pk);
-        for (ShopPicsVo vo : butcherPics) {
-            shopMap.get(vo.getIshop()).getPics().add(vo.getPic());
-        }
         List<ShopPicsVo> Pics = mapper.selShopPics(pk);
         for (ShopPicsVo vo : Pics) {
-            reviewDetailMap.get(vo.getIshop()).getPic().add(vo.getPic());
+            shopMap.get(vo.getIshop()).getPics().add(vo.getPic());
         }
         return list;
     }
