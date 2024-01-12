@@ -23,8 +23,6 @@ public class ReservationService {
                     .ibutMenu(dto.getIbutMenus().get(i))
                     .count(dto.getCounts().get(i))
                     .build();
-
-
             mapper.insPickupMenu(menu);
         }
         return new ResVo(1);
