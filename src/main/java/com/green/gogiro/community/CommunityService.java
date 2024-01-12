@@ -15,14 +15,21 @@ public class CommunityService {
     public ResVo insCommunity(CommunityInsDto dto) {
         mapper.insCommunity(dto);
         mapper.insCommunityPics(dto);
-        return new ResVo(dto.getIboard());
+        if(dto.getIboard() == 0) {
+            return new ResVo(0);
+        }
+        return new ResVo(1);
     }
 
     public ResVo updCommunity(CommunityUpdDto dto) {
+        CommunityEntity entity = mapper.entityCommunity(dto.getIuser(), dto.getIboard());
+        if(entity == null) {
+            return new ResVo(0);
+        }
         mapper.updCommunity(dto);
         mapper.delByCommunityPics(dto);
         mapper.insCommunityPics(dto);
-        return new ResVo(dto.getIboard());
+        return new ResVo(1);
     }
 
     public List<CommunitySelVo> selCommunity(CommunitySelDto dto) {
@@ -39,8 +46,12 @@ public class CommunityService {
     }
 
     public ResVo delCommunity(CommunityDelDto dto) {
+        CommunityEntity entity = mapper.entityCommunity(dto.getIuser(), dto.getIboard());
+        if(entity == null) {
+            return new ResVo(0);
+        }
         mapper.delPicCommunity(dto.getIboard());
-        int result = mapper.delCommunity(dto);
-        return new ResVo(result);
+        mapper.delCommunity(dto);
+        return new ResVo(1);
     }
 }

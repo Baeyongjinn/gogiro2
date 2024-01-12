@@ -51,6 +51,14 @@
         where iboard = #{iboard}
     </select>
 
+    <!-- entity용 -->
+    <select id="entityCommunity">
+        SELECT *
+        FROM t_community
+        WHERE iuser = #{iuser}
+        and iboard = #{iboard}
+    </select>
+
     <delete id="delCommunity">
         delete from t_community
         where iuser = #{iuser}
