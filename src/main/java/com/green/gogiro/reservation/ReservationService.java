@@ -17,17 +17,17 @@ public class ReservationService {
 
     public ResVo postPickup(PickupInsDto dto){
         mapper.insPickup(dto);
-        for(int i=0 ; i< dto.getIbutMenus().size();i++){
-            PickupMenuDto menu= PickupMenuDto.builder()
-                    .ipickup(dto.getIpickup())
-                    .ibutMenu(dto.getIbutMenus().get(i))
-                    .count(dto.getCounts().get(i))
-                    .build();
-
-
-            mapper.insPickupMenu(menu);
+        if(dto.getIbutMenus()!=null && dto.getCounts()!=null) {
+            for (int i = 0; i < dto.getIbutMenus().size(); i++) {
+                PickupMenuDto menu = PickupMenuDto.builder()
+                        .ipickup(dto.getIpickup())
+                        .ibutMenu(dto.getIbutMenus().get(i))
+                        .count(dto.getCounts().get(i))
+                        .build();
+                mapper.insPickupMenu(menu);
+            }
         }
-        return new ResVo(1);
+        return new ResVo(333);
     }
 
     public ResVo cancelReservation(CancelReservationDto dto){
