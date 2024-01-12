@@ -5,9 +5,7 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import com.green.gogiro.reservation.model.*;
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @MybatisTest
@@ -17,26 +15,20 @@ class ReservationMapperTest {
     private ReservationMapper mapper;
 
     @Test
-    void insReservation() throws Exception{
-        final int IUSER1= 4;
-        final int ISHOP1= 1;
-        final String DATE1= "1234-11-11";
+    void insReservationTest() throws Exception{
         ReservationInsDto dto1= new ReservationInsDto();
-        dto1.setIuser(IUSER1);
-        dto1.setIshop(ISHOP1);
-        dto1.setDate(DATE1);
+        dto1.setIuser(4);
+        dto1.setIshop(1);
+        dto1.setDate("1234-11-11");
         List<ReservationInsDto> result1= mapper.selReservationForTest(dto1);
         assertEquals(0, result1.size());
         int testR1= mapper.insReservation(dto1);
         assertEquals(1, testR1);
 
-        final int IUSER2= 5;
-        final int ISHOP2= 2;
-        final String DATE2= "1334-12-21";
         ReservationInsDto dto2= new ReservationInsDto();
-        dto2.setIuser(IUSER2);
-        dto2.setIshop(ISHOP2);
-        dto2.setDate(DATE2);
+        dto2.setIuser(5);
+        dto2.setIshop(2);
+        dto2.setDate("1334-12-21");
         List<ReservationInsDto> result2= mapper.selReservationForTest(dto2);
         assertEquals(0, result2.size());
         int testR2= mapper.insReservation(dto2);
@@ -44,7 +36,7 @@ class ReservationMapperTest {
     }
 
     @Test
-    void insPickup() throws Exception{
+    void insPickupTest() throws Exception{
         PickupInsDto dto1= new PickupInsDto();
         dto1.setIuser(4);
         dto1.setIbutcher(1);
@@ -65,7 +57,7 @@ class ReservationMapperTest {
     }
 
     @Test
-    void insPickupMenu() throws Exception{
+    void insPickupMenuTest() throws Exception{
         PickupMenuDto dto1= PickupMenuDto.builder()
                 .ipickup(6)
                 .ibutMenu(2)
@@ -86,7 +78,7 @@ class ReservationMapperTest {
     }
 
     @Test
-    void cancelReservation() throws Exception{
+    void cancelReservationTest() throws Exception{
         CancelReservationDto dto= new CancelReservationDto();
         dto.setIuser(4);
         dto.setIreser(2);
@@ -97,7 +89,7 @@ class ReservationMapperTest {
     }
 
     @Test
-    void cancelPickup() throws Exception {
+    void cancelPickupTest() throws Exception {
         CancelPickupDto dto= new CancelPickupDto();
         dto.setIuser(4);
         dto.setIpickup(2);
