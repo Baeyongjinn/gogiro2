@@ -5,8 +5,6 @@ import com.green.gogiro.reservation.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Service
 public class ReservationService {
@@ -19,15 +17,17 @@ public class ReservationService {
 
     public ResVo postPickup(PickupInsDto dto){
         mapper.insPickup(dto);
-        for(PickupMenuDto menu: dto.getMenus()){
-            menu.setIbutcher(dto.getIbutcher());
+        for(int i=0 ; i< dto.getIbutMenus().size();i++){
+            PickupMenuDto menu= PickupMenuDto.builder()
+                    .ipickup(dto.getIpickup())
+                    .ibutMenu(dto.getIbutMenus().get(i))
+                    .count(dto.getCounts().get(i))
+                    .build();
+
+
             mapper.insPickupMenu(menu);
         }
         return new ResVo(1);
-    }
-
-    public List<ReservationList> getReservation(int iuser){
-        return mapper.selReservation(iuser);
     }
 
     public ResVo cancelReservation(CancelReservationDto dto){

@@ -1,10 +1,13 @@
 package com.green.gogiro.user;
 
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.user.model.ReservationVo;
 import com.green.gogiro.user.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,5 +38,23 @@ public class UserController {
     @Operation(summary = "유저 정보 보기",description = "유저 정보 보기 처리")
     public UserInfoVo selUserInfo(@PathVariable int iuser){
         return service.selUserInfo(iuser);
+    }
+
+    @GetMapping("/reservation/{iuser}")
+    @Operation(summary = "예약 및 픽업 리스트",description = "회원이 등록한 예약 및 픽업 정보를 리스트로 처리")
+    public List<ReservationVo> getReservation(@PathVariable int iuser){
+        return service.getReservation(iuser);
+    }
+
+    @GetMapping("/review/{iuser}")
+    @Operation(summary = "가게 후기 리스트",description = "회원이 작성한 후기 정보를 리스트로 처리")
+    public List<ReviewVo> getUserReview(int iuser){
+        return service.getUserReview(iuser);
+    }
+
+    @GetMapping("/bookmark/{iuser}")
+    @Operation(summary = "북마크 리스트",description = "회원이 북마크 등록한 가게 정보를 리스트로 처리")
+    public List<BookmarkShopVo> getUserBookmark(int iuser){
+        return service.getUserBookmark(iuser);
     }
 }

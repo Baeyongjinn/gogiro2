@@ -10,7 +10,7 @@ public interface ReservationMapper {
     int insReservation(ReservationInsDto dto);
     int insPickup(PickupInsDto dto);
     int insPickupMenu(PickupMenuDto dto);
-    List<ReservationList> selReservation(int iuser);
+
     int cancelReservation(CancelReservationDto dto);
     int cancelPickup(CancelPickupDto dto);
 }

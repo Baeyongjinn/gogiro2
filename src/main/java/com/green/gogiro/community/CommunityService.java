@@ -37,7 +37,7 @@ public class CommunityService {
             vo.setPics(pics);
         }
         for(int i = 0; i < list.size(); i++) {
-            list.get(i).setBoardNum(list.get(i).getCount() -dto.getStartIdx()-i);
+            list.get(i).setBoardNum(i + 1);
         }
         return list;
     }
