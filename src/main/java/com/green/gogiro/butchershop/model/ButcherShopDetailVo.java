@@ -16,7 +16,7 @@ public class ButcherShopDetailVo {
     private String y;
     private double star;
     private List<String> pics= new ArrayList<>();
-    private List<DetailMenu> menus;
-    private List<ReviewDetail> reviews;
+    private List<DetailMenu> menus = new ArrayList<>();
+    private List<ReviewDetail> reviews = new ArrayList<>();
 }
 

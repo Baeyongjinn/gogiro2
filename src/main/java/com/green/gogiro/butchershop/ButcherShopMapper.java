@@ -22,7 +22,7 @@ public interface ButcherShopMapper {
 
     List<ReviewDetail> selReviewDetail(int ibutcher);
 
-    List<ReviewPicVo> selReviewPicDetail(int ireview);
+    List<ReviewPicVo> selReviewPicDetail(List<Integer> ireview);
 
     ButcherEntity selButcherEntity(int ibutcher);
 }

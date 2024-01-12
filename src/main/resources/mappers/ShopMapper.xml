@@ -40,7 +40,7 @@
     </select>
 
     <select id="selReviewDetail">
-        SELECT a.ireview,c.nickname,a.star,a.review
+        SELECT a.ishop,a.ireview,c.nickname,a.star,a.review
         FROM t_shop_review a
         JOIN t_user c
         ON a.iuser = c.iuser
@@ -48,9 +48,16 @@
     </select>
 
     <select id="selReviewPicDetail">
-        SELECT a.ireview, a.pic
-        FROM t_shop_review_pic a
-        WHERE ireview = #{ireview}
+        SELECT ireview, pic
+        FROM t_shop_review_pic
+        <where>
+            ireview in (
+            <foreach collection="ireview" item="ireview" separator=",">
+                #{ireview}
+            </foreach>
+            )
+        </where>
+
     </select>
 
     <insert id="postShopReview" useGeneratedKeys="true" keyProperty="ireview">
