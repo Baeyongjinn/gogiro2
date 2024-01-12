@@ -1,5 +1,9 @@
 package com.green.gogiro.shop;
 
+import com.green.gogiro.butchershop.model.ButcherPicsVo;
+import com.green.gogiro.butchershop.model.DetailMenu;
+import com.green.gogiro.butchershop.model.ReviewDetail;
+import com.green.gogiro.butchershop.model.ReviewPicVo;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.shop.model.*;
 import lombok.RequiredArgsConstructor;
@@ -36,25 +40,34 @@ public class ShopService {
     public List<ShopDetailVo> getShopDetail(int ishop) {
         List<ShopDetailVo> list = mapper.selShopDetail(ishop);
         List<Integer> pk = new ArrayList<>();
-        Map<Integer, ShopDetailVo> Map = new HashMap<>();
+        List<Integer> ireview = new ArrayList<>();
+        Map<Integer, ShopReviewDetail> reviewDetailMap = new HashMap<>();
+        Map<Integer, ShopDetailVo> shopMap = new HashMap<>();
         for (ShopDetailVo vo : list) {
             pk.add(vo.getIshop());
-            Map.put(vo.getIshop(), vo);
-            List<ShopDetailMenu> menus = mapper.selMenuDetail(vo.getIshop());
-            vo.setMenus(menus);
-            List<ShopReviewDetail> reviews = mapper.selReviewDetail(vo.getIshop());
-            for (ShopReviewDetail review : reviews) {
-                List<ShopReviewPicVo> reviewPics = mapper.selReviewPicDetail(review.getIreview());
-                for (ShopReviewPicVo picVo : reviewPics) {
-                    review.getPic().add(picVo.getPic());
-                }
-            }
-            vo.setReviews(reviews);
+            shopMap.put(vo.getIshop(), vo);
+        }
+        List<ShopDetailMenu> menus = mapper.selMenuDetail(ishop);
+        for (ShopDetailMenu menu : menus) {
+            shopMap.get(menu.getIshop()).getMenus().add(menu);
+        }
+        List<ShopReviewDetail> reviews = mapper.selReviewDetail(ishop);
+        for (ShopReviewDetail review : reviews) {
+            shopMap.get(review.getIshop()).getReviews().add(review);
+            reviewDetailMap.put(review.getIreview(), review);
+            ireview.add(review.getIreview());
+        }
+        List<ShopReviewPicVo> picVos = mapper.selReviewPicDetail(ireview);
+        for (ShopReviewPicVo pics : picVos) {
+            reviewDetailMap.get(pics.getIreview()).getPic().add(pics.getPic());
+        }
+        List<ShopPicsVo> butcherPics = mapper.selShopPics(pk);
+        for (ShopPicsVo vo : butcherPics) {
+            shopMap.get(vo.getIshop()).getPics().add(vo.getPic());
         }
         List<ShopPicsVo> Pics = mapper.selShopPics(pk);
-
         for (ShopPicsVo vo : Pics) {
-            Map.get(vo.getIshop()).getPics().add(vo.getPic());
+            reviewDetailMap.get(vo.getIshop()).getPic().add(vo.getPic());
         }
         return list;
     }

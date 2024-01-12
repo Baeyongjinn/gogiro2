@@ -3,6 +3,7 @@ package com.green.gogiro.shop.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,5 +14,5 @@ public class ShopReviewDto {
     private int ishop;
     private int star;
     private String review;
-    private List<String> pics;
+    private List<String> pics = new ArrayList<>();
 }

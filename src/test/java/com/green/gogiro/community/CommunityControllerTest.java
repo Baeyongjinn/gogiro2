@@ -53,7 +53,8 @@ public class CommunityControllerTest {
 
         dto.setPics(pics);
 
-        mvc.perform(MockMvcRequestBuilders
+        mvc.perform(
+                MockMvcRequestBuilders
                         .post("/api/community")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto))
