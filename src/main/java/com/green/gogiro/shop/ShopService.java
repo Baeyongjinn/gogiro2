@@ -25,7 +25,10 @@ public class ShopService {
             map.put(vo.getIshop(), vo);
         }
 
-        mapper.selShopPics(pk);
+        List<ShopPicsVo> picList=mapper.selShopPics(pk);
+        for(ShopPicsVo vo: picList){
+            map.get(vo.getIshop()).getPics().add(vo.getPic());
+        }
 
         return list;
     }
