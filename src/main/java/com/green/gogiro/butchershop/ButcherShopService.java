@@ -28,15 +28,7 @@ public class ButcherShopService {
             pk.add(vo.getIbutcher());
             butMap.put(vo.getIbutcher(), vo);
         }
-        if (pk.size() > 0) {
-            List<ButcherPicsVo> pics = mapper.selButcherShopPics(pk);
-
-            for (ButcherPicsVo vo2 : pics) {
-                ButcherSelVo butcherSelVo = butMap.get(vo2.getIbutcher());
-                List<String> strPicsList = butcherSelVo.getPics();
-                strPicsList.add(vo2.getPic());
-            }
-        }
+           mapper.selButcherShopPics(pk);
         return list;
     }
 

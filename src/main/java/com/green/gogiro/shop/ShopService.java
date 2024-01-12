@@ -24,38 +24,33 @@ public class ShopService {
             pk.add(vo.getIshop());
             map.put(vo.getIshop(), vo);
         }
-        if (pk.size() > 0) {
-            List<ShopPicsVo> pics = mapper.selShopPics(pk);
-            for (ShopPicsVo vo2 : pics) {
-                ShopSelVo shopSelVo = map.get(vo2.getIshop());
-                List<String> picList = shopSelVo.getPics();
-                picList.add(vo2.getPic());
-            }
-        }
+
+        mapper.selShopPics(pk);
+
         return list;
     }
 
-    public List<ShopDetailVo> getShopDetail(int ishop){
+    public List<ShopDetailVo> getShopDetail(int ishop) {
         List<ShopDetailVo> list = mapper.selShopDetail(ishop);
-        List<Integer> pk= new ArrayList<>();
+        List<Integer> pk = new ArrayList<>();
         Map<Integer, ShopDetailVo> Map = new HashMap<>();
-        for(ShopDetailVo vo : list){
+        for (ShopDetailVo vo : list) {
             pk.add(vo.getIshop());
-            Map.put(vo.getIshop(),vo);
-            List<ShopDetailMenu> menus= mapper.selMenuDetail(vo.getIshop());
+            Map.put(vo.getIshop(), vo);
+            List<ShopDetailMenu> menus = mapper.selMenuDetail(vo.getIshop());
             vo.setMenus(menus);
-            List<ShopReviewDetail> reviews= mapper.selReviewDetail(vo.getIshop());
-            for(ShopReviewDetail review: reviews){
-                List<ShopReviewPicVo> reviewPics= mapper.selReviewPicDetail(review.getIreview());
-                for(ShopReviewPicVo picVo: reviewPics){
+            List<ShopReviewDetail> reviews = mapper.selReviewDetail(vo.getIshop());
+            for (ShopReviewDetail review : reviews) {
+                List<ShopReviewPicVo> reviewPics = mapper.selReviewPicDetail(review.getIreview());
+                for (ShopReviewPicVo picVo : reviewPics) {
                     review.getPic().add(picVo.getPic());
                 }
             }
             vo.setReviews(reviews);
         }
-        List<ShopPicsVo> Pics= mapper.selShopPics(pk);
+        List<ShopPicsVo> Pics = mapper.selShopPics(pk);
 
-        for(ShopPicsVo vo: Pics){
+        for (ShopPicsVo vo : Pics) {
             Map.get(vo.getIshop()).getPics().add(vo.getPic());
         }
         return list;
