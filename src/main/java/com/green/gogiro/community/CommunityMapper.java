@@ -10,17 +10,20 @@ public interface CommunityMapper {
 
     int insCommunity(CommunityInsDto dto);
 
+    // 커뮤 사진 등록
     int insCommunityPics(CommunityInsDto dto);
+    //커뮤 사진 수정
+    int insCommunityPics(CommunityUpdDto dto);
 
     int updCommunity(CommunityUpdDto dto);
 
-    int updPicCommunity(CommunityPicUpdDto dto);
+    int delByCommunityPics(CommunityUpdDto dto);
 
     int selCommunityCount();
 
     List<CommunitySelVo> selCommunity(CommunitySelDto dto);
 
-    List<String> selpicCommunity(int iboard);
+    List<String> selPicCommunity(int iboard);
 
     int delCommunity(CommunityDelDto dto);
 

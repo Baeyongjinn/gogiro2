@@ -20,13 +20,8 @@ public class CommunityService {
 
     public ResVo updCommunity(CommunityUpdDto dto) {
         mapper.updCommunity(dto);
-        CommunityPicUpdDto dto2 = new CommunityPicUpdDto();
-        List<String> pics = dto.getPics();
-        dto2.setIboard(dto.getIboard());
-        for(String pic : pics){
-            dto2.setPic(pic);
-            mapper.updPicCommunity(dto2);
-        }
+        mapper.delByCommunityPics(dto);
+        mapper.insCommunityPics(dto);
         return new ResVo(dto.getIboard());
     }
 
@@ -34,7 +29,7 @@ public class CommunityService {
         List<CommunitySelVo> list = mapper.selCommunity(dto);
         int count = mapper.selCommunityCount();
         for(CommunitySelVo vo : list) {
-            List<String> pics = mapper.selpicCommunity(vo.getIboard());
+            List<String> pics = mapper.selPicCommunity(vo.getIboard());
             vo.setPics(pics);
         }
         for(int i = 0; i < list.size(); i++) {
