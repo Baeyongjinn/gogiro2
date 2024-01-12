@@ -16,6 +16,8 @@ public interface CommunityMapper {
 
     int updPicCommunity(CommunityPicUpdDto dto);
 
+    int selCommunityCount();
+
     List<CommunitySelVo> selCommunity(CommunitySelDto dto);
 
     List<String> selpicCommunity(int iboard);

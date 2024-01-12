@@ -27,26 +27,7 @@
             ibut_menu= #{ibutMenu},
             count= #{count}
     </insert>
-    <select id="selReservation">
-        SELECT
-            0 AS checkShop,
-            ireser,
-            ishop,
-            date,
-            request,
-            confirm
-        FROM t_reservation
-        UNION
-        SELECT
-            1 AS checkShop,
-            ipickup AS ireser,
-            ibutcher AS ishop,
-            date,
-            request,
-            confirm
-        FROM t_pickup
-        WHERE iuser= #{iuser};
-    </select>
+
     <update id="cancelReservation">
         UPDATE
         t_reservation

@@ -8,6 +8,7 @@ import com.green.gogiro.butchershop.model.ButcherShopDetailVo;
 import com.green.gogiro.common.ResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -2,16 +2,17 @@ package com.green.gogiro.user;
 
 import static com.green.gogiro.common.Const.*;
 import com.green.gogiro.common.ResVo;
-import com.green.gogiro.kakao.KakaoMapper;
-import com.green.gogiro.kakao.KakaoService;
+import com.green.gogiro.user.model.ReservationVo;
 import com.green.gogiro.user.model.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Parameter;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Slf4j
@@ -59,4 +60,27 @@ public class UserService {
         return mapper.selUserInfo(iuser);
     }
 
+    public List<ReservationVo> getReservation(int iuser){
+        return mapper.selReservation(iuser);
+    }
+
+    public List<ReviewVo> getUserReview(int iuser){
+        List<ReviewVo> reviews= mapper.selUserReview(iuser);
+        List<ReviewPk> reviewPkList= new ArrayList<>();
+        Map<ReviewPk, ReviewVo> reviewMap= new HashMap<>();
+        for(ReviewVo vo: reviews){
+            ReviewPk pk= new ReviewPk(vo.getCheckShop(),vo.getIreview());
+            reviewMap.put(pk, vo);
+            reviewPkList.add(pk);
+        }
+        for(ReviewPk pk: reviewPkList){
+            List<String> pics= mapper.selUserReviewPic(pk);
+            reviewMap.get(pk).setPics(pics);
+        }
+        return reviews;
+    }
+
+    public List<BookmarkShopVo> getUserBookmark(int iuser){
+        return mapper.selUserBookmark(iuser);
+    }
 }

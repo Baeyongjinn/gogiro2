@@ -11,7 +11,8 @@ public class PickupInsDto {
     private int ibutcher;
     private String date;
     private String request;
+    private List<Integer> ibutMenus;
+    private List<Integer> counts;
     @JsonIgnore
     private int ipickup;
-    private List<PickupMenuDto> menus;
 }

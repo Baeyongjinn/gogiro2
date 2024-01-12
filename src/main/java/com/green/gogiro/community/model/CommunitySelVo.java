@@ -1,5 +1,6 @@
 package com.green.gogiro.community.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.util.List;
@@ -13,4 +14,7 @@ public class CommunitySelVo {
     private String title;
     private String contents;
     private List<String> pics;
+
+    @JsonIgnore
+    private int count;
 }
