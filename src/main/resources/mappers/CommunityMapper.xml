@@ -31,7 +31,11 @@
         set pic = #{pic}
         where iboard = #{iboard}
     </update>
-
+    <select id="selCommunityCount">
+        SELECT
+        COUNT(*)
+        FROM t_community
+    </select>
     <select id="selCommunity">
         SELECT a.iboard, a.iuser, b.nickname AS writerName, a.title, a.contents
         FROM t_community a
