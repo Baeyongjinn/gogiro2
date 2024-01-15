@@ -16,7 +16,7 @@ public class UserMyPageDto {
     private int startIdx;
 
     @JsonIgnore
-    private final int rowCount = 10;
+    private final int rowCount = 5;
 
     public void setPage(int page){
         this.page = page;
