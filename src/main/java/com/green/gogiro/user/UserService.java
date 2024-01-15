@@ -38,10 +38,10 @@ public class UserService {
     public ResVo signin(UserSigninDto dto){
         String check = mapper.signinUser(dto.getEmail());
         if(check == null){
-            new ResVo(3);
+            new ResVo(ID_NULL);
         }
         if (!(BCrypt.checkpw(dto.getUpw(),check))) {
-            new ResVo(2);
+            new ResVo(PW_FAIL);
         }
         return new ResVo(SUCCESS);
     }
@@ -49,7 +49,7 @@ public class UserService {
     public ResVo updateUser(UserUpdDto dto) {
         UserEntity entity = mapper.userEntity(dto.getIuser());
         if(entity == null) {
-            new ResVo(0);
+            new ResVo(FAIL);
         }
         mapper.updateUser(dto);
         return new ResVo(SUCCESS);
