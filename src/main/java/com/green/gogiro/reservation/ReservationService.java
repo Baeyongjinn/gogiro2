@@ -1,5 +1,6 @@
 package com.green.gogiro.reservation;
 
+import static com.green.gogiro.common.Const.*;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.reservation.model.*;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +28,16 @@ public class ReservationService {
                 mapper.insPickupMenu(menu);
             }
         }
-        return new ResVo(333);
+        return new ResVo(SUCCESS);
     }
 
     public ResVo cancelReservation(CancelReservationDto dto){
-        return new ResVo(mapper.cancelReservation(dto));
+        mapper.cancelReservation(dto);
+        return new ResVo(SUCCESS);
     }
 
     public ResVo cancelPickup(CancelPickupDto dto){
-        return new ResVo(mapper.cancelPickup(dto));
+        mapper.cancelPickup(dto);
+        return new ResVo(SUCCESS);
     }
 }
