@@ -74,7 +74,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
 
         String content= mr.getResponse().getContentAsString();
         ResVo rv= om.readValue(content, ResVo.class);
-        assertEquals(333, rv.getResult());
+        assertEquals(1, rv.getResult());
     }
 
     @Test

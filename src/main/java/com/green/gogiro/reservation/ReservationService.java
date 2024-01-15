@@ -18,7 +18,7 @@ public class ReservationService {
 
     public ResVo postPickup(PickupInsDto dto){
         mapper.insPickup(dto);
-        if(dto.getIbutMenus()!=null && dto.getCounts()!=null) {
+        if(dto.getIbutMenus()!=null) {
             for (int i = 0; i < dto.getIbutMenus().size(); i++) {
                 PickupMenuDto menu = PickupMenuDto.builder()
                         .ipickup(dto.getIpickup())
