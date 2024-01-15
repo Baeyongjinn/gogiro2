@@ -67,12 +67,9 @@
     <select id="selReviewPicDetail">
         SELECT a.ireview, a.pic
         FROM t_but_review_pic a
-        <where> ireview in (
-            <foreach collection="ireview" item="ireview"  separator=",">
-                  #{ireview}
-            </foreach>
-            )
-        </where>
+        JOIN t_but_review b
+        ON a.ireview = b.ireview
+        WHERE b.ibutcher = #{ibutcher}
     </select>
 
     <select id="selButcherEntity">

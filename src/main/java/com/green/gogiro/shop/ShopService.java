@@ -57,7 +57,7 @@ public class ShopService {
             reviewDetailMap.put(review.getIreview(), review);
             ireview.add(review.getIreview());
         }
-        List<ShopReviewPicVo> picVos = mapper.selReviewPicDetail(ireview);
+        List<ShopReviewPicVo> picVos = mapper.selReviewPicDetail(ishop);
         for (ShopReviewPicVo pics : picVos) {
             reviewDetailMap.get(pics.getIreview()).getPic().add(pics.getPic());
         }

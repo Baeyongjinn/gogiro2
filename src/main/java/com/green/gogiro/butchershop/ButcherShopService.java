@@ -82,7 +82,7 @@ public class ButcherShopService {
             reviewDetailMap.put(review.getIreview(), review);
             ireview.add(review.getIreview());
         }
-        List<ReviewPicVo> picVos = mapper.selReviewPicDetail(ireview);
+        List<ReviewPicVo> picVos = mapper.selReviewPicDetail(ibutcher);
         for (ReviewPicVo pics : picVos) {
             reviewDetailMap.get(pics.getIreview()).getPic().add(pics.getPic());
         }

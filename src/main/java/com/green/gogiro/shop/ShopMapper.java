@@ -18,7 +18,7 @@ public interface ShopMapper {
 
     List<ShopReviewDetail> selReviewDetail(int ishop);
 
-    List<ShopReviewPicVo> selReviewPicDetail(List<Integer> ireview);
+    List<ShopReviewPicVo> selReviewPicDetail(int ishop);
 
     int postShopReview(ShopReviewDto dto);
 

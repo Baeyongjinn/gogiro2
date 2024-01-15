@@ -48,15 +48,12 @@
     </select>
 
     <select id="selReviewPicDetail">
-        SELECT ireview, pic
-        FROM t_shop_review_pic
-        <where>
-            ireview in (
-            <foreach collection="ireview" item="ireview" separator=",">
-                #{ireview}
-            </foreach>
-            )
-        </where>
+        SELECT a.ireview, a.pic
+        FROM t_shop_review_pic a
+        JOIN t_shop_review b
+        on a.ireview = b.ireview
+        WHERE b.ishop = #{ishop}
+
 
     </select>
 
