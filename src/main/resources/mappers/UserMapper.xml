@@ -83,6 +83,7 @@
         FROM t_pickup
         WHERE iuser= #{iuser}
         ORDER BY createdAt
+        LIMIT #{startIdx}, #{rowCount}
     </select>
     <select id="selUserReview">
         SELECT
@@ -104,7 +105,8 @@
             b.created_at AS createdAt
         FROM t_but_review b
         WHERE iuser= #{iuser}
-        ORDER BY createdAt desc;
+        ORDER BY createdAt desc
+        LIMIT #{startIdx}, #{rowCount}
     </select>
     <select id="selUserReviewPic">
         SELECT
@@ -162,6 +164,7 @@
               GROUP BY ibutcher) b
         ON a.ibutcher= b.ibutcher
         AND b.iuser= #{iuser}
-        ORDER BY createdAt desc;
+        ORDER BY createdAt desc
+        LIMIT #{startIdx}, #{rowCount}
     </select>
 </mapper>

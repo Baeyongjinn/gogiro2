@@ -60,12 +60,12 @@ public class UserService {
         return mapper.selUserInfo(iuser);
     }
 
-    public List<ReservationVo> getReservation(int iuser){
-        return mapper.selReservation(iuser);
+    public List<ReservationVo> getReservation(UserMyPageDto dto){
+        return mapper.selReservation(dto);
     }
 
-    public List<ReviewVo> getUserReview(int iuser){
-        List<ReviewVo> reviews= mapper.selUserReview(iuser);
+    public List<ReviewVo> getUserReview(UserMyPageDto dto){
+        List<ReviewVo> reviews= mapper.selUserReview(dto);
         List<ReviewPk> reviewPkList= new ArrayList<>();
         Map<ReviewPk, ReviewVo> reviewMap= new HashMap<>();
         for(ReviewVo vo: reviews){
@@ -80,7 +80,7 @@ public class UserService {
         return reviews;
     }
 
-    public List<BookmarkShopVo> getUserBookmark(int iuser){
-        return mapper.selUserBookmark(iuser);
+    public List<BookmarkShopVo> getUserBookmark(UserMyPageDto dto){
+        return mapper.selUserBookmark(dto);
     }
 }

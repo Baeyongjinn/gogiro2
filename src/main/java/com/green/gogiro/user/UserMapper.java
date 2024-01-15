@@ -21,11 +21,11 @@ public interface UserMapper {
 
     String checkNickname(String nickname);
 
-    List<ReservationVo> selReservation(int iuser);
+    List<ReservationVo> selReservation(UserMyPageDto dto);
 
-    List<ReviewVo> selUserReview(int iuser);
+    List<ReviewVo> selUserReview(UserMyPageDto dto);
 
     List<String> selUserReviewPic(ReviewPk pk);
 
-    List<BookmarkShopVo> selUserBookmark(int iuser);
+    List<BookmarkShopVo> selUserBookmark(UserMyPageDto dto);
 }
