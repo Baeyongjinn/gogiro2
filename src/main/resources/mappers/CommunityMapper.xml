@@ -46,9 +46,13 @@
     </select>
 
     <select id="selPicCommunity">
-        select pic
+        select iboard, pic
         from t_commu_pics
-        where iboard = #{iboard}
+        where iboard in (
+        <foreach collection="iboard" item="iboard" separator=",">
+            #{iboard}
+        </foreach>
+        )
     </select>
 
     <!-- entity용 -->
