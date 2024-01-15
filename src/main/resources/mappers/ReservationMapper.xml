@@ -24,7 +24,7 @@
         INSERT INTO
         t_pickup_menu
         SET
-            ipickup= #{ipickup},
+            ipickup= #{iPickup},
             ibut_menu= #{ibutMenu},
             count= #{count}
     </insert>

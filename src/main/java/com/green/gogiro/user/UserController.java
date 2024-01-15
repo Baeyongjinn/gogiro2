@@ -36,25 +36,25 @@ public class UserController {
 
     @GetMapping("/{iuser}")
     @Operation(summary = "유저 정보 보기",description = "유저 정보 보기 처리")
-    public UserInfoVo selUserInfo(@PathVariable int iuser){
+    public UserInfoVo selUserInfo(@PathVariable @RequestParam("유저pk") int iuser){
         return service.selUserInfo(iuser);
     }
 
     @GetMapping("/reservation/{iuser}")
     @Operation(summary = "예약 및 픽업 리스트",description = "회원이 등록한 예약 및 픽업 정보를 리스트로 처리")
-    public List<ReservationVo> getReservation(@PathVariable int iuser){
+    public List<ReservationVo> getReservation(@PathVariable @RequestParam("유저pk") int iuser){
         return service.getReservation(iuser);
     }
 
     @GetMapping("/review/{iuser}")
     @Operation(summary = "가게 후기 리스트",description = "회원이 작성한 후기 정보를 리스트로 처리")
-    public List<ReviewVo> getUserReview(int iuser){
+    public List<ReviewVo> getUserReview(@PathVariable @RequestParam("유저pk") int iuser){
         return service.getUserReview(iuser);
     }
 
     @GetMapping("/bookmark/{iuser}")
     @Operation(summary = "북마크 리스트",description = "회원이 북마크 등록한 가게 정보를 리스트로 처리")
-    public List<BookmarkShopVo> getUserBookmark(int iuser){
+    public List<BookmarkShopVo> getUserBookmark(@PathVariable @RequestParam("유저pk") int iuser){
         return service.getUserBookmark(iuser);
     }
 }
