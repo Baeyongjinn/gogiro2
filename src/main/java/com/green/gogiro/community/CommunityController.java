@@ -31,10 +31,10 @@ public class CommunityController {
     public List<CommunitySelVo> getCommunity(CommunitySelDto dto) {
         return service.selCommunity(dto);
     }
-
     @DeleteMapping()
     @Operation(summary = "커뮤니티 삭제",description = "커뮤니티 삭제 처리")
     public ResVo delCommunity(CommunityDelDto dto) {
         return service.delCommunity(dto);
     }
+
 }

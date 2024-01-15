@@ -74,4 +74,10 @@
         where iboard = #{iboard}
     </delete>
 
+    <select id="checkCommunity">
+        SELECT iboard
+        FROM t_community
+        WHERE iboard = #{iboard}
+    </select>
+
 </mapper>

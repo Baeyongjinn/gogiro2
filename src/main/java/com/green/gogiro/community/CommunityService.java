@@ -1,9 +1,12 @@
 package com.green.gogiro.community;
 
+import static com.green.gogiro.common.Const.*;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.community.model.*;
 import lombok.RequiredArgsConstructor;
+import org.junit.internal.runners.statements.Fail;
 import org.springframework.stereotype.Service;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,22 +20,29 @@ public class CommunityService {
 
     public ResVo insCommunity(CommunityInsDto dto) {
         mapper.insCommunity(dto);
+        if(dto.getPics().size() <= 5){
+            return new ResVo(FAIL);
+        }
         mapper.insCommunityPics(dto);
         if(dto.getIboard() == 0) {
-            return new ResVo(0);
+            return new ResVo(FAIL);
         }
-        return new ResVo(1);
+        return new ResVo(SUCCESS);
     }
 
     public ResVo updCommunity(CommunityUpdDto dto) {
+        Integer check = mapper.checkCommunity(dto.getIboard());
+        if(check == null){
+            return new ResVo(FAIL);
+        }
         CommunityEntity entity = mapper.entityCommunity(dto.getIuser(), dto.getIboard());
         if(entity == null) {
-            return new ResVo(0);
+            return new ResVo(FAIL);
         }
         mapper.updCommunity(dto);
         mapper.delByCommunityPics(dto);
         mapper.insCommunityPics(dto);
-        return new ResVo(1);
+        return new ResVo(SUCCESS);
     }
 
     public List<CommunitySelVo> selCommunity(CommunitySelDto dto) {
@@ -55,12 +65,16 @@ public class CommunityService {
     }
 
     public ResVo delCommunity(CommunityDelDto dto) {
+        Integer check = mapper.checkCommunity(dto.getIboard());
+        if(check == null) {
+            return new ResVo(FAIL);
+        }
         CommunityEntity entity = mapper.entityCommunity(dto.getIuser(), dto.getIboard());
         if(entity == null) {
-            return new ResVo(0);
+            return new ResVo(FAIL);
         }
         mapper.delPicCommunity(dto.getIboard());
         mapper.delCommunity(dto);
-        return new ResVo(1);
+        return new ResVo(SUCCESS);
     }
 }
