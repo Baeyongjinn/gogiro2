@@ -77,4 +77,12 @@ public class CommunityService {
         mapper.delCommunity(dto);
         return new ResVo(SUCCESS);
     }
+
+    public ResVo postCommunityComment(CommunityCommentInsDto dto) {
+        return new ResVo(mapper.insCommunityComment(dto));
+    }
+
+    public ResVo delCommunityComment(CommunityCommentDelDto dto) {
+        return new ResVo(mapper.delCommunityComment(dto));
+    }
 }

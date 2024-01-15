@@ -32,4 +32,8 @@ public interface CommunityMapper {
     int delPicCommunity(int iboard);
 
     Integer checkCommunity(int iboard);
+
+    int insCommunityComment(CommunityCommentInsDto dto);
+
+    int delCommunityComment(CommunityCommentDelDto dto);
 }

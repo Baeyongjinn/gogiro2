@@ -79,5 +79,18 @@
         FROM t_community
         WHERE iboard = #{iboard}
     </select>
-
+    <insert id="insCommunityComment">
+        INSERT INTO
+        t_community_comment
+        SET
+            iboard= #{iboard},
+            iuser= #{iuser},
+            contents= #{contents}
+    </insert>
+    <delete id="delCommunityComment">
+        DELETE
+        FROM t_community_comment
+        WHERE iuser= #{iuser}
+        AND icomment= #{icomment}
+    </delete>
 </mapper>
