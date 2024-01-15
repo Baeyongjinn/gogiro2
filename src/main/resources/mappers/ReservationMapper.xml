@@ -41,13 +41,13 @@
         UPDATE
         t_pickup
         SET
-        confirm= 1
+            confirm= 1
         WHERE ipickup= #{ipickup}
         AND iuser= #{iuser}
     </update>
     <select id="selReservationForTest">
         SELECT
-        *
+            *
         FROM t_reservation
         WHERE iuser= #{iuser}
         AND ishop= #{ishop}
@@ -55,7 +55,7 @@
     </select>
     <select id="selPickupForTest">
         SELECT
-        *
+            *
         FROM t_pickup
         WHERE iuser= #{iuser}
         AND ibutcher= #{ibutcher}
@@ -63,21 +63,21 @@
     </select>
     <select id="selPickupMenuForTest">
         SELECT
-        *
+            *
         FROM t_pickup_menu
         WHERE ipickup= #{ipickup}
         AND ibut_menu= #{ibutMenu}
     </select>
     <select id="selReservationConfirmForTest">
         SELECT
-        confirm
+            confirm
         FROM t_reservation
         WHERE iuser= #{iuser}
         AND ireser= #{ireser}
     </select>
     <select id="selPickupConfirmForTest">
         SELECT
-        confirm
+            confirm
         FROM t_pickup
         WHERE iuser= #{iuser}
         AND ipickup= #{ipickup}
