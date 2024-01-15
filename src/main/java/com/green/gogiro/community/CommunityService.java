@@ -5,7 +5,10 @@ import com.green.gogiro.community.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -34,10 +37,16 @@ public class CommunityService {
 
     public List<CommunitySelVo> selCommunity(CommunitySelDto dto) {
         List<CommunitySelVo> list = mapper.selCommunity(dto);
+        List<Integer> iboard = new ArrayList<>();
+        Map<Integer,CommunitySelVo> boardMap = new HashMap<>();
         int count = mapper.selCommunityCount();
         for(CommunitySelVo vo : list) {
-            List<String> pics = mapper.selPicCommunity(vo.getIboard());
-            vo.setPics(pics);
+            iboard.add(vo.getIboard());
+            boardMap.put(vo.getIboard(),vo);
+        }
+        List<CommunityPicsVo> pics = mapper.selPicCommunity(iboard);
+        for(CommunityPicsVo pic : pics){
+            boardMap.get(pic.getIboard()).getPics().add(pic.getPic());
         }
         for(int i = 0; i < list.size(); i++) {
             list.get(i).setBoardNum(count - dto.getStartIdx() - i);
