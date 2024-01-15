@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 public class DetailMenu {
     @JsonIgnore
     private int ibutcher;
-
     private int price;
     private String menu;
     private String pic;

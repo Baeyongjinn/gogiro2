@@ -24,10 +24,10 @@ public class ButcherShopDetailVo {
     @Schema(title = "별점")
     private double star;
     @Schema(title = "가게 사진")
-    private List<String> pics= new ArrayList<>();
+    private List<String> pics;
     @Schema(title = "상세 메뉴")
-    private List<DetailMenu> menus = new ArrayList<>();
+    private List<DetailMenu> menus;
     @Schema(title = "정육점 리뷰")
-    private List<ReviewDetail> reviews = new ArrayList<>();
+    private List<ReviewDetail> reviews;
 }
 

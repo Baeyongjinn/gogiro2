@@ -7,6 +7,5 @@ import lombok.Data;
 public class ReviewPicVo {
     @JsonIgnore
     private int ireview;
-
     private String pic;
 }

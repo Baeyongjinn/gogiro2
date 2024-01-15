@@ -34,7 +34,7 @@ public class ButcherShopController {
 
     @GetMapping("/{ibutcher}")
     @Operation(summary = "정육점 상세 보기",description = "정육점 상세 보기 처리")
-    public List<ButcherShopDetailVo> getShopDetail(@PathVariable int ibutcher){
+    public ButcherShopDetailVo getShopDetail(@PathVariable int ibutcher){
         return service.getShopDetail(ibutcher);
     }
 

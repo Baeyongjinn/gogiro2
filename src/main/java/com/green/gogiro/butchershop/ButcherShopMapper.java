@@ -10,13 +10,15 @@ public interface ButcherShopMapper {
 
     List<ButcherSelVo> selButcherShopAll(ButcherSelDto dto);
 
-    List<ButcherPicsVo> selButcherShopPics(List<Integer> pk);
+    List<ButcherPicsVo> selButcherShopPicList(List<Integer> pk);
+
+    List<String> selButcherShopPics(int ibutcher);
 
     int insButcherReview(ButcherReviewDto dto);
 
     int insButcherReviewPic(ButcherReviewDto dto);
 
-    List<ButcherShopDetailVo> selButcherShopDetail(int ibutcher);
+    ButcherShopDetailVo selButcherShopDetail(int ibutcher);
 
     List<DetailMenu> selMenuDetail(int ibutcher);
 
@@ -25,4 +27,8 @@ public interface ButcherShopMapper {
     List<ReviewPicVo> selReviewPicDetail(int ibutcher);
 
     ButcherEntity selButcherEntity(int ibutcher);
+
+    List<String> selButcherPicsForTest(int ibutcher);
+
+    Integer selButcherReviewForTest(int ireview);
 }

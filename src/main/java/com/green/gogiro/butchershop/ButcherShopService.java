@@ -28,7 +28,7 @@ public class ButcherShopService {
             pk.add(vo.getIbutcher());
             butMap.put(vo.getIbutcher(), vo);
         }
-        List<ButcherPicsVo> pics = mapper.selButcherShopPics(pk);
+        List<ButcherPicsVo> pics = mapper.selButcherShopPicList(pk);
         for (ButcherPicsVo pic : pics) {
             butMap.get(pic.getIbutcher()).getPics().add(pic.getPic());
         }
@@ -56,40 +56,29 @@ public class ButcherShopService {
         return new ResVo(dto.getIreview());
     }
 
-    public List<ButcherShopDetailVo> getShopDetail(int ibutcher) {
+    public ButcherShopDetailVo getShopDetail(int ibutcher) {
         ButcherEntity entity = mapper.selButcherEntity(ibutcher);
         //없는 가게일 경우 빈 리스트 보내기
         if (entity == null) {
-            List<ButcherShopDetailVo> bt = new ArrayList<>();
-            return bt;
+            return new ButcherShopDetailVo();
         }
-        List<ButcherShopDetailVo> list = mapper.selButcherShopDetail(ibutcher);
-        List<Integer> pk = new ArrayList<>();
-        List<Integer> ireview = new ArrayList<>();
-        Map<Integer, ReviewDetail> reviewDetailMap = new HashMap<>();
-        Map<Integer, ButcherShopDetailVo> butMap = new HashMap<>();
-        for (ButcherShopDetailVo vo : list) {
-            pk.add(vo.getIbutcher());
-            butMap.put(vo.getIbutcher(), vo);
-        }
+        ButcherShopDetailVo vo = mapper.selButcherShopDetail(ibutcher);
         List<DetailMenu> menus = mapper.selMenuDetail(ibutcher);
-        for (DetailMenu menu : menus) {
-            butMap.get(menu.getIbutcher()).getMenus().add(menu);
-        }
+        vo.setMenus(menus);
+        List<String> shopPics = mapper.selButcherShopPics(ibutcher);
+        vo.setPics(shopPics);
         List<ReviewDetail> reviews = mapper.selReviewDetail(ibutcher);
-        for (ReviewDetail review : reviews) {
-            butMap.get(review.getIbutcher()).getReviews().add(review);
-            reviewDetailMap.put(review.getIreview(), review);
+        List<Integer> ireview= new ArrayList<>();
+        Map<Integer, ReviewDetail> map= new HashMap<>();
+        for(ReviewDetail review: reviews) {
             ireview.add(review.getIreview());
+            map.put(review.getIreview(), review);
         }
-        List<ReviewPicVo> picVos = mapper.selReviewPicDetail(ibutcher);
-        for (ReviewPicVo pics : picVos) {
-            reviewDetailMap.get(pics.getIreview()).getPic().add(pics.getPic());
+        List<ReviewPicVo> pics = mapper.selReviewPicDetail(ibutcher);
+        for (ReviewPicVo pic : pics) {
+            map.get(pic.getIreview()).getPics().add(pic.getPic());
         }
-        List<ButcherPicsVo> butcherPics = mapper.selButcherShopPics(pk);
-        for (ButcherPicsVo vo : butcherPics) {
-            butMap.get(vo.getIbutcher()).getPics().add(vo.getPic());
-        }
-        return list;
+        vo.setReviews(reviews);
+        return vo;
     }
 }

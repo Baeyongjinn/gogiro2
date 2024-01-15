@@ -19,5 +19,5 @@ public class ReviewDetail {
     private String nickname;
     private int star;
     private String review;
-    private List<String> pic = new ArrayList<>();
+    private List<String> pics = new ArrayList<>();
 }

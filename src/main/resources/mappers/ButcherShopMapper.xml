@@ -12,15 +12,21 @@
         </where>
         LIMIT #{startIdx}, #{rowCount}
     </select>
-
-    <select id="selButcherShopPics">
-        SELECT ibutcher, pic
+    <select id="selButcherShopPicList">
+        SELECT
+            ibutcher,
+            pic
         FROM t_butcher_pic
-        WHERE ibutcher in (
-        <foreach collection="pk" item="ibutcher" separator=",">
+        WHERE ibutcher in
+        <foreach collection="pk" item="ibutcher" open="(" close=")" separator=",">
             #{ibutcher}
         </foreach>
-        )
+    </select>
+    <select id="selButcherShopPics">
+        SELECT
+            pic
+        FROM t_butcher_pic
+        WHERE ibutcher = #{ibutcher}
     </select>
 
     <insert id="insButcherReview" useGeneratedKeys="true" keyProperty="ireview">
@@ -76,5 +82,17 @@
         SELECT ibutcher, name, location, x, y,created_at as createdAt
         FROM t_butcher_shop
         WHERE ibutcher = #{ibutcher}
+    </select>
+    <select id="selButcherPicsForTest">
+        SELECT
+            pic
+        FROM t_butcher_pic
+        WHERE ibutcher= #{ibutcher}
+    </select>
+    <select id="selButcherReviewForTest">
+        SELECT
+            ireview
+        FROM t_but_review
+        WHERE ireview= #{ireview}
     </select>
 </mapper>

@@ -30,57 +30,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockMvcConfig
 @WebMvcTest(ButcherShopControllerTest.class)
 class ButcherShopControllerTest {
-
     @Autowired
     private MockMvc mvc;
-
     @MockBean
     private ShopService service;
-
     @Autowired
     private ObjectMapper mapper;
 
-//    @Test
-//    void getButList() throws Exception{
-//        MultiValueMap<String,String> params = new LinkedMultiValueMap<>();
-//        params.add("page","1");
-//
-//
-//
-//        ButcherSelVo vo = new ButcherSelVo();
-//        vo.setIbutcher(3);
-//        vo.setLocation("dd");
-//        vo.setX("111.ddd.dd");
-//        vo.setY("333.333.444");
-//
-//        List<String> pics = new ArrayList<>();
-//        pics.add("ddd");
-//        pics.add("fff");
-//        vo.setPics(pics);
-//
-//        List<ButcherSelVo> list = new ArrayList<>();
-//        list.add(vo);
-//
-//
-//
-////        mvc.perform(
-////                MockMvcRequestBuilders
-////                        .get("/api/butcher-shop")
-////                        .params(params)
-////        ).andExpect(status().isOk())
-////                .andExpect(content().string(mapper.writeValueAsString(list)))
-////                .andDo(print());
-////
-////        verify(service).getShopList(any());
-////
-////    }
-
     @Test
-    void postButReview() throws Exception{
-
+    void getButListTest() {
     }
 
     @Test
-    void getShopDetail() {
+    void postButReviewTest() {
+    }
+
+    @Test
+    void getShopDetailTest() {
     }
 }
