@@ -38,25 +38,23 @@ class ReservationServiceTest {
     void postPickupTest() throws Exception{
         PickupInsDto dto= new PickupInsDto();
         ResVo vo= service.postPickup(dto);
-        assertEquals(333,vo.getResult());
+        assertEquals(1,vo.getResult());
         verify(mapper).insPickup(any());
     }
 
     @Test
     void cancelReservationTest() throws Exception{
-        final int RESULT= 123;
-        given(mapper.cancelReservation(any())).willReturn(RESULT);
+        given(mapper.cancelReservation(any())).willReturn(1);
         CancelReservationDto dto= new CancelReservationDto();
         ResVo vo= service.cancelReservation(dto);
-        assertEquals(RESULT, vo.getResult());
+        assertEquals(1, vo.getResult());
     }
 
     @Test
     void cancelPickupTest() throws Exception{
-        final int RESULT= 123;
-        given(mapper.cancelPickup(any())).willReturn(RESULT);
+        given(mapper.cancelPickup(any())).willReturn(1);
         CancelPickupDto dto= new CancelPickupDto();
         ResVo vo= service.cancelPickup(dto);
-        assertEquals(RESULT, vo.getResult());
+        assertEquals(1, vo.getResult());
     }
 }
