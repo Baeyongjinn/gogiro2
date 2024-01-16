@@ -21,6 +21,8 @@ public class CommunitySelVo {
     private String title;
     @Schema(title = "내용")
     private String contents;
+    @Schema(title = "작성일")
+    private String createdAt;
     @Schema(title = "사진")
     private List<String> pics = new ArrayList<>();
 
