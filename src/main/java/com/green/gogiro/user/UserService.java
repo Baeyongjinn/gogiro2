@@ -124,6 +124,7 @@ public class UserService {
         if(check == null) {
             new ResVo(FAIL);
         }
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updateUser(dto);
         return new ResVo(SUCCESS);
     }

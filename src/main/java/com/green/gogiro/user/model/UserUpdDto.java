@@ -1,13 +1,14 @@
 package com.green.gogiro.user.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
 @Schema(title = "유저정보 수정 Dto")
 public class UserUpdDto {
-    @Schema(title = "유저pk")
+    @JsonIgnore
     private int iuser;
     @Schema(title = "닉네임")
     private String nickname;
