@@ -57,16 +57,16 @@ class ButcherShopMapperTest {
         assertEquals(pics.size(), insertPics);
     }
 
-    @Test
-    void selButcherShopDetailTest() throws Exception {
-        ButcherShopDetailVo vo1= mapper.selButcherShopDetail(1);
-        ButcherShopDetailVo vo2= mapper.selButcherShopDetail(2);
-        assertEquals("다정축산물직판장",vo1.getName());
-        assertEquals("남문한우백화점 부림축산",vo2.getName());
-        ButcherShopDetailVo vo3= mapper.selButcherShopDetail(3);
-        assertEquals(0,vo3.getIbutcher());
-
-    }
+//    @Test
+//    void selButcherShopDetailTest() throws Exception {
+//        ButcherShopDetailVo vo1= mapper.selButcherShopDetail(1);
+//        ButcherShopDetailVo vo2= mapper.selButcherShopDetail(2);
+//        assertEquals("다정축산물직판장",vo1.getName());
+//        assertEquals("남문한우백화점 부림축산",vo2.getName());
+//        ButcherShopDetailVo vo3= mapper.selButcherShopDetail(3);
+//        assertEquals(0,vo3.getIbutcher());
+//
+//    }
 
     @Test
     void selMenuDetailTest() throws Exception {

@@ -66,7 +66,8 @@ public class ButcherShopService {
         if (entity == null) {
             return new ButcherShopDetailVo();
         }
-        ButcherShopDetailVo vo = mapper.selButcherShopDetail(ibutcher);
+        ButDto dto= new ButDto(authenticationFacade.getLoginUserPk(),ibutcher);
+        ButcherShopDetailVo vo = mapper.selButcherShopDetail(dto);
         List<DetailMenu> menus = mapper.selMenuDetail(ibutcher);
         vo.setMenus(menus);
         List<String> shopPics = mapper.selButcherShopPics(ibutcher);

@@ -16,7 +16,8 @@ public class ButcherShopDetailVo {
     @Schema(title = "위치")
     private String location;
     @Schema(title = "상세정보")
-    private String information;
+    private String open;
+    private String tel;
     @Schema(title = "경도")
     private String x;
     @Schema(title = "위도")
@@ -29,5 +30,6 @@ public class ButcherShopDetailVo {
     private List<DetailMenu> menus;
     @Schema(title = "정육점 리뷰")
     private List<ReviewDetail> reviews;
+    private int isBook;
 }
 

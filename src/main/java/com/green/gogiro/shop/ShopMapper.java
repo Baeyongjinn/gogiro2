@@ -10,9 +10,11 @@ import java.util.List;
 public interface ShopMapper {
     List<ShopSelVo> selShopAll(ShopSelDto dto);
 
-    List<ShopPicsVo> selShopPics(List<Integer> pk);
+    List<String> selShopPics(int ishop);
 
-    List<ShopDetailVo> selShopDetail(int ishop, int iuser);
+    List<ShopPicsVo> selShopPicList(List<Integer> pk);
+
+    ShopDetailVo selShopDetail(ShopDto dto);
 
     List<ShopDetailMenu> selMenuDetail(int ishop);
 

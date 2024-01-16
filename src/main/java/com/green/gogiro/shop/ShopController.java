@@ -23,7 +23,7 @@ public class ShopController {
 
     @GetMapping("/{ishop}")
     @Operation(summary = "고기집 상세 보기",description = "고기집 상세 보기 처리")
-    public List<ShopDetailVo> getShopDetail(@PathVariable int ishop){
+    public ShopDetailVo getShopDetail(@PathVariable int ishop){
         return service.getShopDetail(ishop);
     }
 
