@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class UserMyPageDto {
 
-    @Schema(title = "유저pk")
+    @JsonIgnore
     private int iuser;
     @Schema(title = "페이지", defaultValue = "1")
     private int page;

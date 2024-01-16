@@ -3,7 +3,7 @@
 <mapper namespace="com.green.gogiro.butchershop.ButcherShopMapper">
 
     <select id="selButcherShopAll">
-        SELECT ibutcher, name, location, x, y
+        SELECT ibutcher, name, location
         FROM t_butcher_shop
         <where>
             <if test="search != null and search != '' ">

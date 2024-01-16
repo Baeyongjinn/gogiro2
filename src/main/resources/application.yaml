@@ -1,3 +1,15 @@
+app:
+  jwt:
+    secret: DaeguGreenArtAcademyClass502RoomForJavaSpringBootFighting
+    header-scheme-name: authorization
+    token-type: Bearer
+    access-token-expiry: 7200000
+    refresh-token-expiry: 1296000000
+
+
+file:
+  dir: D:/download/gogiro/
+
 
 spring:
   datasource:
@@ -12,3 +24,7 @@ mybatis:
 springdoc:
   swagger-ui:
     path: /swagger.html
+
+
+server:
+  port: 8080

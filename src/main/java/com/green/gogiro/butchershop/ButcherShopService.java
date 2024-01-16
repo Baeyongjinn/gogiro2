@@ -38,11 +38,11 @@ public class ButcherShopService {
 
     public ResVo postButReview(ButcherReviewDto dto) {
         ButcherEntity entity = mapper.selButcherEntity(dto.getIbutcher());
-        UserEntity userEntity = userMapper.userEntity(dto.getIuser());
+
         //없는 유저일 경우
-        if (userEntity == null) {
-            return new ResVo(0);
-        }
+//        if (userEntity == null) {
+//            return new ResVo(0);
+//        }
         //없는 가게일 경우
         if (entity == null) {
             return new ResVo(2);

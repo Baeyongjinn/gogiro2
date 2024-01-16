@@ -51,7 +51,7 @@
         , birth, gender, address, pic, tel
         , created_at as createdAt
         FROM t_user
-        WHERE iuser = #{iuser}
+        WHERE email = #{email}
     </select>
 
     <select id="checkNickname">

@@ -1,6 +1,7 @@
 package com.green.gogiro.community.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -8,7 +9,8 @@ import lombok.Data;
 public class CommunityCommentInsDto {
     @Schema(title = "커뮤니티pk")
     private int iboard;
-    @Schema(title = "유저pk")
+
+    @JsonIgnore
     private int iuser;
     @Schema(title = "댓글내용")
     private String contents;

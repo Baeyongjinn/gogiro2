@@ -3,8 +3,8 @@ package com.green.gogiro.community;
 import static com.green.gogiro.common.Const.*;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.community.model.*;
+import com.green.gogiro.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
-import org.junit.internal.runners.statements.Fail;
 import org.springframework.stereotype.Service;
 
 
@@ -18,9 +18,12 @@ import java.util.Map;
 public class CommunityService {
     private final CommunityMapper mapper;
 
+    private final AuthenticationFacade authenticationFacade;
+
     public ResVo insCommunity(CommunityInsDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insCommunity(dto);
-        if(dto.getPics().size() <= 5){
+        if(dto.getPics().size() >= 5){
             return new ResVo(FAIL);
         }
         mapper.insCommunityPics(dto);
@@ -79,10 +82,12 @@ public class CommunityService {
     }
 
     public ResVo postCommunityComment(CommunityCommentInsDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         return new ResVo(mapper.insCommunityComment(dto));
     }
 
     public ResVo delCommunityComment(CommunityCommentDelDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         return new ResVo(mapper.delCommunityComment(dto));
     }
 }
