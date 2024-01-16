@@ -76,6 +76,7 @@ public class ShopService {
     }
 
     public ResVo toggleShopBookmark(ShopBookmarkDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         dto.setOn(mapper.selShopBookmark(dto)==null);
         dto.setIuser(authenticationFacade.getLoginUserPk());
         if(dto.isOn()) {

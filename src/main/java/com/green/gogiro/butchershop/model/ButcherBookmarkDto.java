@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class ButcherBookmarkDto {
+    @JsonIgnore
     private int iuser;
     private int ibutcher;
     @JsonIgnore

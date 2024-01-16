@@ -1,10 +1,8 @@
 package com.green.gogiro.shop;
 
+import com.green.gogiro.butchershop.model.ButcherBookmarkDto;
 import com.green.gogiro.common.ResVo;
-import com.green.gogiro.shop.model.ShopDetailVo;
-import com.green.gogiro.shop.model.ShopReviewDto;
-import com.green.gogiro.shop.model.ShopSelDto;
-import com.green.gogiro.shop.model.ShopSelVo;
+import com.green.gogiro.shop.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +31,12 @@ public class ShopController {
     @Operation(summary = "리뷰 등록",description = "리뷰 등록 처리")
     public ResVo postShopReview(@RequestBody ShopReviewDto dto) {
         return service.postShopReview(dto);
+    }
+
+    @PostMapping("/bookmark")
+    @Operation(summary = "고기집 북마크 ON/OFF",description = "고기집 북마크 토글 처리")
+    public ResVo toggleShopBookmark(@RequestBody ShopBookmarkDto dto) {
+        return service.toggleShopBookmark(dto);
     }
 
 
