@@ -49,12 +49,15 @@
     </insert>
 
     <select id="selButcherShopDetail">
-        SELECT A.ibutcher, A.NAME, A.location, A.information, ifnull(AVG(C.star),0) AS star,A.`x`, A.`y`
+        SELECT A.ibutcher, A.NAME, A.location, A.open, A.tel, ROUND(ifnull(AVG(C.star),0)) AS star,A.`x`, A.`y`
+        ,if(D.ibutcher IS NULL , 0 , 1) AS isBook
         FROM t_butcher_shop AS A
         JOIN t_but_menu AS B
         ON A.ibutcher = B.ibutcher
         JOIN t_but_review C
         ON C.ibutcher = A.ibutcher
+        LEFT JOIN t_but_bookmark D
+        ON D.ibutcher= A.ibutcher AND D.iuser= #{iuser}
         WHERE A.ibutcher = #{ibutcher}
     </select>
 

@@ -13,7 +13,7 @@
         LIMIT #{startIdx}, #{rowCount}
     </select>
 
-    <select id="selShopPics">
+    <select id="selShopPicList">
         SELECT ishop, pic
         FROM t_shop_pic
         WHERE ishop in (
@@ -21,6 +21,12 @@
             #{ishop}
         </foreach>
         )
+    </select>
+
+    <select id="selShopPics">
+        SELECT pic
+        FROM t_shop_pic
+        WHERE ishop = #{ishop}
     </select>
 
     <select id="selShopDetail">

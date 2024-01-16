@@ -60,9 +60,9 @@ public class UserService {
                              UserSigninDto dto) {
         UserEntity entity = mapper.userEntity(dto.getEmail());
         if (entity == null) {
-            UserSignVo.builder().result(ID_NULL).build();
+            return UserSignVo.builder().result(ID_NULL).build();
         } else if (!passwordEncoder.matches(dto.getUpw(), entity.getUpw())) {
-            UserSignVo.builder().result(PW_FAIL).build();
+            return UserSignVo.builder().result(PW_FAIL).build();
         }
         MyPrincipal myPrincipal = MyPrincipal.builder()
                 .iuser(entity.getIuser())
