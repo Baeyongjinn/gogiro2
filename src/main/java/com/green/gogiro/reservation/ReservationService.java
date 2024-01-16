@@ -4,6 +4,7 @@ import static com.green.gogiro.common.Const.*;
 
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.reservation.model.*;
+import com.green.gogiro.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservationService {
     private final ReservationMapper mapper;
+    private final AuthenticationFacade authenticationFacade;
 
 
     public ResVo postReservation(ReservationInsDto dto) {
@@ -18,6 +20,7 @@ public class ReservationService {
     }
 
     public ResVo postPickup(PickupInsDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insPickup(dto);
         if (dto.getIbutMenus() != null) {
             for (int i = 0; i < dto.getIbutMenus().size(); i++) {
@@ -33,11 +36,13 @@ public class ReservationService {
     }
 
     public ResVo cancelReservation(CancelReservationDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.cancelReservation(dto);
         return new ResVo(SUCCESS);
     }
 
     public ResVo cancelPickup(CancelPickupDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.cancelPickup(dto);
         return new ResVo(SUCCESS);
     }

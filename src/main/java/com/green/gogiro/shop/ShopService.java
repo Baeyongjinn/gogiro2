@@ -5,6 +5,7 @@ import com.green.gogiro.butchershop.model.DetailMenu;
 import com.green.gogiro.butchershop.model.ReviewDetail;
 import com.green.gogiro.butchershop.model.ReviewPicVo;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.shop.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ShopService {
     private final ShopMapper mapper;
+
+    private final AuthenticationFacade authenticationFacade;
 
     public List<ShopSelVo> getShopList(ShopSelDto dto) {
 
@@ -69,6 +72,7 @@ public class ShopService {
     }
 
     public ResVo postShopReview(ShopReviewDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.postShopReview(dto);
         mapper.postShopReviewPic(dto);
         return new ResVo(dto.getIreview());

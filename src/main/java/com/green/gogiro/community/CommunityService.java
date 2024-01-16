@@ -38,10 +38,11 @@ public class CommunityService {
         if(check == null){
             return new ResVo(FAIL);
         }
-        CommunityEntity entity = mapper.entityCommunity(dto.getIuser(), dto.getIboard());
+        CommunityEntity entity = mapper.entityCommunity(authenticationFacade.getLoginUserPk(), dto.getIboard());
         if(entity == null) {
             return new ResVo(FAIL);
         }
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updCommunity(dto);
         mapper.delByCommunityPics(dto);
         mapper.insCommunityPics(dto);
@@ -72,10 +73,11 @@ public class CommunityService {
         if(check == null) {
             return new ResVo(FAIL);
         }
-        CommunityEntity entity = mapper.entityCommunity(dto.getIuser(), dto.getIboard());
+        CommunityEntity entity = mapper.entityCommunity(authenticationFacade.getLoginUserPk(), dto.getIboard());
         if(entity == null) {
             return new ResVo(FAIL);
         }
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.delPicCommunity(dto.getIboard());
         mapper.delCommunity(dto);
         return new ResVo(SUCCESS);

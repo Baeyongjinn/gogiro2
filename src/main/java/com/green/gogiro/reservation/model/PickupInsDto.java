@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class PickupInsDto {
-    @Schema(title = "유저pk")
+    @JsonIgnore
     private int iuser;
     @Schema(title = "정육점pk")
     private int ibutcher;

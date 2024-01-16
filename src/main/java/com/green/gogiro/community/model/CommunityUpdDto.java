@@ -1,5 +1,6 @@
 package com.green.gogiro.community.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -7,7 +8,7 @@ import java.util.List;
 
 @Data
 public class CommunityUpdDto {
-    @Schema(title = "유저pk")
+    @JsonIgnore
     private int iuser;
     @Schema(title = "커뮤니티pk")
     private int iboard;

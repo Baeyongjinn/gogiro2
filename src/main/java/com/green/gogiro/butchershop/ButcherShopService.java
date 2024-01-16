@@ -2,6 +2,7 @@ package com.green.gogiro.butchershop;
 
 import com.green.gogiro.butchershop.model.*;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.user.UserMapper;
 import com.green.gogiro.user.model.UserEntity;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class ButcherShopService {
     private final ButcherShopMapper mapper;
     private final UserMapper userMapper;
+
+    private final AuthenticationFacade authenticationFacade;
 
     public List<ButcherSelVo> getButList(ButcherSelDto dto) {
 
@@ -51,6 +54,7 @@ public class ButcherShopService {
         if (entity.getIbutcher() != dto.getIbutcher()) {
             return new ResVo(3);
         }
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insButcherReview(dto);
         mapper.insButcherReviewPic(dto);
         return new ResVo(dto.getIreview());

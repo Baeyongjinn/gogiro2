@@ -9,7 +9,9 @@ import java.util.List;
 public class ButcherReviewDto {
     @JsonIgnore
     private int ireview;
+    @JsonIgnore
     private int iuser;
+
     private int ibutcher;
     private int star;
     private String review;
