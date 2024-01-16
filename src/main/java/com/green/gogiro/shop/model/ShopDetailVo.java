@@ -26,6 +26,7 @@ public class ShopDetailVo {
     private double star;
     @Schema(title = "로그인 사용자 북마크 확인",description = "0이면 off 1이면 북마크 on")
     private int isBook;
+    private List<String> facilities;
     @Schema(title = "가게 사진")
     private List<String> pics = new ArrayList<>();
     @Schema(title = "상세 메뉴")

@@ -20,6 +20,8 @@ public interface ShopMapper {
 
     List<ShopReviewPicVo> selReviewPicDetail(int ishop);
 
+    List<String> shopFacilities(int ishop);
+
     int postShopReview(ShopReviewDto dto);
 
     int postShopReviewPic(ShopReviewDto dto);

@@ -39,6 +39,7 @@ public class ShopService {
 
     public List<ShopDetailVo> getShopDetail(int ishop) {
         List<ShopDetailVo> list = mapper.selShopDetail(ishop, authenticationFacade.getLoginUserPk());
+        List<String> fa = mapper.shopFacilities(ishop);
         List<Integer> pk = new ArrayList<>();
         List<Integer> ireview = new ArrayList<>();
         Map<Integer, ShopReviewDetail> reviewDetailMap = new HashMap<>();
@@ -46,6 +47,7 @@ public class ShopService {
         for (ShopDetailVo vo : list) {
             pk.add(vo.getIshop());
             shopMap.put(vo.getIshop(), vo);
+            vo.setFacilities(fa);
         }
         List<ShopDetailMenu> menus = mapper.selMenuDetail(ishop);
         for (ShopDetailMenu menu : menus) {

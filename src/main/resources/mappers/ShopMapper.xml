@@ -100,5 +100,13 @@
         WHERE iuser= #{iuser}
         AND ishop= #{ishop}
     </delete>
+    
+    <select id="shopFacilities">
+        SELECT b.facility
+        FROM t_shop_facilities a
+        JOIN t_facilities b
+        ON a.ifacil = b.ifacil
+        WHERE a.ishop = #{ishop}
+    </select>
 
 </mapper>
