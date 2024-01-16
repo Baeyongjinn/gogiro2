@@ -2,7 +2,7 @@ package com.green.gogiro.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.green.greengram4.common.AppProperties;
+import com.green.gogiro.common.AppProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
