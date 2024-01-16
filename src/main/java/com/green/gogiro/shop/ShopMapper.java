@@ -12,7 +12,7 @@ public interface ShopMapper {
 
     List<ShopPicsVo> selShopPics(List<Integer> pk);
 
-    List<ShopDetailVo> selShopDetail(int ishop);
+    List<ShopDetailVo> selShopDetail(int ishop, int iuser);
 
     List<ShopDetailMenu> selMenuDetail(int ishop);
 

@@ -38,7 +38,7 @@ public class ShopService {
     }
 
     public List<ShopDetailVo> getShopDetail(int ishop) {
-        List<ShopDetailVo> list = mapper.selShopDetail(ishop);
+        List<ShopDetailVo> list = mapper.selShopDetail(ishop, authenticationFacade.getLoginUserPk());
         List<Integer> pk = new ArrayList<>();
         List<Integer> ireview = new ArrayList<>();
         Map<Integer, ShopReviewDetail> reviewDetailMap = new HashMap<>();
