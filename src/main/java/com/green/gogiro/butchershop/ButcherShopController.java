@@ -1,10 +1,7 @@
 package com.green.gogiro.butchershop;
 
 
-import com.green.gogiro.butchershop.model.ButcherReviewDto;
-import com.green.gogiro.butchershop.model.ButcherSelDto;
-import com.green.gogiro.butchershop.model.ButcherSelVo;
-import com.green.gogiro.butchershop.model.ButcherShopDetailVo;
+import com.green.gogiro.butchershop.model.*;
 import com.green.gogiro.common.ResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +33,12 @@ public class ButcherShopController {
     @Operation(summary = "정육점 상세 보기",description = "정육점 상세 보기 처리")
     public ButcherShopDetailVo getShopDetail(@PathVariable int ibutcher){
         return service.getShopDetail(ibutcher);
+    }
+
+    @PostMapping("/bookmark")
+    @Operation(summary = "정육점 북마크 ON/OFF",description = "정육점 북마크 토글 처리")
+    public ResVo toggleButcherBookmark(@RequestBody ButcherBookmarkDto dto) {
+        return service.toggleButcherBookmark(dto);
     }
 
 }

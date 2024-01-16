@@ -28,4 +28,6 @@ public interface UserMapper {
     List<String> selUserReviewPic(ReviewPk pk);
 
     List<BookmarkShopVo> selUserBookmark(UserMyPageDto dto);
+
+    int delShopReview(ReviewDelDto dto);
 }

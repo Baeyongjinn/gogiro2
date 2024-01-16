@@ -77,6 +77,25 @@
         </foreach>
     </insert>
 
-
+    <select id="selShopBookmark">
+        SELECT
+            iuser
+        FROM t_shop_bookmark
+        where iuser= #{iuser}
+        AND ishop= #{ishop}
+    </select>
+    <insert id="ShopBookmarkOn">
+        INSERT INTO
+        t_shop_bookmark
+        SET
+            iuser= #{iuser},
+            ishop=#{ishop}
+    </insert>
+    <delete id="ShopBookmarkOff">
+        DELETE
+        FROM t_shop_bookmark
+        WHERE iuser= #{iuser}
+        AND ishop= #{ishop}
+    </delete>
 
 </mapper>

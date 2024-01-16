@@ -31,4 +31,9 @@ public interface ButcherShopMapper {
     List<String> selButcherPicsForTest(int ibutcher);
 
     Integer selButcherReviewForTest(int ireview);
+
+    Integer selButcherBookmark(ButcherBookmarkDto dto);
+
+    void butcherBookmarkOn(ButcherBookmarkDto dto);
+    void butcherBookmarkOff(ButcherBookmarkDto dto);
 }

@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -159,5 +160,9 @@ public class UserService {
     public List<BookmarkShopVo> getUserBookmark(UserMyPageDto dto){
         dto.setIuser(authenticationFacade.getLoginUserPk());
         return mapper.selUserBookmark(dto);
+    }
+
+    public ResVo delShopReview(ReviewDelDto dto) {
+        return new ResVo(mapper.delShopReview(dto));
     }
 }

@@ -1,9 +1,6 @@
 package com.green.gogiro.shop;
 
-import com.green.gogiro.butchershop.model.ButcherPicsVo;
-import com.green.gogiro.butchershop.model.DetailMenu;
-import com.green.gogiro.butchershop.model.ReviewDetail;
-import com.green.gogiro.butchershop.model.ReviewPicVo;
+import com.green.gogiro.butchershop.model.*;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.shop.model.*;
@@ -77,5 +74,14 @@ public class ShopService {
         mapper.postShopReviewPic(dto);
         return new ResVo(dto.getIreview());
     }
-
+    public ResVo toggleShopBookmark(ShopBookmarkDto dto) {
+        dto.setOn(mapper.selShopBookmark(dto)==null);
+        if(dto.isOn()) {
+            mapper.ShopBookmarkOn(dto);
+            return new ResVo(1);
+        } else {
+            mapper.ShopBookmarkOff(dto);
+            return new ResVo(0);
+        }
+    }
 }

@@ -85,4 +85,15 @@ public class ButcherShopService {
         vo.setReviews(reviews);
         return vo;
     }
+
+    public ResVo toggleButcherBookmark(ButcherBookmarkDto dto) {
+        dto.setOn(mapper.selButcherBookmark(dto)==null);
+        if(dto.isOn()) {
+            mapper.butcherBookmarkOn(dto);
+            return new ResVo(1);
+        } else {
+            mapper.butcherBookmarkOff(dto);
+            return new ResVo(0);
+        }
+    }
 }
