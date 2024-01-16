@@ -4,7 +4,6 @@ import static com.green.gogiro.common.Const.*;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.community.model.*;
 import lombok.RequiredArgsConstructor;
-import org.junit.internal.runners.statements.Fail;
 import org.springframework.stereotype.Service;
 
 
