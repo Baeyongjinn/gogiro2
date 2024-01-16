@@ -23,6 +23,7 @@ public interface ShopMapper {
     int postShopReview(ShopReviewDto dto);
 
     int postShopReviewPic(ShopReviewDto dto);
-
-
+    Integer selShopBookmark(ShopBookmarkDto dto);
+    void ShopBookmarkOn(ShopBookmarkDto dto);
+    void ShopBookmarkOff(ShopBookmarkDto dto);
 }

@@ -167,4 +167,18 @@
         ORDER BY createdAt desc
         LIMIT #{startIdx}, #{rowCount}
     </select>
+    <delete id="delShopReview">
+        DELETE
+        FROM
+        <choose>
+            <when test="check">
+                t_shop_review
+            </when>
+            <otherwise>
+                t_but_review
+            </otherwise>
+        </choose>
+        where ireview= #{ireview}
+        AND iuser= #{iuser}
+    </delete>
 </mapper>

@@ -89,10 +89,34 @@
         FROM t_butcher_pic
         WHERE ibutcher= #{ibutcher}
     </select>
-    <select id="selButcherReviewForTest">
+    <select id="selIreviewForTest">
         SELECT
-            ireview
+            MAX(ireview)+1
         FROM t_but_review
-        WHERE ireview= #{ireview}
     </select>
+    <sql id="alterIreviewAutoIncrementForTest">
+        ALTER
+        TABLE t_but_review
+        AUTO_INCREMENT= #{autoIncrement}
+    </sql>
+    <select id="selButcherBookmark">
+        SELECT
+            iuser
+        FROM t_but_bookmark
+        where iuser= #{iuser}
+        AND ibutcher= #{ibutcher}
+    </select>
+    <insert id="butcherBookmarkOn">
+        INSERT INTO
+        t_but_bookmark
+        SET
+        iuser= #{iuser},
+        ibutcher=#{ibutcher}
+    </insert>
+    <delete id="butcherBookmarkOff">
+        DELETE
+        FROM t_but_bookmark
+        WHERE iuser= #{iuser}
+        AND ibutcher= #{ibutcher}
+    </delete>
 </mapper>

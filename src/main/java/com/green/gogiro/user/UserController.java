@@ -57,4 +57,10 @@ public class UserController {
     public List<BookmarkShopVo> getUserBookmark(UserMyPageDto dto){
         return service.getUserBookmark(dto);
     }
+
+    @DeleteMapping("/review")
+    @Operation(summary = "가게 후기 삭제",description = "회원이 작성한 가게 리뷰 삭제 처리")
+    public ResVo delShopReview(@RequestBody ReviewDelDto dto) {
+        return service.delShopReview(dto);
+    }
 }
