@@ -56,8 +56,6 @@
         JOIN t_shop_review b
         on a.ireview = b.ireview
         WHERE b.ishop = #{ishop}
-
-
     </select>
 
     <insert id="postShopReview" useGeneratedKeys="true" keyProperty="ireview">
@@ -87,6 +85,7 @@
         where iuser= #{iuser}
         AND ishop= #{ishop}
     </select>
+
     <insert id="ShopBookmarkOn">
         INSERT INTO
         t_shop_bookmark
@@ -94,6 +93,7 @@
             iuser= #{iuser},
             ishop=#{ishop}
     </insert>
+
     <delete id="ShopBookmarkOff">
         DELETE
         FROM t_shop_bookmark

@@ -13,7 +13,6 @@
         address = #{address},
         pic = #{pic},
         tel= #{tel}
-
     </insert>
 
     <select id="signinUser">
@@ -30,6 +29,7 @@
         tel = #{tel}
         where iuser = #{iuser}
     </update>
+
     <select id="selUserInfo">
         SELECT
         email,
@@ -43,7 +43,6 @@
         FROM t_user
         where iuser= #{iuser}
     </select>
-
 
     <!-- entity용 -->
     <select id="userEntity">
@@ -85,6 +84,7 @@
         ORDER BY createdAt
         LIMIT #{startIdx}, #{rowCount}
     </select>
+
     <select id="selUserReview">
         SELECT
             0 AS checkShop,
@@ -108,6 +108,7 @@
         ORDER BY createdAt desc
         LIMIT #{startIdx}, #{rowCount}
     </select>
+
     <select id="selUserReviewPic">
         SELECT
             pic
@@ -122,6 +123,7 @@
         </choose>
         WHERE ireview= #{ireview}
     </select>
+
     <select id="selUserBookmark">
         SELECT
             a.imeat,
@@ -167,6 +169,7 @@
         ORDER BY createdAt desc
         LIMIT #{startIdx}, #{rowCount}
     </select>
+
     <delete id="delShopReview">
         DELETE
         FROM

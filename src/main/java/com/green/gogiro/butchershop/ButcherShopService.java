@@ -23,7 +23,6 @@ public class ButcherShopService {
     private final AuthenticationFacade authenticationFacade;
 
     public List<ButcherSelVo> getButList(ButcherSelDto dto) {
-
         List<ButcherSelVo> list = mapper.selButcherShopAll(dto);
         List<Integer> pk = new ArrayList<>();
         Map<Integer, ButcherSelVo> butMap = new HashMap<>();

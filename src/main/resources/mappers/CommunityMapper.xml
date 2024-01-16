@@ -32,11 +32,13 @@
         set pic = #{pic}
         where iboard = #{iboard}
     </update>
+
     <select id="selCommunityCount">
         SELECT
         COUNT(*)
         FROM t_community
     </select>
+
     <select id="selCommunity">
         SELECT a.iboard, a.iuser, b.nickname AS writerName, a.title, a.contents, date(a.created_at) AS createdAt
         FROM t_community a
@@ -79,6 +81,7 @@
         FROM t_community
         WHERE iboard = #{iboard}
     </select>
+
     <insert id="insCommunityComment">
         INSERT INTO
         t_community_comment
@@ -87,6 +90,7 @@
             iuser= #{iuser},
             contents= #{contents}
     </insert>
+
     <delete id="delCommunityComment">
         DELETE
         FROM t_community_comment

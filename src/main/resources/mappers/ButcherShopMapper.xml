@@ -12,6 +12,7 @@
         </where>
         LIMIT #{startIdx}, #{rowCount}
     </select>
+
     <select id="selButcherShopPicList">
         SELECT
             ibutcher,
@@ -22,6 +23,7 @@
             #{ibutcher}
         </foreach>
     </select>
+
     <select id="selButcherShopPics">
         SELECT
             pic
@@ -83,22 +85,26 @@
         FROM t_butcher_shop
         WHERE ibutcher = #{ibutcher}
     </select>
+
     <select id="selButcherPicsForTest">
         SELECT
             pic
         FROM t_butcher_pic
         WHERE ibutcher= #{ibutcher}
     </select>
+
     <select id="selIreviewForTest">
         SELECT
             MAX(ireview)+1
         FROM t_but_review
     </select>
+
     <sql id="alterIreviewAutoIncrementForTest">
         ALTER
         TABLE t_but_review
         AUTO_INCREMENT= #{autoIncrement}
     </sql>
+
     <select id="selButcherBookmark">
         SELECT
             iuser
@@ -106,6 +112,7 @@
         where iuser= #{iuser}
         AND ibutcher= #{ibutcher}
     </select>
+
     <insert id="butcherBookmarkOn">
         INSERT INTO
         t_but_bookmark
@@ -113,6 +120,7 @@
         iuser= #{iuser},
         ibutcher=#{ibutcher}
     </insert>
+
     <delete id="butcherBookmarkOff">
         DELETE
         FROM t_but_bookmark

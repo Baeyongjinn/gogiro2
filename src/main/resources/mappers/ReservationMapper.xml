@@ -11,6 +11,7 @@
             request= #{request},
             head_count= #{headCount}
     </insert>
+
     <insert id="insPickup" useGeneratedKeys="true" keyProperty="ipickup">
         INSERT INTO
         t_pickup
@@ -20,6 +21,7 @@
             date= #{date},
             request= #{request}
     </insert>
+
     <insert id="insPickupMenu">
         INSERT INTO
         t_pickup_menu
@@ -37,6 +39,7 @@
         WHERE ireser= #{ireser}
         AND iuser= #{iuser}
     </update>
+
     <update id="cancelPickup">
         UPDATE
         t_pickup
@@ -45,6 +48,7 @@
         WHERE ipickup= #{ipickup}
         AND iuser= #{iuser}
     </update>
+
     <select id="selReservationForTest">
         SELECT
             *
@@ -53,6 +57,7 @@
         AND ishop= #{ishop}
         AND date= #{date}
     </select>
+
     <select id="selPickupForTest">
         SELECT
             *
@@ -61,6 +66,7 @@
         AND ibutcher= #{ibutcher}
         AND date= #{date}
     </select>
+
     <select id="selPickupMenuForTest">
         SELECT
             *
@@ -68,6 +74,7 @@
         WHERE ipickup= #{ipickup}
         AND ibut_menu= #{ibutMenu}
     </select>
+
     <select id="selReservationConfirmForTest">
         SELECT
             confirm
@@ -75,6 +82,7 @@
         WHERE iuser= #{iuser}
         AND ireser= #{ireser}
     </select>
+
     <select id="selPickupConfirmForTest">
         SELECT
             confirm
