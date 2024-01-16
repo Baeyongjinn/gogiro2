@@ -7,6 +7,7 @@ import lombok.Data;
 public class ShopBookmarkDto {
     @JsonIgnore
     private int iuser;
+
     private int ishop;
     @JsonIgnore
     private boolean on;
