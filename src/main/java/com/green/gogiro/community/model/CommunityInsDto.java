@@ -11,8 +11,7 @@ import java.util.List;
 public class CommunityInsDto {
     @JsonIgnore
     private int iboard;
-
-    @Schema(title = "유저pk")
+    @JsonIgnore
     private int iuser;
     @Schema(title = "제목")
     private String title;

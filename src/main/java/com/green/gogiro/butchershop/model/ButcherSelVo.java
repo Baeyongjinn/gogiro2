@@ -16,8 +16,5 @@ public class ButcherSelVo {
     private String location;
     @Schema(title = "사진")
     private List<String> pics = new ArrayList<>();
-    @Schema(title = "경도")
-    private String x;
-    @Schema(title = "위도")
-    private String y;
+
 }

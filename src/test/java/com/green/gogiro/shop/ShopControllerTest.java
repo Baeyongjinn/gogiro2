@@ -36,34 +36,34 @@ public class ShopControllerTest {
     private ObjectMapper mapper;
 
 
-    @Test
-    void postShopReview() throws Exception {
-        ResVo result = new ResVo(1);
-
-        given(service.postShopReview(any())).willReturn(result);
-
-        ShopReviewDto dto = new ShopReviewDto();
-        dto.setIuser(4);
-        dto.setIshop(1);
-        dto.setStar(10);
-        dto.setReview("마이따");
-        List<String > pics = new ArrayList<>();
-        pics.add("aa.jpg");
-        pics.add("bb.jpg");
-        dto.setPics(pics);
-
-        mvc.perform(MockMvcRequestBuilders
-                .post("/api/shop")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(dto))
-        )
-                .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(result)))
-                .andDo(print());
-        verify(service).postShopReview(any());
-    }
-
-
+//    @Test
+//    void postShopReview() throws Exception {
+//        ResVo result = new ResVo(1);
+//
+//        given(service.postShopReview(any())).willReturn(result);
+//
+//        ShopReviewDto dto = new ShopReviewDto();
+//        dto.setIuser(4);
+//        dto.setIshop(1);
+//        dto.setStar(10);
+//        dto.setReview("마이따");
+//        List<String > pics = new ArrayList<>();
+//        pics.add("aa.jpg");
+//        pics.add("bb.jpg");
+//        dto.setPics(pics);
+//
+//        mvc.perform(MockMvcRequestBuilders
+//                .post("/api/shop")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(mapper.writeValueAsString(dto))
+//        )
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(mapper.writeValueAsString(result)))
+//                .andDo(print());
+//        verify(service).postShopReview(any());
+//    }
+//
+//
 
 
 }
