@@ -16,6 +16,7 @@ public class ReservationService {
 
 
     public ResVo postReservation(ReservationInsDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         return new ResVo(mapper.insReservation(dto));
     }
 
