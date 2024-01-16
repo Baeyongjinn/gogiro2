@@ -88,8 +88,7 @@ public class ButcherShopService {
 
     public ResVo toggleButcherBookmark(ButcherBookmarkDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        dto.setOn(mapper.selButcherBookmark(dto)==null);
-        if(dto.isOn()) {
+        if(mapper.selButcherBookmark(dto)==null) {
             mapper.butcherBookmarkOn(dto);
             return new ResVo(1);
         } else {
