@@ -170,6 +170,19 @@
         LIMIT #{startIdx}, #{rowCount}
     </select>
 
+    <delete id="delShopReviewPics">
+        DELETE
+        FROM
+        <choose>
+            <when test="check">
+                t_shop_review_pic
+            </when>
+            <otherwise>
+                t_but_review_pic
+            </otherwise>
+        </choose>
+        where ireview= #{ireview}
+    </delete>
     <delete id="delShopReview">
         DELETE
         FROM

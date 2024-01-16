@@ -163,6 +163,8 @@ public class UserService {
     }
 
     public ResVo delShopReview(ReviewDelDto dto) {
+        dto.setIuser(authenticationFacade.getLoginUserPk());
+        mapper.delShopReviewPics(dto.getIreview());
         return new ResVo(mapper.delShopReview(dto));
     }
 }
