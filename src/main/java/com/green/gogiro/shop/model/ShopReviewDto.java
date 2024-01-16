@@ -11,7 +11,7 @@ import java.util.List;
 public class ShopReviewDto {
     @JsonIgnore
     private int ireview;
-    @Schema(title = "유저pk")
+    @JsonIgnore
     private int iuser;
     @Schema(title = "가게pk")
     private int ishop;

@@ -74,8 +74,10 @@ public class ShopService {
         mapper.postShopReviewPic(dto);
         return new ResVo(dto.getIreview());
     }
+
     public ResVo toggleShopBookmark(ShopBookmarkDto dto) {
         dto.setOn(mapper.selShopBookmark(dto)==null);
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         if(dto.isOn()) {
             mapper.ShopBookmarkOn(dto);
             return new ResVo(1);
