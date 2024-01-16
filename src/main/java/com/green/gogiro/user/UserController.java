@@ -33,11 +33,13 @@ public class UserController {
     }
 
     @PostMapping("/signout")
+    @Operation(summary = "로그아웃", description = "로그아웃 처리")
     public ResVo postSignout( HttpServletResponse res) {
         return service.signout(res);
     }
 
     @GetMapping("/refresh-token")
+    @Operation(summary = "리프레쉬토큰 발급",description = "리프레쉬토큰 발급 처리")
     public UserSignVo getRefreshToken(HttpServletRequest req) {
         return service.getRefreshToken(req);
     }
