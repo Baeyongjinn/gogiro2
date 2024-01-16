@@ -6,17 +6,17 @@ import lombok.Data;
 
 @Data
 public class ReviewDelDto {
-    @Schema(title="가게구분")
+    @Schema(title="가게구분(0: 고기집 1: 정육점)")
     private int checkShop;
     @Schema(title="리뷰pk")
     private int ireview;
-    @Schema(title="유저pk")
+    @JsonIgnore
     private int iuser;
     @JsonIgnore
     private boolean check;
 
     public void setCheckShop(int checkShop){
         this.checkShop= checkShop;
-        this.check= (checkShop==1);
+        this.check= (checkShop==0);
     }
 }
