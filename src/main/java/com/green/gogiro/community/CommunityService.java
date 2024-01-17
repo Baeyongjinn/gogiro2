@@ -25,7 +25,7 @@ public class CommunityService {
     private final MyFileUtils myFileUtils;
     private final AuthenticationFacade authenticationFacade;
 
-    public ResVo insCommunity(CommunityInsDto dto) {
+    public CommunityPicsInsVo insCommunity(CommunityInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insCommunity(dto);
         //제목을 입력하지 않는 경우
@@ -53,7 +53,11 @@ public class CommunityService {
         if(dto.getIboard() == 0) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY);
         }
-        return new ResVo(SUCCESS);
+        CommunityPicsInsVo vo = CommunityPicsInsVo.builder()
+                .iboard(dto.getIboard())
+                .pics(dto.getPics())
+                .build();
+        return vo;
     }
 
     public ResVo updCommunity(CommunityUpdDto dto) {

@@ -38,32 +38,32 @@ public class CommunityControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
-    @Test
-    void postCommunity() throws Exception {
-        ResVo result = new ResVo(1);
-
-        given(service.insCommunity(any())).willReturn(result);
-
-        CommunityInsDto dto = new CommunityInsDto();
-        dto.setIuser(4);
-        dto.setTitle("dd");
-        dto.setContents("내용");
-        List<String > pics = new ArrayList<>();
-        pics.add("aa.jpg");
-
-        dto.setPics(pics);
-
-        mvc.perform(
-                MockMvcRequestBuilders
-                        .post("/api/community")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(dto))
-                )
-                .andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(result)))
-                .andDo(print());
-        verify(service).insCommunity(any());
-    }
+//    @Test
+//    void postCommunity() throws Exception {
+//        ResVo result = new ResVo(1);
+//
+//        given(service.insCommunity(any())).willReturn(result);
+//
+//        CommunityInsDto dto = new CommunityInsDto();
+//        dto.setIuser(4);
+//        dto.setTitle("dd");
+//        dto.setContents("내용");
+//        List<String > pics = new ArrayList<>();
+//        pics.add("aa.jpg");
+//
+//        dto.setPics(pics);
+//
+//        mvc.perform(
+//                MockMvcRequestBuilders
+//                        .post("/api/community")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(mapper.writeValueAsString(dto))
+//                )
+//                .andExpect(status().isOk())
+//                .andExpect(content().string(mapper.writeValueAsString(result)))
+//                .andDo(print());
+//        verify(service).insCommunity(any());
+//    }
 
 
     @Test

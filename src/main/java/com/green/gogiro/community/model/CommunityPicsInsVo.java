@@ -1,12 +1,13 @@
 package com.green.gogiro.community.model;
 
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class CommunityPicsInsDto {
+@Builder
+public class CommunityPicsInsVo {
     private int iboard;
-    private List<String> pics = new ArrayList<>();
+    private List<String> pics;
 }

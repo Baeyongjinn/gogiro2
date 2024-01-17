@@ -17,7 +17,7 @@ public class CommunityController {
 
     @PostMapping()
     @Operation(summary = "커뮤니티 등록",description = "커뮤니티 등록 처리")
-    public ResVo postCommunity(@RequestPart List<MultipartFile> pics, @RequestPart CommunityInsDto dto) {
+    public CommunityPicsInsVo postCommunity(@RequestPart List<MultipartFile> pics, @RequestPart CommunityInsDto dto) {
         dto.setFiles(pics);
         return service.insCommunity(dto);
     }
