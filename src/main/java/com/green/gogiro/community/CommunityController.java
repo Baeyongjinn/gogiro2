@@ -35,7 +35,17 @@ public class CommunityController {
 
     @PutMapping()
     @Operation(summary = "커뮤니티 수정", description = "커뮤니티 수정 처리")
-    public ResVo putCommunity(@RequestBody CommunityUpdDto dto) {
+    public CommunityPicsInsVo putCommunity(@RequestPart(required = false) List<MultipartFile> pics
+            , @RequestPart CommunityUpdDto dto) {
+        //사진을 넣지 않는경우
+        if(dto.getFiles() == null||dto.getFiles().isEmpty()) {
+            throw new RestApiException(AuthErrorCode.MUST_PHOTO);
+        }
+        //사진을 5장 초과했을 경우
+        if(dto.getFiles().size() >= 5){
+            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        }
+        dto.setFiles(pics);
         return service.updCommunity(dto);
     }
 

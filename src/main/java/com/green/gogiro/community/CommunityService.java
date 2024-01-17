@@ -41,7 +41,7 @@ public class CommunityService {
             String saveFileNm = myFileUtils.transferTo(file, target);
             dto.getPics().add(saveFileNm);
         }
-
+        //오토인클리먼트 0 값일때
         mapper.insCommunityPics(dto);
         if(dto.getIboard() == 0) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY);
@@ -53,7 +53,7 @@ public class CommunityService {
         return vo;
     }
 
-    public ResVo updCommunity(CommunityUpdDto dto) {
+    public CommunityPicsInsVo updCommunity(CommunityUpdDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
         if(check == null){
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
@@ -62,11 +62,29 @@ public class CommunityService {
         if(entity.getIboard() != dto.getIboard()) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_ENTITY);
         }
+        //제목을 입력하지 않는 경우
+        if(dto.getTitle() == null) {
+            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
+        }
+        //내용을 입력하지 않는 경우
+        if(dto.getContents() == null) {
+            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
+        }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updCommunity(dto);
         mapper.delByCommunityPics(dto);
+        String target = "/community/" + dto.getIboard();
+        for(MultipartFile file : dto.getFiles()) {
+            String saveFileNm = myFileUtils.transferTo(file, target);
+            dto.getPics().add(saveFileNm);
+        }
         mapper.insCommunityPics(dto);
-        return new ResVo(SUCCESS);
+        CommunityPicsInsVo vo = CommunityPicsInsVo.builder()
+                .iboard(dto.getIboard())
+                .pics(dto.getPics())
+                .build();
+
+        return vo;
     }
 
     public List<CommunitySelVo> selCommunity(CommunitySelDto dto) {
