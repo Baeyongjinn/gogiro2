@@ -54,7 +54,6 @@ public class UserService {
         String path= "/user/"+dto.getIuser();
         String savedPicFileNm= myFileUtils.transferTo(pic, path);
         dto.setPic(savedPicFileNm);
-
         mapper.updUserPic(dto);
 
         int result = dto.getIuser();
