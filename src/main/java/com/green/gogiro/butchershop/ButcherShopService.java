@@ -55,7 +55,7 @@ public class ButcherShopService {
         }
         //입력한 가게와 동일한 가게인지 확인
         if (entity.getIbutcher() != dto.getIbutcher()) {
-            return new ResVo(3);
+            throw new RestApiException(AuthErrorCode.CHECK_SHOP);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         if(dto.getReview() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR,dto.getReview())){
@@ -68,10 +68,6 @@ public class ButcherShopService {
 
     public ButcherShopDetailVo getShopDetail(int ibutcher) {
         ButcherEntity entity = mapper.selButcherEntity(ibutcher);
-        //없는 가게일 경우 빈 리스트 보내기
-        if (entity == null) {
-            return new ButcherShopDetailVo();
-        }
         int i;
         try {
             i= authenticationFacade.getLoginUserPk();
@@ -105,10 +101,10 @@ public class ButcherShopService {
         dto.setOn(mapper.selButcherBookmark(dto) == null);
         if(dto.isOn()) {
             mapper.butcherBookmarkOn(dto);
-            return new ResVo(1);
+            return new ResVo(Const.ON);
         } else {
             mapper.butcherBookmarkOff(dto);
-            return new ResVo(0);
+            return new ResVo(Const.OFF);
         }
     }
 }
