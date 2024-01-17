@@ -28,11 +28,7 @@ public class SecurityConfiguration {
                                                                     , "/error"
                                                                     , "/err"
                                                                     , "/"
-                                                                    , "/api/shop"
-                                                                    , "/api/shop/**"
-                                                                    , "/api/butcher-shop"
-                                                                    , "/api/butcher-shop/**"
-                                                                    , "/api/community"
+
                                                                     , "/static/**"
                                                                     , "/index.html"
                                                                     , "/static/**"
@@ -40,7 +36,13 @@ public class SecurityConfiguration {
                                                                     , "/swagger-ui/**"
                                                                     , "/v3/api-docs/**"
                                                                     , "/api/user/refresh-token"
-                ).permitAll().anyRequest().authenticated()
+                                )
+                        .permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/butcher-shop","/api/butcher-shop/**"
+                                                                , "/api/shop", "/api/shop/**"
+                                                                , "/api/community")
+                                .permitAll()
+                                .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(execpt -> {

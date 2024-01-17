@@ -12,7 +12,6 @@ public class ButcherReviewDto {
     private int ireview;
     @JsonIgnore
     private int iuser;
-
     private int ibutcher;
     private int star;
     private String review;
