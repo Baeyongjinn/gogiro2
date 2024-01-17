@@ -57,7 +57,8 @@
         JOIN t_but_review C
         ON C.ibutcher = A.ibutcher
         LEFT JOIN t_but_bookmark D
-        ON D.ibutcher= A.ibutcher AND D.iuser= #{iuser}
+        ON D.ibutcher= A.ibutcher
+        AND D.iuser= #{iuser}
         WHERE A.ibutcher = #{ibutcher}
     </select>
 

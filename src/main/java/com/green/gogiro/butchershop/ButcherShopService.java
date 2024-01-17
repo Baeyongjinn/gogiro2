@@ -2,6 +2,7 @@ package com.green.gogiro.butchershop;
 
 import com.green.gogiro.butchershop.model.*;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.user.UserMapper;
 import com.green.gogiro.user.model.UserEntity;
@@ -23,6 +24,9 @@ public class ButcherShopService {
     private final AuthenticationFacade authenticationFacade;
 
     public List<ButcherSelVo> getButList(ButcherSelDto dto) {
+        if(dto.getPage() <= 0){
+         //   throw new RestApiException()
+        }
         List<ButcherSelVo> list = mapper.selButcherShopAll(dto);
         List<Integer> pk = new ArrayList<>();
         Map<Integer, ButcherSelVo> butMap = new HashMap<>();
@@ -65,7 +69,14 @@ public class ButcherShopService {
         if (entity == null) {
             return new ButcherShopDetailVo();
         }
-        ButDto dto= new ButDto(authenticationFacade.getLoginUserPk(),ibutcher);
+        int i;
+        try {
+            i= authenticationFacade.getLoginUserPk();
+        } catch(Exception e) {
+            i= 0;
+        }
+        ButDto dto= new ButDto(i, ibutcher);
+
         ButcherShopDetailVo vo = mapper.selButcherShopDetail(dto);
         List<DetailMenu> menus = mapper.selMenuDetail(ibutcher);
         vo.setMenus(menus);

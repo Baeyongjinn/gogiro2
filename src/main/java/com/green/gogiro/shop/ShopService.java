@@ -38,7 +38,13 @@ public class ShopService {
     }
 
     public ShopDetailVo getShopDetail(int ishop) {
-        ShopDto dto= new ShopDto(authenticationFacade.getLoginUserPk(),ishop);
+        int i;
+        try {
+            i= authenticationFacade.getLoginUserPk();
+        } catch(Exception e) {
+            i= 0;
+        }
+        ShopDto dto= new ShopDto(i,ishop);
         ShopDetailVo list = mapper.selShopDetail(dto);
         List<String> fa = mapper.shopFacilities(ishop);
         List<ShopDetailMenu> menus = mapper.selMenuDetail(ishop);
