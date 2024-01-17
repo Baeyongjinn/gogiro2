@@ -16,7 +16,7 @@ public interface ButcherShopMapper {
 
     int insButcherReview(ButcherReviewDto dto);
 
-    int insButcherReviewPic(ButcherReviewDto dto);
+    int insButcherReviewPic(ButcherReviewPIcsInsDto dto);
 
     ButcherShopDetailVo selButcherShopDetail(ButDto dto);
 

@@ -27,7 +27,8 @@ public class ButcherShopController {
 
     @PostMapping
     @Operation(summary = "리뷰 등록",description = "리뷰 등록 처리")
-    public ButcherReviewPIcsInsDto postButReview(@RequestPart(value = "file",required = false) List<MultipartFile> file, @RequestPart ButcherReviewDto dto){
+    public ButcherReviewPIcsInsDto postButReview(@RequestPart List<MultipartFile> pics, @RequestPart ButcherReviewDto dto){
+        dto.setPics(pics);
         return service.postButReview(dto);
     }
 
