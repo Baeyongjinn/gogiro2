@@ -20,6 +20,6 @@ public class ShopReviewDto {
     private int star;
     @Schema(title = "리뷰")
     private String review;
-    @Schema(title = "사진",description = "최대 5장",defaultValue = "최대 5장")
+    @Schema(title = "사진",description = "최대 5장")
     private List<MultipartFile> pics;
 }

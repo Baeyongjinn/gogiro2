@@ -2,6 +2,8 @@ package com.green.gogiro.community;
 
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.community.model.*;
+import com.green.gogiro.exception.AuthErrorCode;
+import com.green.gogiro.exception.RestApiException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,16 @@ public class CommunityController {
 
     @PostMapping()
     @Operation(summary = "커뮤니티 등록",description = "커뮤니티 등록 처리")
-    public CommunityPicsInsVo postCommunity(@RequestPart List<MultipartFile> pics, @RequestPart CommunityInsDto dto) {
+    public CommunityPicsInsVo postCommunity(@RequestPart(required = false) List<MultipartFile> pics
+            , @RequestPart CommunityInsDto dto) {
+        //사진을 넣지 않는경우
+        if(dto.getFiles() == null||dto.getFiles().isEmpty()) {
+            throw new RestApiException(AuthErrorCode.MUST_PHOTO);
+        }
+        //사진을 5장 초과했을 경우
+        if(dto.getFiles().size() >= 5){
+            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        }
         dto.setFiles(pics);
         return service.insCommunity(dto);
     }

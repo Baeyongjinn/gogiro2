@@ -60,8 +60,7 @@
     <select id="entityCommunity">
         SELECT *
         FROM t_community
-        WHERE iuser = #{iuser}
-        and iboard = #{iboard}
+        WHERE iboard = #{iboard}
     </select>
 
     <delete id="delCommunity">

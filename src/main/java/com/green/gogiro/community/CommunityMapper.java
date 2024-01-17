@@ -25,7 +25,7 @@ public interface CommunityMapper {
 
     List<CommunityPicsVo> selPicCommunity(List<Integer> iboard);
 
-    CommunityEntity entityCommunity(int iuser, int iboard);
+    CommunityEntity entityCommunity(int iboard);
 
     int delCommunity(CommunityDelDto dto);
 
