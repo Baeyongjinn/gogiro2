@@ -29,6 +29,8 @@ public class UserSignupDto {
     private String address;
     @JsonIgnore
     private String pic;
+    @JsonIgnore
+    private MultipartFile file;
     @Schema(title = "전화번호",defaultValue = " ")
     private String tel;
 }

@@ -1,7 +1,9 @@
 package com.green.gogiro.shop;
 
 import com.green.gogiro.butchershop.model.ButcherBookmarkDto;
+import com.green.gogiro.common.Const;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.shop.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
+import static com.green.gogiro.exception.AuthErrorCode.MUST_PHOTO;
+import static com.green.gogiro.exception.AuthErrorCode.SIZE_PHOTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,8 +35,11 @@ public class ShopController {
 
     @PostMapping
     @Operation(summary = "리뷰 등록",description = "리뷰 등록 처리")
-    public ShopReviewPicsInsDto postShopReview(@RequestPart List<MultipartFile> pics, @RequestPart ShopReviewDto dto) {
+    public ShopReviewPicsInsDto postShopReview(@RequestPart(required = false) List<MultipartFile> pics, @RequestPart ShopReviewDto dto) {
         dto.setPics(pics);
+        if (dto.getPics() == null || dto.getPics().isEmpty()) {
+            throw new RestApiException(MUST_PHOTO);
+        }
         return service.postShopReview(dto);
     }
 

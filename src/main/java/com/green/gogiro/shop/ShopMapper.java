@@ -16,6 +16,8 @@ public interface ShopMapper {
 
     ShopDetailVo selShopDetail(ShopDto dto);
 
+    List<ShopFacilityVo> selShopFacility(List<Integer> ishop);
+
     List<ShopDetailMenu> selMenuDetail(int ishop);
 
     List<ShopReviewDetail> selReviewDetail(int ishop);

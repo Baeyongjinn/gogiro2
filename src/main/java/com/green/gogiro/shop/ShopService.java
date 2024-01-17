@@ -41,6 +41,10 @@ public class ShopService {
         for(ShopPicsVo vo: picList){
             map.get(vo.getIshop()).getPics().add(vo.getPic());
         }
+        List<ShopFacilityVo> facilities = mapper.selShopFacility(pk);
+        for(ShopFacilityVo fa : facilities){
+            map.get(fa.getIshop()).getFacilities().add(fa.getFacility());
+        }
 
         return list;
     }
@@ -109,9 +113,6 @@ public class ShopService {
 
         mapper.insShopReviewPic(pDto);
 
-        if (dto.getPics() == null) {
-            throw new RestApiException(MUST_PHOTO);
-        }
         if (dto.getPics().size() > Const.PIC_MAX) {
             throw new RestApiException(SIZE_PHOTO);
         }

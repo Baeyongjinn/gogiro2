@@ -9,6 +9,9 @@
             <if test="search != null and search != '' ">
                 name like CONCAT('%',#{search},'%')
             </if>
+            <if test="category != 0">
+                imeat = #{category}
+            </if>
         </where>
         LIMIT #{startIdx}, #{rowCount}
     </select>
@@ -27,6 +30,18 @@
         SELECT pic
         FROM t_shop_pic
         WHERE ishop = #{ishop}
+    </select>
+
+    <select id="selShopFacility">
+        SELECT a.ishop, b.facility
+        FROM t_shop_facilities a
+        JOIN t_facilities b
+        ON a.ifacil = b.ifacil
+        WHERE a.ishop in (
+        <foreach collection="ishop" item="ishop" separator=",">
+         #{ishop}
+        </foreach>
+        )
     </select>
 
     <select id="selShopDetail">

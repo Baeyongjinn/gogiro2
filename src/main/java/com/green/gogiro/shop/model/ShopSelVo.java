@@ -16,5 +16,6 @@ public class ShopSelVo {
     private String location;
     @Schema(title = "사진")
     private List<String> pics = new ArrayList<>();
+    private List<String> facilities = new ArrayList<>();
 
 }
