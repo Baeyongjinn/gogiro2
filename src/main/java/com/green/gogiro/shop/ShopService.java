@@ -1,7 +1,7 @@
 package com.green.gogiro.shop;
 
-import com.green.gogiro.butchershop.model.*;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.shop.model.*;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.green.gogiro.exception.AuthErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -73,16 +75,18 @@ public class ShopService {
     }
 
     public ResVo postShopReview(ShopReviewDto dto) {
+        // **************리터럴 처리
         ShopEntity entity = mapper.selShopEntity(dto.getIshop());
 
         if(entity == null) {
-            return new ResVo(2);
+            throw new RestApiException(VALID_SHOP);
         }
         if (entity.getIshop() != dto.getIshop()) {
-            return new ResVo(3);
+            throw new RestApiException(CHECK_SHOP);
         }
 
         dto.setIuser(authenticationFacade.getLoginUserPk());
+
         int reviewCheck = mapper.postShopReview(dto);
         int reviewPicCheck = mapper.postShopReviewPic(dto);
         if (reviewCheck == 0) {
@@ -98,8 +102,10 @@ public class ShopService {
             // 리뷰 사진이 작성되지 않았을 때
         }
         if (dto.getPics() == null) {
-            return new ResVo(0);
-            // 사진을 넣어주세요.
+            throw new RestApiException(MUST_PHOTO);
+        }
+        if (dto.getPics().size() > 5) {
+            throw new RestApiException(SIZE_PHOTO);
         }
         return new ResVo(dto.getIreview());
     }
