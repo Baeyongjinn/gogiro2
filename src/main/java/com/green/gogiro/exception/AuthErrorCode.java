@@ -28,7 +28,6 @@ public enum AuthErrorCode implements ErrorCode{
 
     NOT_FOUND_REFRESH_TOKEN(HttpStatus.NOT_FOUND, "refresh-token이 없습니다.");
 
-
     private final HttpStatus httpStatus;
     private final String message;
 
