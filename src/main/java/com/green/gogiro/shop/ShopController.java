@@ -6,6 +6,7 @@ import com.green.gogiro.shop.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class ShopController {
 
     @PostMapping
     @Operation(summary = "리뷰 등록",description = "리뷰 등록 처리")
-    public ResVo postShopReview(@RequestBody ShopReviewDto dto) {
+    public ShopReviewPicsInsDto postShopReview(@RequestPart List<MultipartFile> pics, @RequestPart ShopReviewDto dto) {
+        dto.setPics(pics);
         return service.postShopReview(dto);
     }
 

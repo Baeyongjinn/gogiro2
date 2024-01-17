@@ -51,6 +51,7 @@ public class ButcherShopService {
 
     public ButcherReviewPIcsInsDto postButReview(ButcherReviewDto dto) {
         ButcherEntity entity = mapper.selButcherEntity(dto.getIbutcher());
+        dto.setIuser(authenticationFacade.getLoginUserPk());
 
         //없는 가게일 경우
         if (entity == null) {
@@ -61,18 +62,17 @@ public class ButcherShopService {
             throw new RestApiException(AuthErrorCode.CHECK_SHOP);
         }
         if(dto.getReview() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR,dto.getReview())){
-            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CONTEND);
+            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
         }
-        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insButcherReview(dto);
-        String target = "/butcher/review/" + dto.getIreview() + "/" + dto.getIuser();
+        String target = "/butcher/"+dto.getIbutcher()+"/review/" + dto.getIreview();
         ButcherReviewPIcsInsDto pDto = new ButcherReviewPIcsInsDto();
         pDto.setIreview(dto.getIreview());
         for(MultipartFile file : dto.getPics()){
             String saveFileNm = myFileUtils.transferTo(file,target);
             pDto.getPics().add(saveFileNm);
         }
-        mapper.insButcherReviewPic(dto);
+        mapper.insButcherReviewPic(pDto);
         return pDto;
     }
 

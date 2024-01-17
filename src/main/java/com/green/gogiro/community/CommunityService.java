@@ -34,7 +34,7 @@ public class CommunityService {
         }
         //내용을 입력하지 않는 경우
         if(dto.getContents() == null) {
-            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CONTEND);
+            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
         }
         //사진을 5장 초과했을 경우
         if(dto.getPics().size() >= 5){

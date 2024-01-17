@@ -1,18 +1,23 @@
 package com.green.gogiro.shop;
 
+import com.green.gogiro.common.Const;
+import com.green.gogiro.common.MyFileUtils;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.shop.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import static com.green.gogiro.exception.AuthErrorCode.*;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +25,7 @@ public class ShopService {
     private final ShopMapper mapper;
 
     private final AuthenticationFacade authenticationFacade;
+    private final MyFileUtils myFileUtils;
 
     public List<ShopSelVo> getShopList(ShopSelDto dto) {
 
@@ -74,9 +80,9 @@ public class ShopService {
         return list;
     }
 
-    public ResVo postShopReview(ShopReviewDto dto) {
-        // **************리터럴 처리
+    public ShopReviewPicsInsDto postShopReview(ShopReviewDto dto) {
         ShopEntity entity = mapper.selShopEntity(dto.getIshop());
+        dto.setIuser(authenticationFacade.getLoginUserPk());
 
         if(entity == null) {
             throw new RestApiException(VALID_SHOP);
@@ -85,40 +91,42 @@ public class ShopService {
             throw new RestApiException(CHECK_SHOP);
         }
 
-        dto.setIuser(authenticationFacade.getLoginUserPk());
+        mapper.insShopReview(dto);
 
-        int reviewCheck = mapper.postShopReview(dto);
-        int reviewPicCheck = mapper.postShopReviewPic(dto);
-        if (reviewCheck == 0) {
-            return new ResVo(0);
-            // 리뷰가 작성이 되지 않았을 때
+        if (Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getReview())){
+            throw new RestApiException(NOT_CONTENT);
         }
-        if (dto.getReview() == null){
-            return new ResVo(0);
-            // 리뷰를 꼭 작성해야함
+
+        String target = "/shop/"+dto.getIshop()+"/review/" + dto.getIreview() + "/";
+        ShopReviewPicsInsDto pDto = new ShopReviewPicsInsDto();
+
+        pDto.setIreview(dto.getIreview());
+
+        for (MultipartFile file : dto.getPics()) {
+            String saveFileNm = myFileUtils.transferTo(file,target);
+            pDto.getPics().add(saveFileNm);
         }
-        if (reviewPicCheck == 0) {
-            return new ResVo(0);
-            // 리뷰 사진이 작성되지 않았을 때
-        }
+
+        mapper.insShopReviewPic(pDto);
+
         if (dto.getPics() == null) {
             throw new RestApiException(MUST_PHOTO);
         }
-        if (dto.getPics().size() > 5) {
+        if (dto.getPics().size() > Const.PIC_MAX) {
             throw new RestApiException(SIZE_PHOTO);
         }
-        return new ResVo(dto.getIreview());
+        return pDto;
     }
 
     public ResVo toggleShopBookmark(ShopBookmarkDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         dto.setOn(mapper.selShopBookmark(dto) == null);
         if(dto.isOn()) {
-            mapper.ShopBookmarkOn(dto);
-            return new ResVo(1);
+            mapper.shopBookmarkOn(dto);
+            return new ResVo(Const.ON);
         } else {
-            mapper.ShopBookmarkOff(dto);
-            return new ResVo(0);
+            mapper.shopBookmarkOff(dto);
+            return new ResVo(Const.OFF);
         }
     }
 }

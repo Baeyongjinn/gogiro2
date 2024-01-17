@@ -10,6 +10,8 @@ public class Const {
     public static final int ID_NULL = 3;
     public static final int PW_FAIL = 2;
 
+    public static final int PIC_MAX = 5;
+
     public static final String REGEXP_PATTERN_SPACE_CHAR = "^[\\s]*$";
 
 }

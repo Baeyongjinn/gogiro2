@@ -64,7 +64,7 @@
         WHERE b.ishop = #{ishop}
     </select>
 
-    <insert id="postShopReview" useGeneratedKeys="true" keyProperty="ireview">
+    <insert id="insShopReview" useGeneratedKeys="true" keyProperty="ireview">
         INSERT INTO
         t_shop_review
         SET
@@ -74,7 +74,7 @@
         review = #{review}
     </insert>
 
-    <insert id="postShopReviewPic">
+    <insert id="insShopReviewPic">
         INSERT INTO
         t_shop_review_pic
         (ireview, pic)
@@ -92,7 +92,7 @@
         AND ishop= #{ishop}
     </select>
 
-    <insert id="ShopBookmarkOn">
+    <insert id="shopBookmarkOn">
         INSERT INTO
         t_shop_bookmark
         SET
@@ -100,7 +100,7 @@
             ishop=#{ishop}
     </insert>
 
-    <delete id="ShopBookmarkOff">
+    <delete id="shopBookmarkOff">
         DELETE
         FROM t_shop_bookmark
         WHERE iuser= #{iuser}
