@@ -1,6 +1,7 @@
 package com.green.gogiro.user;
 
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.user.model.ReservationVo;
 import com.green.gogiro.user.model.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,10 +22,12 @@ public class UserController {
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입", description = "회원가입 처리")
-    public ResVo signup(@RequestPart MultipartFile pic,
+    public ResVo signup(@RequestPart(required = false) MultipartFile pic,
                         @RequestPart UserSignupDto dto) {
-
-        return service.signup(pic, dto);
+        if(pic!=null) {
+            dto.setFile(pic);
+        }
+        return service.signup(dto);
     }
 
     @PostMapping("/signin")
@@ -49,7 +52,11 @@ public class UserController {
 
     @PutMapping
     @Operation(summary = "회원정보 수정", description = "회원정보 수정 처리")
-    public ResVo updateUser(@RequestBody UserUpdDto dto) {
+    public ResVo updateUser(@RequestPart(required = false) MultipartFile pic,
+                            @RequestPart UserUpdDto dto) {
+        if(pic!=null) {
+            dto.setFile(pic);
+        }
         return service.updateUser(dto);
     }
 
