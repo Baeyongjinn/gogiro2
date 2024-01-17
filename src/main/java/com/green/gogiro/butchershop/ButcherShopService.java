@@ -61,9 +61,11 @@ public class ButcherShopService {
         if (entity.getIbutcher() != dto.getIbutcher()) {
             throw new RestApiException(AuthErrorCode.CHECK_SHOP);
         }
+        //리뷰가 공백인지 아닌지 체크
         if(dto.getReview() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR,dto.getReview())){
             throw new RestApiException(AuthErrorCode.NOT_CONTENT);
         }
+        //사진 크기가 5장 이하 인지 체크
         if(dto.getPics().size() > Const.PIC_MAX){
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
@@ -88,7 +90,6 @@ public class ButcherShopService {
             i= 0;
         }
         ButDto dto= new ButDto(i, ibutcher);
-
         ButcherShopDetailVo vo = mapper.selButcherShopDetail(dto);
         List<DetailMenu> menus = mapper.selMenuDetail(ibutcher);
         vo.setMenus(menus);
