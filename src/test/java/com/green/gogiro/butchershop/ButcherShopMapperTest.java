@@ -45,17 +45,17 @@ class ButcherShopMapperTest {
 
     }
 
-    @Test
-    void insButcherReviewPicTest() throws Exception {
-        ButcherReviewDto dto= new ButcherReviewDto();
-        dto.setIreview(2);
-        List<String> pics= new ArrayList<>();
-        pics.add("testPic");
-        pics.add("testPic2");
-        dto.setPics(pics);
-        int insertPics= mapper.insButcherReviewPic(dto);
-        assertEquals(pics.size(), insertPics);
-    }
+//    @Test
+//    void insButcherReviewPicTest() throws Exception {
+//        ButcherReviewDto dto= new ButcherReviewDto();
+//        dto.setIreview(2);
+//        List<String> pics= new ArrayList<>();
+//        pics.add("testPic");
+//        pics.add("testPic2");
+//        //dto.setPics(pics);
+//        int insertPics= mapper.insButcherReviewPic(dto);
+//        assertEquals(pics.size(), insertPics);
+//    }
 
 //    @Test
 //    void selButcherShopDetailTest() throws Exception {

@@ -2,6 +2,7 @@ package com.green.gogiro.butchershop;
 
 import com.green.gogiro.butchershop.model.*;
 import com.green.gogiro.common.Const;
+import com.green.gogiro.common.MyFileUtils;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +28,7 @@ public class ButcherShopService {
     private final UserMapper userMapper;
 
     private final AuthenticationFacade authenticationFacade;
+    private final MyFileUtils myFileUtils;
 
     public List<ButcherSelVo> getButList(ButcherSelDto dto) {
         if(dto.getPage() <= 0){
@@ -46,7 +49,7 @@ public class ButcherShopService {
         return list;
     }
 
-    public ResVo postButReview(ButcherReviewDto dto) {
+    public ButcherReviewPIcsInsDto postButReview(ButcherReviewDto dto) {
         ButcherEntity entity = mapper.selButcherEntity(dto.getIbutcher());
 
         //없는 가게일 경우
@@ -57,13 +60,20 @@ public class ButcherShopService {
         if (entity.getIbutcher() != dto.getIbutcher()) {
             throw new RestApiException(AuthErrorCode.CHECK_SHOP);
         }
-        dto.setIuser(authenticationFacade.getLoginUserPk());
         if(dto.getReview() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR,dto.getReview())){
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CONTEND);
         }
+        dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insButcherReview(dto);
+        String target = "/butcher/review/" + dto.getIreview() + "/" + dto.getIuser();
+        ButcherReviewPIcsInsDto pDto = new ButcherReviewPIcsInsDto();
+        pDto.setIreview(dto.getIreview());
+        for(MultipartFile file : dto.getPics()){
+            String saveFileNm = myFileUtils.transferTo(file,target);
+            pDto.getPics().add(saveFileNm);
+        }
         mapper.insButcherReviewPic(dto);
-        return new ResVo(dto.getIreview());
+        return pDto;
     }
 
     public ButcherShopDetailVo getShopDetail(int ibutcher) {

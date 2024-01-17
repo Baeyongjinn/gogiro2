@@ -8,10 +8,15 @@ app:
 
 
 file:
-  dir: D:/download/gogiro/
+  dir: D:/gogi/download/gogiro/
+
 
 
 spring:
+  servlet:
+      multipart:
+        max-file-size: 5MB
+        max-request-size: 15MB
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://192.168.0.144:3306/db_even_last_1
