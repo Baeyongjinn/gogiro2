@@ -24,12 +24,13 @@ public class ButcherShopDetailVo {
     private String y;
     @Schema(title = "별점")
     private double star;
+    @Schema(title = "유저 북마크 여부",description = "0:북마크 전 1:북마크 후")
+    private int isBook;
     @Schema(title = "가게 사진")
     private List<String> pics;
     @Schema(title = "상세 메뉴")
     private List<DetailMenu> menus;
     @Schema(title = "정육점 리뷰")
     private List<ReviewDetail> reviews;
-    private int isBook;
 }
 
