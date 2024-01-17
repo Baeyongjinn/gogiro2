@@ -24,12 +24,12 @@ public interface ShopMapper {
 
     List<String> shopFacilities(int ishop);
 
-    int postShopReview(ShopReviewDto dto);
+    int insShopReview(ShopReviewDto dto);
 
-    int postShopReviewPic(ShopReviewDto dto);
+    int insShopReviewPic(ShopReviewPicsInsDto dto);
     Integer selShopBookmark(ShopBookmarkDto dto);
-    void ShopBookmarkOn(ShopBookmarkDto dto);
-    void ShopBookmarkOff(ShopBookmarkDto dto);
+    void shopBookmarkOn(ShopBookmarkDto dto);
+    void shopBookmarkOff(ShopBookmarkDto dto);
 
     ShopEntity selShopEntity(int ishop);
 }

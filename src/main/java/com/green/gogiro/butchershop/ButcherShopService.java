@@ -59,7 +59,7 @@ public class ButcherShopService {
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         if(dto.getReview() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR,dto.getReview())){
-            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CONTEND);
+            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
         }
         mapper.insButcherReview(dto);
         mapper.insButcherReviewPic(dto);
