@@ -27,7 +27,6 @@ public class CommunityService {
 
     public CommunityPicsInsVo insCommunity(CommunityInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        mapper.insCommunity(dto);
         //제목을 입력하지 않는 경우
         if(dto.getTitle() == null) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
@@ -36,19 +35,13 @@ public class CommunityService {
         if(dto.getContents() == null) {
             throw new RestApiException(AuthErrorCode.NOT_CONTENT);
         }
-        //사진을 5장 초과했을 경우
-        if(dto.getPics().size() >= 5){
-            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
-        }
-        //사진을 넣지 않는경우
-        if(dto.getPics() == null) {
-            throw new RestApiException(AuthErrorCode.MUST_PHOTO);
-        }
+        mapper.insCommunity(dto);
         String target = "/community/" + dto.getIboard();
         for(MultipartFile file : dto.getFiles()) {
             String saveFileNm = myFileUtils.transferTo(file, target);
             dto.getPics().add(saveFileNm);
         }
+
         mapper.insCommunityPics(dto);
         if(dto.getIboard() == 0) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY);
@@ -63,11 +56,11 @@ public class CommunityService {
     public ResVo updCommunity(CommunityUpdDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
         if(check == null){
-            return new ResVo(FAIL);
+            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         }
-        CommunityEntity entity = mapper.entityCommunity(authenticationFacade.getLoginUserPk(), dto.getIboard());
-        if(entity == null) {
-            return new ResVo(FAIL);
+        CommunityEntity entity = mapper.entityCommunity(dto.getIboard());
+        if(entity.getIboard() != dto.getIboard()) {
+            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_ENTITY);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updCommunity(dto);
@@ -97,12 +90,12 @@ public class CommunityService {
 
     public ResVo delCommunity(CommunityDelDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
-        if(check == null) {
-            return new ResVo(FAIL);
+        if(check == null){
+            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         }
-        CommunityEntity entity = mapper.entityCommunity(authenticationFacade.getLoginUserPk(), dto.getIboard());
-        if(entity == null) {
-            return new ResVo(FAIL);
+        CommunityEntity entity = mapper.entityCommunity(dto.getIboard());
+        if(entity.getIboard() != dto.getIboard()) {
+            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_ENTITY);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.delPicCommunity(dto.getIboard());
