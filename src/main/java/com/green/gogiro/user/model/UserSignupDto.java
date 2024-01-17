@@ -3,6 +3,7 @@ package com.green.gogiro.user.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Schema(title = "회원가입Dto")
@@ -26,7 +27,7 @@ public class UserSignupDto {
     private String gender;
     @Schema(title = "주소")
     private String address;
-    @Schema(title = "프로필 사진",defaultValue = " ")
+    @JsonIgnore
     private String pic;
     @Schema(title = "전화번호",defaultValue = " ")
     private String tel;
