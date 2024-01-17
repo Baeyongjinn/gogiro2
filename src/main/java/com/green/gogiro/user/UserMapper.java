@@ -11,6 +11,8 @@ public interface UserMapper {
 
     int signupUser(UserSignupDto dto);
 
+    int updUserPic(UserSignupDto dto);
+
     String signinUser(String email);
 
     int updateUser(UserUpdDto dto);
