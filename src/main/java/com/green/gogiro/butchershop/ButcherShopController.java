@@ -5,8 +5,10 @@ import com.green.gogiro.butchershop.model.*;
 import com.green.gogiro.common.ResVo;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.apache.coyote.BadRequestException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class ButcherShopController {
 
     @PostMapping
     @Operation(summary = "리뷰 등록",description = "리뷰 등록 처리")
-    public ResVo postButReview(@RequestBody ButcherReviewDto dto){
+    public ButcherReviewPIcsInsDto postButReview(@RequestPart(value = "file",required = false) List<MultipartFile> file, @RequestPart ButcherReviewDto dto){
         return service.postButReview(dto);
     }
 
