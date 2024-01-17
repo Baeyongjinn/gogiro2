@@ -3,6 +3,7 @@ package com.green.gogiro.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +28,9 @@ public class SecurityConfiguration {
                                                                     , "/error"
                                                                     , "/err"
                                                                     , "/"
+                                                                    ,"/api/shop"
+                                                                    , "/api/butcher-shop"
+                                                                    , "/api/community"
                                                                     , "/static/**"
                                                                     , "/index.html"
                                                                     , "/static/**"
