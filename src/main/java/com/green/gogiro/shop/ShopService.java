@@ -109,9 +109,6 @@ public class ShopService {
 
         mapper.insShopReviewPic(pDto);
 
-        if (dto.getPics() == null) {
-            throw new RestApiException(MUST_PHOTO);
-        }
         if (dto.getPics().size() > Const.PIC_MAX) {
             throw new RestApiException(SIZE_PHOTO);
         }
