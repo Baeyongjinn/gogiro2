@@ -67,16 +67,40 @@ public class ShopService {
     }
 
     public ResVo postShopReview(ShopReviewDto dto) {
+        ShopEntity entity = mapper.selShopEntity(dto.getIshop());
+
+        if(entity == null) {
+            return new ResVo(2);
+        }
+        if (entity.getIshop() != dto.getIshop()) {
+            return new ResVo(3);
+        }
+
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        mapper.postShopReview(dto);
-        mapper.postShopReviewPic(dto);
+        int reviewCheck = mapper.postShopReview(dto);
+        int reviewPicCheck = mapper.postShopReviewPic(dto);
+        if (reviewCheck == 0) {
+            return new ResVo(0);
+            // 리뷰가 작성이 되지 않았을 때
+        }
+        if (dto.getReview() == null){
+            return new ResVo(0);
+            // 리뷰를 꼭 작성해야함
+        }
+        if (reviewPicCheck == 0) {
+            return new ResVo(0);
+            // 리뷰 사진이 작성되지 않았을 때
+        }
+        if (dto.getPics() == null) {
+            return new ResVo(0);
+            // 사진을 넣어주세요.
+        }
         return new ResVo(dto.getIreview());
     }
 
     public ResVo toggleShopBookmark(ShopBookmarkDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        dto.setOn(mapper.selShopBookmark(dto)==null);
-        dto.setIuser(authenticationFacade.getLoginUserPk());
+        dto.setOn(mapper.selShopBookmark(dto) == null);
         if(dto.isOn()) {
             mapper.ShopBookmarkOn(dto);
             return new ResVo(1);
