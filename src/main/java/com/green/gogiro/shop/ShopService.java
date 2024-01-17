@@ -81,7 +81,6 @@ public class ShopService {
     }
 
     public ShopReviewPicsInsDto postShopReview(ShopReviewDto dto) {
-        // **************리터럴 처리
         ShopEntity entity = mapper.selShopEntity(dto.getIshop());
         dto.setIuser(authenticationFacade.getLoginUserPk());
 
@@ -101,7 +100,6 @@ public class ShopService {
         String target = "/shop/"+dto.getIshop()+"/review/" + dto.getIreview() + "/";
         ShopReviewPicsInsDto pDto = new ShopReviewPicsInsDto();
 
-
         pDto.setIreview(dto.getIreview());
 
         for (MultipartFile file : dto.getPics()) {
@@ -114,7 +112,7 @@ public class ShopService {
         if (dto.getPics() == null) {
             throw new RestApiException(MUST_PHOTO);
         }
-        if (dto.getPics().size() > 5) {
+        if (dto.getPics().size() > Const.PIC_MAX) {
             throw new RestApiException(SIZE_PHOTO);
         }
         return pDto;
@@ -125,10 +123,10 @@ public class ShopService {
         dto.setOn(mapper.selShopBookmark(dto) == null);
         if(dto.isOn()) {
             mapper.shopBookmarkOn(dto);
-            return new ResVo(1);
+            return new ResVo(Const.ON);
         } else {
             mapper.shopBookmarkOff(dto);
-            return new ResVo(0);
+            return new ResVo(Const.OFF);
         }
     }
 }
