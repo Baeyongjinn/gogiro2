@@ -36,7 +36,9 @@
         SET iuser = #{iuser}
         , ibutcher = #{ibutcher}
         , star = #{star}
+        <if test="review != null != ' '">
         , review = #{review}
+        </if>
     </insert>
 
     <insert id="insButcherReviewPic">
@@ -131,4 +133,6 @@
         WHERE iuser= #{iuser}
         AND ibutcher= #{ibutcher}
     </delete>
+
+
 </mapper>

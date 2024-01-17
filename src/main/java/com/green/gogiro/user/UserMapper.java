@@ -32,4 +32,5 @@ public interface UserMapper {
     int delShopReviewPics(int ireview);
 
     int delShopReview(ReviewDelDto dto);
+
 }

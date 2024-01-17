@@ -197,4 +197,5 @@
         where ireview= #{ireview}
         AND iuser= #{iuser}
     </delete>
+
 </mapper>
