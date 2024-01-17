@@ -98,7 +98,7 @@ public class ShopService {
             throw new RestApiException(NOT_CONTENT);
         }
 
-        String target = "/shop/review" + dto.getIreview() + "/" + dto.getIuser();
+        String target = "/shop/"+dto.getIshop()+"/review/" + dto.getIreview() + "/";
         ShopReviewPicsInsDto pDto = new ShopReviewPicsInsDto();
 
 
