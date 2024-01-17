@@ -3,6 +3,7 @@ package com.green.gogiro.community;
 import static com.green.gogiro.common.Const.*;
 
 
+import com.green.gogiro.common.MyFileUtils;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.community.model.*;
 import com.green.gogiro.exception.AuthErrorCode;
@@ -10,6 +11,7 @@ import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +22,7 @@ import java.util.Map;
 @Service
 public class CommunityService {
     private final CommunityMapper mapper;
-
+    private final MyFileUtils myFileUtils;
     private final AuthenticationFacade authenticationFacade;
 
     public ResVo insCommunity(CommunityInsDto dto) {
@@ -42,9 +44,14 @@ public class CommunityService {
         if(dto.getPics() == null) {
             throw new RestApiException(AuthErrorCode.MUST_PHOTO);
         }
+        String target = "/community/" + dto.getIboard();
+        for(MultipartFile file : dto.getFiles()) {
+            String saveFileNm = myFileUtils.transferTo(file, target);
+            dto.getPics().add(saveFileNm);
+        }
         mapper.insCommunityPics(dto);
         if(dto.getIboard() == 0) {
-            return new ResVo(FAIL);
+            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY);
         }
         return new ResVo(SUCCESS);
     }
