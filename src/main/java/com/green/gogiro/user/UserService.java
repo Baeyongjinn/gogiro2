@@ -6,6 +6,9 @@ import com.green.gogiro.common.AppProperties;
 import com.green.gogiro.common.CookieUtils;
 import com.green.gogiro.common.MyFileUtils;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.AuthErrorCode;
+import com.green.gogiro.exception.CommonErrorCode;
+import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.security.JwtTokenProvider;
 import com.green.gogiro.security.MyPrincipal;
@@ -43,23 +46,32 @@ public class UserService {
     private final MyFileUtils myFileUtils;
 
 
-    public ResVo signup(MultipartFile pic, UserSignupDto dto) {
+    public ResVo signup(UserSignupDto dto) {
         String checkNickname = mapper.checkNickname(dto.getNickname());
-
-        String hashedPw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());
+        String hashedPw = passwordEncoder.encode(dto.getUpw());
         dto.setUpw(hashedPw);
+
+        if(dto.getEmail()==null||
+           dto.getUpw()==null||
+           dto.getName()==null||
+           dto.getNickname()==null||
+           dto.getBirth()==null||
+           dto.getGender()==null) {
+            throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
+        }
 
         mapper.signupUser(dto);
 
-        String path= "/user/"+dto.getIuser();
-        String savedPicFileNm= myFileUtils.transferTo(pic, path);
-        dto.setPic(savedPicFileNm);
-        mapper.updUserPic(dto);
+        if(dto.getFile()!=null) {
+            String path= "/user/"+dto.getIuser();
+            String savedPicFileNm= myFileUtils.transferTo(dto.getFile(), path);
+            dto.setPic(savedPicFileNm);
+            mapper.updUserPic(dto);
+        }
 
         int result = dto.getIuser();
         log.info("dto: {}", dto);
         //iuser값 return
-
         return new ResVo(result);
     }
 
@@ -69,9 +81,9 @@ public class UserService {
                              UserSigninDto dto) {
         UserEntity entity = mapper.userEntity(dto.getEmail());
         if (entity == null) {
-            return UserSignVo.builder().result(ID_NULL).build();
+            throw new RestApiException(AuthErrorCode.VALID_EXIST_USER_ID);
         } else if (!passwordEncoder.matches(dto.getUpw(), entity.getUpw())) {
-            return UserSignVo.builder().result(PW_FAIL).build();
+            throw new RestApiException(AuthErrorCode.VALID_PASSWORD);
         }
         MyPrincipal myPrincipal = MyPrincipal.builder()
                 .iuser(entity.getIuser())
@@ -131,16 +143,26 @@ public class UserService {
 
     public ResVo updateUser(UserUpdDto dto) {
         String check = mapper.checkNickname(dto.getNickname());
+
+        if(dto.getNickname()==null||
+           dto.getAddress()==null||
+           dto.getTel()==null) {
+            throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
+        }
         if(check == null) {
-            new ResVo(FAIL);
+           throw new RestApiException(AuthErrorCode.NOT_NICK_NAME);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
+        if(dto.getFile()!=null) {
+            String path= "/user/"+dto.getIuser();
+            String savedPicFileNm= myFileUtils.transferTo(dto.getFile(), path);
+            dto.setPic(savedPicFileNm);
+        }
         mapper.updateUser(dto);
         return new ResVo(SUCCESS);
     }
 
     public UserInfoVo selUserInfo(){
-        //UserEntity entity = mapper.userEntity(iuser);
         return mapper.selUserInfo(authenticationFacade.getLoginUserPk());
     }
 
