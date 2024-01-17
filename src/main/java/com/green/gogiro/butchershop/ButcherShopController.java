@@ -2,7 +2,10 @@ package com.green.gogiro.butchershop;
 
 
 import com.green.gogiro.butchershop.model.*;
+import com.green.gogiro.common.Const;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.AuthErrorCode;
+import com.green.gogiro.exception.RestApiException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -27,8 +30,11 @@ public class ButcherShopController {
 
     @PostMapping
     @Operation(summary = "리뷰 등록",description = "리뷰 등록 처리")
-    public ButcherReviewPIcsInsDto postButReview(@RequestPart List<MultipartFile> pics, @RequestPart ButcherReviewDto dto){
+    public ButcherReviewPIcsInsDto postButReview(@RequestPart(required = false) List<MultipartFile> pics, @RequestPart ButcherReviewDto dto){
         dto.setPics(pics);
+        if(dto.getPics() == null || dto.getPics().isEmpty()){
+            throw new RestApiException(AuthErrorCode.MUST_PHOTO);
+        }
         return service.postButReview(dto);
     }
 

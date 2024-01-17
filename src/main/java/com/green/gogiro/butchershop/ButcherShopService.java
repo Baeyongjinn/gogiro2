@@ -64,6 +64,9 @@ public class ButcherShopService {
         if(dto.getReview() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR,dto.getReview())){
             throw new RestApiException(AuthErrorCode.NOT_CONTENT);
         }
+        if(dto.getPics().size() > Const.PIC_MAX){
+            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        }
         mapper.insButcherReview(dto);
         String target = "/butcher/"+dto.getIbutcher()+"/review/" + dto.getIreview();
         ButcherReviewPIcsInsDto pDto = new ButcherReviewPIcsInsDto();
