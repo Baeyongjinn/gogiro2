@@ -41,6 +41,10 @@ public class ShopService {
         for(ShopPicsVo vo: picList){
             map.get(vo.getIshop()).getPics().add(vo.getPic());
         }
+        List<ShopFacilityVo> facilities = mapper.selShopFacility(pk);
+        for(ShopFacilityVo fa : facilities){
+            map.get(fa.getIshop()).getFacilities().add(fa.getFacility());
+        }
 
         return list;
     }

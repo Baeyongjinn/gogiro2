@@ -43,6 +43,7 @@
         FROM t_community a
         JOIN t_user b
         ON a.iuser = b.iuser
+        ORDER BY a.created_at DESC
         limit #{startIdx}, #{rowCount}
     </select>
 

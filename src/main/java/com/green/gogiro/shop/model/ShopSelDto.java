@@ -12,6 +12,8 @@ public class ShopSelDto {
     @Schema(title = "검색",defaultValue = " ")
     private String search;
 
+    private int category;
+
     @JsonIgnore
     private int startIdx;
 
