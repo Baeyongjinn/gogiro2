@@ -115,4 +115,10 @@
         WHERE a.ishop = #{ishop}
     </select>
 
+    <select id="selShopEntity">
+        SELECT ishop, name, location, x, y,created_at as createdAt
+        FROM t_shop
+        WHERE ishop = #{ishop}
+    </select>
+
 </mapper>

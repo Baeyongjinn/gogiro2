@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,8 +21,10 @@ public class UserController {
 
     @PostMapping("/signup")
     @Operation(summary = "회원가입", description = "회원가입 처리")
-    public ResVo signup(@RequestBody UserSignupDto dto) {
-        return service.signup(dto);
+    public ResVo signup(@RequestPart MultipartFile pic,
+                        @RequestPart UserSignupDto dto) {
+
+        return service.signup(pic, dto);
     }
 
     @PostMapping("/signin")

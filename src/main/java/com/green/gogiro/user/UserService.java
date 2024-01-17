@@ -21,6 +21,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,15 +43,23 @@ public class UserService {
     private final MyFileUtils myFileUtils;
 
 
-    public ResVo signup(UserSignupDto dto) {
+    public ResVo signup(MultipartFile pic, UserSignupDto dto) {
         String checkNickname = mapper.checkNickname(dto.getNickname());
 
         String hashedPw = BCrypt.hashpw(dto.getUpw(), BCrypt.gensalt());
         dto.setUpw(hashedPw);
+
         mapper.signupUser(dto);
+
+        String path= "/user/"+dto.getIuser();
+        String savedPicFileNm= myFileUtils.transferTo(pic, path);
+        dto.setPic(savedPicFileNm);
+        mapper.updUserPic(dto);
+
         int result = dto.getIuser();
         log.info("dto: {}", dto);
         //iuser값 return
+
         return new ResVo(result);
     }
 

@@ -26,7 +26,6 @@ public enum AuthErrorCode implements ErrorCode{
     CHECK_SHOP(HttpStatus.BAD_REQUEST,"식당이 일치하지 않습니다."),
     NOT_FOUND_REFRESH_TOKEN(HttpStatus.NOT_FOUND, "refresh-token이 없습니다.");
 
-
     private final HttpStatus httpStatus;
     private final String message;
 

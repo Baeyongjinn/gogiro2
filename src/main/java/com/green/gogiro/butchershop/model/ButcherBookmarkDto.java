@@ -8,4 +8,6 @@ public class ButcherBookmarkDto {
     @JsonIgnore
     private int iuser;
     private int ibutcher;
+    @JsonIgnore
+    private boolean on;
 }
