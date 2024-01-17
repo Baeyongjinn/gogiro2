@@ -1,12 +1,15 @@
 package com.green.gogiro.community;
 
 import static com.green.gogiro.common.Const.*;
+
+
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.community.model.*;
+import com.green.gogiro.exception.AuthErrorCode;
+import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +26,21 @@ public class CommunityService {
     public ResVo insCommunity(CommunityInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insCommunity(dto);
+        //제목을 입력하지 않는 경우
+        if(dto.getTitle() == null) {
+            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
+        }
+        //내용을 입력하지 않는 경우
+        if(dto.getContents() == null) {
+            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CONTEND);
+        }
+        //사진을 5장 초과했을 경우
         if(dto.getPics().size() >= 5){
-            return new ResVo(FAIL);
+            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        }
+        //사진을 넣지 않는경우
+        if(dto.getPics() == null) {
+            throw new RestApiException(AuthErrorCode.MUST_PHOTO);
         }
         mapper.insCommunityPics(dto);
         if(dto.getIboard() == 0) {

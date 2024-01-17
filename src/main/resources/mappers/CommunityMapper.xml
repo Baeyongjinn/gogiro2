@@ -26,7 +26,6 @@
         and iuser = #{iuser}
     </update>
 
-
     <update id="updPicCommunity">
         update t_commu_pics
         set pic = #{pic}
