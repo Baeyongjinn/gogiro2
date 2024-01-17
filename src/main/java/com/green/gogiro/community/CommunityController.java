@@ -5,6 +5,7 @@ import com.green.gogiro.community.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,7 +17,8 @@ public class CommunityController {
 
     @PostMapping()
     @Operation(summary = "커뮤니티 등록",description = "커뮤니티 등록 처리")
-    public ResVo postCommunity(@RequestBody CommunityInsDto dto) {
+    public ResVo postCommunity(@RequestPart List<MultipartFile> pics, @RequestPart CommunityInsDto dto) {
+        dto.setFiles(pics);
         return service.insCommunity(dto);
     }
 

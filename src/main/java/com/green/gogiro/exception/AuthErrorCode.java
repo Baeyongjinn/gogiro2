@@ -24,6 +24,7 @@ public enum AuthErrorCode implements ErrorCode{
     NOT_COMMUNITY_CONTEND(HttpStatus.BAD_REQUEST,"내용을 입력해 주세요"),
     VALID_SHOP(HttpStatus.NOT_FOUND,"존재 하지 않는 식당(정육점)입니다."),
     CHECK_SHOP(HttpStatus.BAD_REQUEST,"식당이 일치하지 않습니다."),
+    NOT_COMMUNITY(HttpStatus.NOT_FOUND, "잘못된 등록입니다."),
 
 
     NOT_FOUND_REFRESH_TOKEN(HttpStatus.NOT_FOUND, "refresh-token이 없습니다.");
