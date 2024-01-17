@@ -1,19 +1,23 @@
 package com.green.gogiro.butchershop;
 
 import com.green.gogiro.butchershop.model.*;
+import com.green.gogiro.common.Const;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.user.UserMapper;
 import com.green.gogiro.user.model.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +29,7 @@ public class ButcherShopService {
 
     public List<ButcherSelVo> getButList(ButcherSelDto dto) {
         if(dto.getPage() <= 0){
-         //   throw new RestApiException()
+            throw new RestApiException(AuthErrorCode.VALID_PAGE);
         }
         List<ButcherSelVo> list = mapper.selButcherShopAll(dto);
         List<Integer> pk = new ArrayList<>();
@@ -45,19 +49,18 @@ public class ButcherShopService {
     public ResVo postButReview(ButcherReviewDto dto) {
         ButcherEntity entity = mapper.selButcherEntity(dto.getIbutcher());
 
-        //없는 유저일 경우
-//        if (userEntity == null) {
-//            return new ResVo(0);
-//        }
         //없는 가게일 경우
         if (entity == null) {
-            return new ResVo(2);
+            throw new RestApiException(AuthErrorCode.VALID_SHOP);
         }
         //입력한 가게와 동일한 가게인지 확인
         if (entity.getIbutcher() != dto.getIbutcher()) {
             return new ResVo(3);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
+        if(dto.getReview() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR,dto.getReview())){
+            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CONTEND);
+        }
         mapper.insButcherReview(dto);
         mapper.insButcherReviewPic(dto);
         return new ResVo(dto.getIreview());

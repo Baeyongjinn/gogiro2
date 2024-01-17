@@ -18,7 +18,7 @@ public class MyFileUtils {
     }
 
     //폴더 만들기
-    public String makeFolders(String parh) {
+    public String makeFolder(String parh) {
         File folder = new File(uploadPrefixPath, parh);
         folder.mkdirs();
         return folder.getAbsolutePath();
@@ -48,7 +48,7 @@ public class MyFileUtils {
     //메모리에 있는 내용 > 파일로 옮기는 메소드
     public String transferTo(MultipartFile mf, String target) {
         String fileNm = getRandomFileNm(mf);
-        String folderPath = makeFolders(target);
+        String folderPath = makeFolder(target);
         File saveFile = new File(folderPath, fileNm);
 
         try {
@@ -60,16 +60,22 @@ public class MyFileUtils {
         }
     }
 
-    public void delFiles(String folderPath) { //폴더 아래에 폴더 및 파일 삭제, 보냈는 폴더는 삭제 안함
-        File folder = new File(folderPath);
-        if(folder.exists()) {
-            File[] files = folder.listFiles();
+    public void delFolderTrigger(String relativePath) {
+        delFolder(uploadPrefixPath+ relativePath);
+    }
 
-            for(File file : files) {
+    public void delFolder(String folderPath) {
+        File folder= new File(folderPath);
+        if(folder.exists()) {
+            File[] files= folder.listFiles();
+
+            for(File file: files) {
                 if(file.isDirectory()) {
-                    delFiles(file.getAbsolutePath());
+                    delFolder(file.getAbsolutePath());
+                } else {
+                    file.delete();
                 }
-                file.delete();
+                folder.delete();
             }
         }
     }
