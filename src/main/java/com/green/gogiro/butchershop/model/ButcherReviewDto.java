@@ -2,6 +2,7 @@ package com.green.gogiro.butchershop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public class ButcherReviewDto {
     private int ibutcher;
     private int star;
     private String review;
-    private List<String> pics;
+    private List<MultipartFile> pics;
 }
