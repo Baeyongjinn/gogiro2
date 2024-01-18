@@ -82,7 +82,9 @@ public class ButcherShopService {
     }
 
     public ButcherShopDetailVo getShopDetail(int ibutcher) {
-        ButcherEntity entity = mapper.selButcherEntity(ibutcher);
+        if(mapper.selButcherEntity(ibutcher) == null) {
+            throw new RestApiException(AuthErrorCode.VALID_SHOP);
+        }
         int i;
         try {
             i= authenticationFacade.getLoginUserPk();
