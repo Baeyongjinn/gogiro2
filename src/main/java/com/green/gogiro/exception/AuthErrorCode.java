@@ -25,6 +25,7 @@ public enum AuthErrorCode implements ErrorCode{
     NOT_COMMUNITY_ENTITY(HttpStatus.BAD_REQUEST, "다른 유저의 게시글입니다"),
     REGEXP_DATE_TYPE(HttpStatus.BAD_REQUEST,"날짜를 올바르게 입력해 주세요"),
     INVALID_MENU_OR_COUNT(HttpStatus.BAD_REQUEST,"메뉴혹은 수량이 잘못되었습니다"),
+    SEARCH_COMMUNITY(HttpStatus.NOT_FOUND, "해당하는 검색결과가 없습니다"),
 
 
     NOT_FOUND_REFRESH_TOKEN(HttpStatus.NOT_FOUND, "refresh-token이 없습니다.");
