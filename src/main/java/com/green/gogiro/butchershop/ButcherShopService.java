@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import static com.green.gogiro.exception.AuthErrorCode.NOT_CONTENT;
+import static com.green.gogiro.exception.AuthErrorCode.VALID_SHOP;
 
 @Service
 @RequiredArgsConstructor
@@ -117,7 +118,11 @@ public class ButcherShopService {
     }
 
     public ResVo toggleButcherBookmark(ButcherBookmarkDto dto) {
+        ButcherEntity entity = mapper.selButcherEntity(dto.getIbutcher());
         dto.setIuser(authenticationFacade.getLoginUserPk());
+        if (entity == null) {
+            throw new RestApiException(VALID_SHOP);
+        }
         dto.setOn(mapper.selButcherBookmark(dto) == null);
         if(dto.isOn()) {
             mapper.butcherBookmarkOn(dto);
