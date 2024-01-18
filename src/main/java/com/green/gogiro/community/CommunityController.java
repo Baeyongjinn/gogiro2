@@ -28,7 +28,7 @@ public class CommunityController {
                 throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
             }
         }
-        
+
         return service.insCommunity(dto);
     }
 
@@ -37,10 +37,13 @@ public class CommunityController {
     public CommunityPicsInsVo putCommunity(@RequestPart(required = false) List<MultipartFile> pics
             , @RequestPart CommunityUpdDto dto) {
         //사진을 5장 초과했을 경우
-        if(dto.getFiles().size() >= 5){
-            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        if(pics!=null){
+            dto.setFiles(pics);
+            if(dto.getFiles().size() >= 5){
+                throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+            }
         }
-        dto.setFiles(pics);
+
         return service.updCommunity(dto);
     }
 
