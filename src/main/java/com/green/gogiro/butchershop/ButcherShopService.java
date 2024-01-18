@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import static com.green.gogiro.exception.AuthErrorCode.NOT_CONTENT;
+
 @Service
 @RequiredArgsConstructor
 public class ButcherShopService {
@@ -31,8 +33,11 @@ public class ButcherShopService {
     private final MyFileUtils myFileUtils;
 
     public List<ButcherSelVo> getButList(ButcherSelDto dto) {
+        if(Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR_TYPE_2,dto.getSearch())){
+            throw new RestApiException(NOT_CONTENT);
+        }
         if(dto.getPage() <= 0){
-            throw new RestApiException(AuthErrorCode.VALID_PAGE);
+            throw new RestApiException(AuthErrorCode.INVALID_PAGE);
         }
         List<ButcherSelVo> list = mapper.selButcherShopAll(dto);
         List<Integer> pk = new ArrayList<>();
@@ -45,7 +50,6 @@ public class ButcherShopService {
         for (ButcherPicsVo pic : pics) {
             butMap.get(pic.getIbutcher()).getPics().add(pic.getPic());
         }
-
         return list;
     }
 
@@ -82,7 +86,9 @@ public class ButcherShopService {
     }
 
     public ButcherShopDetailVo getShopDetail(int ibutcher) {
-        ButcherEntity entity = mapper.selButcherEntity(ibutcher);
+        if(mapper.selButcherEntity(ibutcher) == null) {
+            throw new RestApiException(AuthErrorCode.VALID_SHOP);
+        }
         int i;
         try {
             i= authenticationFacade.getLoginUserPk();

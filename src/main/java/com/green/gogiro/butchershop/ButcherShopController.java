@@ -29,7 +29,7 @@ public class ButcherShopController {
     }
 
     @PostMapping
-    @Operation(summary = "리뷰 등록",description = "리뷰 등록 처리")
+    @Operation(summary = "후기 등록",description = "후기 등록 처리")
     public ButcherReviewPIcsInsDto postButReview(@RequestPart(required = false) List<MultipartFile> pics, @RequestPart ButcherReviewDto dto){
         dto.setPics(pics);
         if(dto.getPics() == null || dto.getPics().isEmpty()){
@@ -40,7 +40,7 @@ public class ButcherShopController {
 
     @GetMapping("/{ibutcher}")
     @Operation(summary = "정육점 상세 보기",description = "정육점 상세 보기 처리")
-    public ButcherShopDetailVo getShopDetail(@PathVariable int ibutcher){
+    public ButcherShopDetailVo getButDetail(@PathVariable int ibutcher){
         return service.getShopDetail(ibutcher);
     }
 

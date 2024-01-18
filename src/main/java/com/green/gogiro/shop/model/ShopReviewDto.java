@@ -14,7 +14,7 @@ public class ShopReviewDto {
     private int ireview;
     @JsonIgnore
     private int iuser;
-    @Schema(title = "가게pk")
+    @Schema(title = "고기집pk")
     private int ishop;
     @Schema(title = "별점")
     private int star;

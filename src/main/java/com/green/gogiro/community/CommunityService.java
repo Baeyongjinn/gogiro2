@@ -1,8 +1,10 @@
 package com.green.gogiro.community;
 
 import static com.green.gogiro.common.Const.*;
+import static com.green.gogiro.exception.AuthErrorCode.NOT_CONTENT;
 
 
+import com.green.gogiro.common.Const;
 import com.green.gogiro.common.MyFileUtils;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.community.model.*;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service
@@ -28,11 +31,11 @@ public class CommunityService {
     public CommunityPicsInsVo insCommunity(CommunityInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         //제목을 입력하지 않는 경우
-        if(dto.getTitle() == null) {
+        if(dto.getTitle() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getTitle())) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
         }
         //내용을 입력하지 않는 경우
-        if(dto.getContents() == null) {
+        if(dto.getContents() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getContents())) {
             throw new RestApiException(AuthErrorCode.NOT_CONTENT);
         }
         mapper.insCommunity(dto);
@@ -41,12 +44,11 @@ public class CommunityService {
             for(MultipartFile file : dto.getFiles()) {
                 String saveFileNm = myFileUtils.transferTo(file, target);
                 dto.getPics().add(saveFileNm);
-
             }
-            //오토인클리먼트 0 값일때
             mapper.insCommunityPics(dto);
         }
 
+        //오토인클리먼트 0 값일때
         if(dto.getIboard() == 0) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY);
         }
@@ -59,19 +61,21 @@ public class CommunityService {
 
     public CommunityPicsInsVo updCommunity(CommunityUpdDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
+        //게시글여부 확인
         if(check == null){
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         }
+        //본인 게시글 확인
         CommunityEntity entity = mapper.entityCommunity(dto.getIboard());
         if(entity.getIboard() != dto.getIboard()) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_ENTITY);
         }
         //제목을 입력하지 않는 경우
-        if(dto.getTitle() == null) {
+        if(dto.getTitle() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getTitle())) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
         }
         //내용을 입력하지 않는 경우
-        if(dto.getContents() == null) {
+        if(dto.getContents() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getContents())) {
             throw new RestApiException(AuthErrorCode.NOT_CONTENT);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
@@ -86,7 +90,6 @@ public class CommunityService {
             }
             mapper.insCommunityPics(dto);
         }
-
         CommunityPicsInsVo vo = CommunityPicsInsVo.builder()
                 .iboard(dto.getIboard())
                 .pics(dto.getPics())
@@ -96,6 +99,9 @@ public class CommunityService {
     }
 
     public List<CommunitySelVo> selCommunity(CommunitySelDto dto) {
+        if(Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR_TYPE_2,dto.getSearch())){
+            throw new RestApiException(NOT_CONTENT);
+        }
         List<CommunitySelVo> list = mapper.selCommunity(dto);
         List<Integer> iboard = new ArrayList<>();
         Map<Integer,CommunitySelVo> boardMap = new HashMap<>();

@@ -6,7 +6,7 @@
         SELECT ishop, name, location
         FROM t_shop
         <where>
-            <if test="search != null and search != '' ">
+            <if test="search != null and search">
                 name like CONCAT('%',#{search},'%')
             </if>
             <if test="category != 0">
@@ -136,4 +136,9 @@
         WHERE ishop = #{ishop}
     </select>
 
+    <select id="selShopCategory">
+        SELECT imeat
+        FROM t_category
+        WHERE imeat = #{imeat}
+    </select>
 </mapper>

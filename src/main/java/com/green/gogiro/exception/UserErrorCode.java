@@ -11,6 +11,8 @@ public enum UserErrorCode implements ErrorCode{
 
     NOT_EMAIL(HttpStatus.BAD_REQUEST,"아이디를 입력해주세요"),
     REGEXP_EMAIL(HttpStatus.BAD_REQUEST,"이메일 형식이 틀렸습니다"),
+    REGEXP_TEL(HttpStatus.BAD_REQUEST,"전화번호 형식이 틀렸습니다"),
+    REGEXP_GENDER(HttpStatus.BAD_REQUEST,"성별을 선택해 주세요"),
     NOT_PASSWORD(HttpStatus.BAD_REQUEST,"비밀번호를 입력해 주세요"),
     NOT_NAME(HttpStatus.BAD_REQUEST,"이름을 입력해주세요"),
     NOT_NICK_NAME(HttpStatus.BAD_REQUEST,"닉네임을 입력해 주세요"),

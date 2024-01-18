@@ -3,10 +3,12 @@ package com.green.gogiro.shop;
 import com.green.gogiro.common.Const;
 import com.green.gogiro.common.MyFileUtils;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.shop.model.*;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,60 +30,73 @@ public class ShopService {
     private final MyFileUtils myFileUtils;
 
     public List<ShopSelVo> getShopList(ShopSelDto dto) {
-
-        List<ShopSelVo> list = mapper.selShopAll(dto);
-        List<Integer> pk = new ArrayList<>();
-        Map<Integer, ShopSelVo> map = new HashMap<>();
-        for (ShopSelVo vo : list) {
-            pk.add(vo.getIshop());
-            map.put(vo.getIshop(), vo);
+        if(Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR_TYPE_2,dto.getSearch())){
+            throw new RestApiException(NOT_CONTENT);
+        }
+        Integer category = mapper.selShopCategory(dto.getCategory());
+        if(dto.getCategory() == 0){
+            category = Const.SUCCESS;
+        }
+        if (category == null) {
+            throw new RestApiException(INVALID_CATEGORY);
+        }
+        List<ShopSelVo> shopList = mapper.selShopAll(dto);
+        List<Integer> shopPk = new ArrayList<>();
+        Map<Integer, ShopSelVo> shopMap = new HashMap<>();
+        for (ShopSelVo vo : shopList) {
+            shopPk.add(vo.getIshop());
+            shopMap.put(vo.getIshop(), vo);
         }
 
-        List<ShopPicsVo> picList=mapper.selShopPicList(pk);
+        List<ShopPicsVo> picList = mapper.selShopPicList(shopPk);
         for(ShopPicsVo vo: picList){
-            map.get(vo.getIshop()).getPics().add(vo.getPic());
+            shopMap.get(vo.getIshop()).getPics().add(vo.getPic());
         }
-        List<ShopFacilityVo> facilities = mapper.selShopFacility(pk);
-        for(ShopFacilityVo fa : facilities){
-            map.get(fa.getIshop()).getFacilities().add(fa.getFacility());
+        List<ShopFacilityVo> shopFacilities = mapper.selShopFacility(shopPk);
+        for(ShopFacilityVo vo : shopFacilities){
+            shopMap.get(vo.getIshop()).getFacilities().add(vo.getFacility());
         }
 
-        return list;
+        return shopList;
     }
 
     public ShopDetailVo getShopDetail(int ishop) {
+        ShopEntity entity = mapper.selShopEntity(ishop);
+        if (entity == null) {
+            throw new RestApiException(VALID_SHOP);
+        }
         int i;
         try {
             i= authenticationFacade.getLoginUserPk();
         } catch(Exception e) {
             i= 0;
         }
-        ShopDto dto= new ShopDto(i,ishop);
-        ShopDetailVo list = mapper.selShopDetail(dto);
-        List<String> fa = mapper.shopFacilities(ishop);
-        List<ShopDetailMenu> menus = mapper.selMenuDetail(ishop);
-        List<String> pics2 = mapper.selShopPics(ishop);
-        list.setFacilities(fa);
-        list.setMenus(menus);
-        list.setPics(pics2);
+        ShopDto dto = new ShopDto(i,ishop);
+        ShopDetailVo shopDetailList = mapper.selShopDetail(dto);
+        List<String> facilityList = mapper.shopFacilities(ishop);
+        List<ShopDetailMenu> menuList = mapper.selMenuDetail(ishop);
+        List<String> picList = mapper.selShopPics(ishop);
+        shopDetailList.setFacilities(facilityList);
+        shopDetailList.setMenus(menuList);
+        shopDetailList.setPics(picList);
 
 
-        List<Integer> ireview = new ArrayList<>();
+        List<Integer> ireviewList = new ArrayList<>();
         Map<Integer, ShopReviewDetail> reviewDetailMap = new HashMap<>();
 
 
-        List<ShopReviewDetail> reviews = mapper.selReviewDetail(ishop);
-        for (ShopReviewDetail review : reviews) {
+        List<ShopReviewDetail> reviewList = mapper.selReviewDetail(ishop);
+        for (ShopReviewDetail review : reviewList) {
 
-            ireview.add(review.getIreview());
+            ireviewList.add(review.getIreview());
             reviewDetailMap.put(review.getIreview(), review);
         }
-        List<ShopReviewPicVo> picVos = mapper.selReviewPicDetail(ishop);
-        for (ShopReviewPicVo pics : picVos) {
+        List<ShopReviewPicVo> reviewPicList = mapper.selReviewPicDetail(ishop);
+        for (ShopReviewPicVo pics : reviewPicList) {
             reviewDetailMap.get(pics.getIreview()).getPic().add(pics.getPic());
         }
-        list.setReviews(reviews);
-        return list;
+        shopDetailList.setReviews(reviewList);
+        return shopDetailList;
     }
 
     public ShopReviewPicsInsDto postShopReview(ShopReviewDto dto) {
