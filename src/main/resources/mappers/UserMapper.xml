@@ -21,11 +21,12 @@
             pic = #{pic}
         WHERE iuser= #{iuser}
     </update>
-    <select id="signinUser">
-        SELECT upw
+    <select id="selIuserForTest">
+        SELECT
+            MAX(iuser)
         FROM t_user
-        WHERE email = #{email}
     </select>
+
 
     <update id="updateUser">
         update t_user
@@ -96,20 +97,26 @@
             0 AS checkShop,
             a.ireview,
             a.ishop,
+            c.name,
             a.star,
             a.review,
             a.created_at AS createdAt
         FROM t_shop_review a
+        JOIN t_shop c
+        ON a.ishop= c.ishop
         WHERE iuser= #{iuser}
         UNION
         SELECT
             1 AS checkShop,
             b.ireview,
             b.ibutcher AS ishop,
+            d.name,
             b.star,
             b.review,
             b.created_at AS createdAt
         FROM t_but_review b
+        JOIN t_butcher_shop d
+        ON b.ibutcher= d.ibutcher
         WHERE iuser= #{iuser}
         ORDER BY createdAt desc
         LIMIT #{startIdx}, #{rowCount}
