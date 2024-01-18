@@ -36,13 +36,17 @@ public class CommunityService {
             throw new RestApiException(AuthErrorCode.NOT_CONTENT);
         }
         mapper.insCommunity(dto);
-        String target = "/community/" + dto.getIboard();
-        for(MultipartFile file : dto.getFiles()) {
-            String saveFileNm = myFileUtils.transferTo(file, target);
-            dto.getPics().add(saveFileNm);
+        if(dto.getFiles()!=null){
+            String target = "/community/" + dto.getIboard();
+            for(MultipartFile file : dto.getFiles()) {
+                String saveFileNm = myFileUtils.transferTo(file, target);
+                dto.getPics().add(saveFileNm);
+
+            }
+            //오토인클리먼트 0 값일때
+            mapper.insCommunityPics(dto);
         }
-        //auto_increment 0 값일때
-        mapper.insCommunityPics(dto);
+
         if(dto.getIboard() == 0) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY);
         }
