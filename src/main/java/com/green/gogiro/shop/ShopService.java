@@ -30,7 +30,7 @@ public class ShopService {
     public List<ShopSelVo> getShopList(ShopSelDto dto) {
         Integer category = mapper.selShopCategory(dto.getCategory());
         if (category == null) {
-            throw new RestApiException(VALID_CATEGORY);
+            throw new RestApiException(INVALID_CATEGORY);
         }
         List<ShopSelVo> list = mapper.selShopAll(dto);
         List<Integer> pk = new ArrayList<>();

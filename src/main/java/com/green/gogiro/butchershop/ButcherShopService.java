@@ -32,7 +32,7 @@ public class ButcherShopService {
 
     public List<ButcherSelVo> getButList(ButcherSelDto dto) {
         if(dto.getPage() <= 0){
-            throw new RestApiException(AuthErrorCode.VALID_PAGE);
+            throw new RestApiException(AuthErrorCode.INVALID_PAGE);
         }
         List<ButcherSelVo> list = mapper.selButcherShopAll(dto);
         List<Integer> pk = new ArrayList<>();

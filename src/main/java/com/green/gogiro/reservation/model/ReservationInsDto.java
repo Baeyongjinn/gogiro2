@@ -10,7 +10,7 @@ public class ReservationInsDto {
     private int iuser;
     @Schema(title = "식당pk")
     private int ishop;
-    @Schema(title = "예약날짜",defaultValue = "0000-00-00 00:00:00")
+    @Schema(title = "예약날짜")
     private String date;
     @Schema(title = "요청 사항")
     private String request;

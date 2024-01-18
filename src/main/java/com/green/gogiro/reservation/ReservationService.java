@@ -39,9 +39,15 @@ public class ReservationService {
     }
 
     public ResVo postPickup(PickupInsDto dto) {
+        if(dto.getDate() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getDate()) || !Pattern.matches(REGEXP_DATE_TYPE5,dto.getDate())
+        || dto.getDate().equals("0000-00-00 00:00:00")){
+            throw new RestApiException(AuthErrorCode.REGEXP_DATE_TYPE);
+        }
+        if(dto.getIbutMenus() != null || !(dto.getIbutMenus().size() == dto.getCounts().size())) {
+            throw new RestApiException(AuthErrorCode.INVALID_MENU_OR_COUNT);
+        }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insPickup(dto);
-        if (dto.getIbutMenus() != null) {
             for (int i = 0; i < dto.getIbutMenus().size(); i++) {
                 PickupMenuDto menu = PickupMenuDto.builder()
                         .ipickup(dto.getIpickup())
@@ -50,7 +56,6 @@ public class ReservationService {
                         .build();
                 mapper.insPickupMenu(menu);
             }
-        }
         return new ResVo(SUCCESS);
     }
 
