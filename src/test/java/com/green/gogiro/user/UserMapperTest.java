@@ -40,13 +40,13 @@ class UserMapperTest {
         assertTrue(dto.getIuser()>0);
 
         UserInfoVo vo= mapper.selUserInfo(dto.getIuser());
+
         assertEquals(email,vo.getEmail());
         assertEquals(name,vo.getName());
-        assertEquals(nickname,vo.getNickname());
+        assertEquals(nickname,mapper.checkNickname(vo.getNickname()));
         assertEquals(birth,vo.getBirth());
         assertEquals(gender,vo.getGender());
         assertEquals(address,vo.getAddress());
-
     }
 
     @Test
@@ -93,15 +93,12 @@ class UserMapperTest {
     }
 
     @Test
-    void checkNickname() {
-    }
-
-    @Test
     void selReservation() {
     }
 
     @Test
     void selUserReview() {
+
     }
 
     @Test
