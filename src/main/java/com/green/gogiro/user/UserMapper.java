@@ -13,7 +13,7 @@ public interface UserMapper {
 
     int updUserPic(UserSignupDto dto);
 
-    String signinUser(String email);
+    int selIuserForTest();
 
     int updateUser(UserUpdDto dto);
 
