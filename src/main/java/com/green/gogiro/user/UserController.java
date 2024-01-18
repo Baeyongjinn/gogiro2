@@ -40,7 +40,7 @@ public class UserController {
 
     @PostMapping("/signout")
     @Operation(summary = "로그아웃", description = "로그아웃 처리")
-    public ResVo postSignout( HttpServletResponse res) {
+    public ResVo signout(HttpServletResponse res) {
         return service.signout(res);
     }
 
@@ -52,7 +52,7 @@ public class UserController {
 
     @PutMapping
     @Operation(summary = "회원정보 수정", description = "회원정보 수정 처리")
-    public ResVo updateUser(@RequestPart(required = false) MultipartFile pic,
+    public ResVo putUser(@RequestPart(required = false) MultipartFile pic,
                             @RequestPart UserUpdDto dto) {
         if(pic!=null) {
             dto.setFile(pic);
@@ -62,7 +62,7 @@ public class UserController {
 
     @GetMapping("")
     @Operation(summary = "유저 정보 보기", description = "유저 정보 보기 처리")
-    public UserInfoVo selUserInfo() {
+    public UserInfoVo getUserInfo() {
         return service.selUserInfo();
     }
 

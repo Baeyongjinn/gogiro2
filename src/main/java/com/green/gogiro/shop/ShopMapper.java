@@ -8,27 +8,21 @@ import java.util.List;
 
 @Mapper
 public interface ShopMapper {
+
     List<ShopSelVo> selShopAll(ShopSelDto dto);
-
-    List<String> selShopPics(int ishop);
-
     List<ShopPicsVo> selShopPicList(List<Integer> pk);
-
-    ShopDetailVo selShopDetail(ShopDto dto);
-
     List<ShopFacilityVo> selShopFacility(List<Integer> ishop);
 
+    ShopDetailVo selShopDetail(ShopDto dto);
+    List<String> shopFacilities(int ishop);
     List<ShopDetailMenu> selMenuDetail(int ishop);
-
+    List<String> selShopPics(int ishop);
     List<ShopReviewDetail> selReviewDetail(int ishop);
-
     List<ShopReviewPicVo> selReviewPicDetail(int ishop);
 
-    List<String> shopFacilities(int ishop);
-
     int insShopReview(ShopReviewDto dto);
-
     int insShopReviewPic(ShopReviewPicsInsDto dto);
+
     Integer selShopBookmark(ShopBookmarkDto dto);
     void shopBookmarkOn(ShopBookmarkDto dto);
     void shopBookmarkOff(ShopBookmarkDto dto);
