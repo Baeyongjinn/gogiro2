@@ -22,10 +22,13 @@ public class CommunityController {
     public CommunityPicsInsVo postCommunity(@RequestPart(required = false) List<MultipartFile> pics
             , @RequestPart CommunityInsDto dto) {
         //사진을 5장 초과했을 경우
-        if(dto.getFiles().size() >= 5){
-            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        if(pics!=null){
+            dto.setFiles(pics);
+            if(dto.getFiles().size() >= 5){
+                throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+            }
         }
-        dto.setFiles(pics);
+        
         return service.insCommunity(dto);
     }
 
