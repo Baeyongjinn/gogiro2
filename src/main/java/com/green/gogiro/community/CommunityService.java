@@ -41,7 +41,7 @@ public class CommunityService {
             String saveFileNm = myFileUtils.transferTo(file, target);
             dto.getPics().add(saveFileNm);
         }
-        //오토인클리먼트 0 값일때
+        //auto_increment 0 값일때
         mapper.insCommunityPics(dto);
         if(dto.getIboard() == 0) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY);

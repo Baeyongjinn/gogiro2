@@ -10,7 +10,7 @@
                 name like CONCAT('%',#{search},'%')
             </if>
             <if test="category != 0">
-                imeat = #{category}
+                and imeat = #{category}
             </if>
         </where>
         LIMIT #{startIdx}, #{rowCount}
