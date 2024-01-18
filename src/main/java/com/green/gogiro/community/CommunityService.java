@@ -49,7 +49,7 @@ public class CommunityService {
             mapper.insCommunityPics(dto);
         }
 
-        //오토인클리먼트 0 값일때
+        //autu_increment 0 값일때
         if(dto.getIboard() == 0) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY);
         }
@@ -95,9 +95,11 @@ public class CommunityService {
     }
 
     public List<CommunitySelVo> selCommunity(CommunitySelDto dto) {
+        //검색창 공백
         if(Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR_TYPE_2,dto.getSearch())){
             throw new RestApiException(NOT_CONTENT);
         }
+        //검색결과 없음
         List<CommunitySelVo> list = mapper.selCommunity(dto);
         if(list.isEmpty()) {
             throw new RestApiException(SEARCH_COMMUNITY);
