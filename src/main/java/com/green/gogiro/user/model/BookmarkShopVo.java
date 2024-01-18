@@ -21,6 +21,8 @@ public class BookmarkShopVo {
     private String open;
     @Schema(title = "전화번호")
     private String tel;
+    @Schema(title = "고기 종류")
+    private String mtype;
 
     private List<String> facilities = new ArrayList<>();
     @JsonIgnore

@@ -94,31 +94,37 @@
 
     <select id="selUserReview">
         SELECT
-            0 AS checkShop,
-            a.ireview,
-            a.ishop,
-            c.name,
-            a.star,
-            a.review,
-            a.created_at AS createdAt
+        0 AS checkShop,
+        a.ireview,
+        a.ishop,
+        b.name,
+        a.review,
+        a.star,
+        a.created_at AS createdAt,
+        if(c.iuser IS NULL, 0, 1) AS isBook
         FROM t_shop_review a
-        JOIN t_shop c
+        JOIN t_shop b
+        ON a.ishop= b.ishop
+        LEFT JOIN t_shop_bookmark c
         ON a.ishop= c.ishop
-        WHERE iuser= #{iuser}
+        WHERE a.iuser = #{iuser}
         UNION
         SELECT
-            1 AS checkShop,
-            b.ireview,
-            b.ibutcher AS ishop,
-            d.name,
-            b.star,
-            b.review,
-            b.created_at AS createdAt
-        FROM t_but_review b
-        JOIN t_butcher_shop d
-        ON b.ibutcher= d.ibutcher
-        WHERE iuser= #{iuser}
-        ORDER BY createdAt desc
+        1 AS checkShop,
+        a.ireview,
+        a.ibutcher AS ishop,
+        b.name,
+        a.review,
+        a.star,
+        a.created_at AS createdAt,
+        if(c.iuser IS NULL, 0, 1) AS isBook
+        FROM t_but_review a
+        JOIN t_butcher_shop b
+        ON a.ibutcher= b.ibutcher
+        LEFT JOIN t_but_bookmark c
+        ON a.ibutcher= c.ibutcher
+        WHERE a.iuser = #{iuser}
+        ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
 
@@ -145,6 +151,7 @@
             a.location,
             a.`open`,
             a.tel,
+            c.mtype,
             b.created_at AS createdAt
         FROM t_shop a
         JOIN (SELECT
@@ -154,6 +161,8 @@
               FROM t_shop_bookmark
               ) b
         ON a.ishop= b.ishop
+        JOIN t_category c
+        ON a.imeat = c.imeat
         AND b.iuser= #{iuser}
         UNION
         SELECT
@@ -163,6 +172,7 @@
             a.location,
             a.`open`,
             a.tel,
+            NULL mtype,
             b.created_at AS createdAt
         FROM t_butcher_shop a
         JOIN (SELECT
