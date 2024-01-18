@@ -28,10 +28,10 @@ public class ShopService {
     private final MyFileUtils myFileUtils;
 
     public List<ShopSelVo> getShopList(ShopSelDto dto) {
-//        Integer category = mapper.selShopCategory(dto.getCategory());
-//        if (category == null) {
-//
-//        }
+        Integer category = mapper.selShopCategory(dto.getCategory());
+        if (category == null) {
+            throw new RestApiException(VALID_CATEGORY);
+        }
         List<ShopSelVo> list = mapper.selShopAll(dto);
         List<Integer> pk = new ArrayList<>();
         Map<Integer, ShopSelVo> map = new HashMap<>();
