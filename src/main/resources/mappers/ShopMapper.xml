@@ -6,7 +6,7 @@
         SELECT ishop, name, location
         FROM t_shop
         <where>
-            <if test="search != null and search != '' ">
+            <if test="search != null and search">
                 name like CONCAT('%',#{search},'%')
             </if>
             <if test="category != 0">

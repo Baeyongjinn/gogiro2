@@ -1,6 +1,7 @@
 package com.green.gogiro.community;
 
 import static com.green.gogiro.common.Const.*;
+import static com.green.gogiro.exception.AuthErrorCode.NOT_CONTENT;
 
 
 import com.green.gogiro.common.Const;
@@ -98,7 +99,9 @@ public class CommunityService {
     }
 
     public List<CommunitySelVo> selCommunity(CommunitySelDto dto) {
-
+        if(Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR_TYPE_2,dto.getSearch())){
+            throw new RestApiException(NOT_CONTENT);
+        }
         List<CommunitySelVo> list = mapper.selCommunity(dto);
         List<Integer> iboard = new ArrayList<>();
         Map<Integer,CommunitySelVo> boardMap = new HashMap<>();

@@ -3,10 +3,12 @@ package com.green.gogiro.shop;
 import com.green.gogiro.common.Const;
 import com.green.gogiro.common.MyFileUtils;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.shop.model.*;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +30,9 @@ public class ShopService {
     private final MyFileUtils myFileUtils;
 
     public List<ShopSelVo> getShopList(ShopSelDto dto) {
+        if(Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR_TYPE_2,dto.getSearch())){
+            throw new RestApiException(NOT_CONTENT);
+        }
         Integer category = mapper.selShopCategory(dto.getCategory());
         if(dto.getCategory() == 0){
             category = Const.SUCCESS;

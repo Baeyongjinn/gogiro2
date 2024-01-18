@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import static com.green.gogiro.exception.AuthErrorCode.NOT_CONTENT;
+
 @Service
 @RequiredArgsConstructor
 public class ButcherShopService {
@@ -31,6 +33,9 @@ public class ButcherShopService {
     private final MyFileUtils myFileUtils;
 
     public List<ButcherSelVo> getButList(ButcherSelDto dto) {
+        if(Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR_TYPE_2,dto.getSearch())){
+            throw new RestApiException(NOT_CONTENT);
+        }
         if(dto.getPage() <= 0){
             throw new RestApiException(AuthErrorCode.INVALID_PAGE);
         }
