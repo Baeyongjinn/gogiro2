@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class ShopDetailVo {
-    @Schema(title = "식당pk")
+    @Schema(title = "고기집pk")
     private int ishop;
     @Schema(title = "상호명")
     private String name;

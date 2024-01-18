@@ -8,7 +8,7 @@ import lombok.Data;
 public class ReservationInsDto {
     @JsonIgnore
     private int iuser;
-    @Schema(title = "식당pk")
+    @Schema(title = "고기집pk")
     private int ishop;
     @Schema(title = "예약날짜",defaultValue = "0000-00-00 00:00:00")
     private String date;

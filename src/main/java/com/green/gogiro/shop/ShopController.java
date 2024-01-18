@@ -34,7 +34,7 @@ public class ShopController {
     }
 
     @PostMapping
-    @Operation(summary = "리뷰 등록",description = "리뷰 등록 처리")
+    @Operation(summary = "후기 등록",description = "후기 등록 처리")
     public ShopReviewPicsInsDto postShopReview(@RequestPart(required = false) List<MultipartFile> pics, @RequestPart ShopReviewDto dto) {
         dto.setPics(pics);
         if (dto.getPics() == null || dto.getPics().isEmpty()) {
