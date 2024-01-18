@@ -20,4 +20,7 @@ public class Const {
 
     public static final String REGEXP_USER_GENDER = "^[남|여]$";
 
+    public static final String REGEXP_DATE_TYPE5 =
+            "\\d{4}-[01]\\d-[0-3]\\d\\s[0-2](\\d:[0-5]\\d:([0-5]\\d)?)?";
+
 }

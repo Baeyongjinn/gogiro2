@@ -50,31 +50,37 @@ public class UserService {
         String hashedPw = passwordEncoder.encode(dto.getUpw());
         dto.setUpw(hashedPw);
 
-        if(dto.getEmail() == null||
-           dto.getUpw() == null ||
-           dto.getName() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getName())
-           || dto.getNickname() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getNickname())
-           || dto.getBirth() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getBirth())
-           || dto.getGender() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getGender())) {
+        if (dto.getEmail() == null ||
+                dto.getUpw() == null ||
+                dto.getTel() == null ||
+                dto.getName() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getName())
+                || dto.getNickname() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getNickname())
+                || dto.getBirth() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getBirth())
+                || dto.getGender() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getGender())
+                || dto.getAddress() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getAddress())) {
             throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
         }
 
-        if(!Pattern.matches(REGEXP_USER_ID,dto.getEmail())){
+        if(!Pattern.matches(REGEXP_USER_TEL,dto.getTel())) {
+            throw new RestApiException(UserErrorCode.REGEXP_TEL);
+        }
+
+        if (!Pattern.matches(REGEXP_USER_ID, dto.getEmail())) {
             throw new RestApiException(UserErrorCode.REGEXP_EMAIL);
         }
 
-        if(!Pattern.matches(REGEXP_USER_GENDER,dto.getGender())){
+        if (!Pattern.matches(REGEXP_USER_GENDER, dto.getGender())) {
             throw new RestApiException(UserErrorCode.REGEXP_GENDER);
         }
-        if(!Pattern.matches(REGEXP_USER_TEL,dto.getTel())){
+        if (!Pattern.matches(REGEXP_USER_TEL, dto.getTel())) {
             throw new RestApiException(UserErrorCode.REGEXP_TEL);
         }
 
         mapper.signupUser(dto);
 
-        if(dto.getFile()!=null) {
-            String path= "/user/"+dto.getIuser();
-            String savedPicFileNm= myFileUtils.transferTo(dto.getFile(), path);
+        if (dto.getFile() != null) {
+            String path = "/user/" + dto.getIuser();
+            String savedPicFileNm = myFileUtils.transferTo(dto.getFile(), path);
             dto.setPic(savedPicFileNm);
             mapper.updUserPic(dto);
         }
@@ -91,9 +97,9 @@ public class UserService {
                              UserSigninDto dto) {
         UserEntity entity = mapper.userEntity(dto.getEmail());
         if (entity == null) {
-            throw new RestApiException(AuthErrorCode.VALID_EXIST_USER_ID);
+            throw new RestApiException(AuthErrorCode.INVALID_EXIST_USER_ID);
         } else if (!passwordEncoder.matches(dto.getUpw(), entity.getUpw())) {
-            throw new RestApiException(AuthErrorCode.VALID_PASSWORD);
+            throw new RestApiException(AuthErrorCode.INVALID_PASSWORD);
         }
         MyPrincipal myPrincipal = MyPrincipal.builder()
                 .iuser(entity.getIuser())
@@ -118,21 +124,22 @@ public class UserService {
                 .accessToken(at)
                 .build();
     }
+
     public ResVo signout(HttpServletResponse res) {
-        cookeUtils.deleteCookie(res,"rt");
+        cookeUtils.deleteCookie(res, "rt");
         return new ResVo(1);
     }
 
     public UserSignVo getRefreshToken(HttpServletRequest req) {
-        Cookie cookie = cookeUtils.getCookie(req,"rt");
-        if(cookie == null){
+        Cookie cookie = cookeUtils.getCookie(req, "rt");
+        if (cookie == null) {
             return UserSignVo.builder().
                     result(FAIL)
                     .accessToken(null)
                     .build();
         }
         String token = cookie.getValue();
-        if(!jwtTokenProvider.isValidateToken(token)) {
+        if (!jwtTokenProvider.isValidateToken(token)) {
             return UserSignVo.builder().
                     result(FAIL)
                     .accessToken(null)
@@ -150,55 +157,54 @@ public class UserService {
     }
 
 
-
     public ResVo updateUser(UserUpdDto dto) {
         String check = mapper.checkNickname(dto.getNickname());
 
-        if(dto.getNickname()==null||
-           dto.getAddress()==null||
-           dto.getTel()==null) {
+        if (dto.getNickname() == null ||
+                dto.getAddress() == null ||
+                dto.getTel() == null) {
             throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
         }
-        if(check == null) {
-           throw new RestApiException(UserErrorCode.NOT_NICK_NAME);
+        if (check == null) {
+            throw new RestApiException(UserErrorCode.NOT_NICK_NAME);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        if(dto.getFile()!=null) {
-            String path= "/user/"+dto.getIuser();
-            String savedPicFileNm= myFileUtils.transferTo(dto.getFile(), path);
+        if (dto.getFile() != null) {
+            String path = "/user/" + dto.getIuser();
+            String savedPicFileNm = myFileUtils.transferTo(dto.getFile(), path);
             dto.setPic(savedPicFileNm);
         }
         mapper.updateUser(dto);
         return new ResVo(SUCCESS);
     }
 
-    public UserInfoVo selUserInfo(){
+    public UserInfoVo selUserInfo() {
         return mapper.selUserInfo(authenticationFacade.getLoginUserPk());
     }
 
-    public List<ReservationVo> getReservation(UserMyPageDto dto){
+    public List<ReservationVo> getReservation(UserMyPageDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         return mapper.selReservation(dto);
     }
 
-    public List<ReviewVo> getUserReview(UserMyPageDto dto){
+    public List<ReviewVo> getUserReview(UserMyPageDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        List<ReviewVo> reviews= mapper.selUserReview(dto);
-        List<ReviewPk> reviewPkList= new ArrayList<>();
-        Map<ReviewPk, ReviewVo> reviewMap= new HashMap<>();
-        for(ReviewVo vo: reviews){
-            ReviewPk pk= new ReviewPk(vo.getCheckShop(),vo.getIreview());
+        List<ReviewVo> reviews = mapper.selUserReview(dto);
+        List<ReviewPk> reviewPkList = new ArrayList<>();
+        Map<ReviewPk, ReviewVo> reviewMap = new HashMap<>();
+        for (ReviewVo vo : reviews) {
+            ReviewPk pk = new ReviewPk(vo.getCheckShop(), vo.getIreview());
             reviewMap.put(pk, vo);
             reviewPkList.add(pk);
         }
-        for(ReviewPk pk: reviewPkList){
-            List<String> pics= mapper.selUserReviewPic(pk);
+        for (ReviewPk pk : reviewPkList) {
+            List<String> pics = mapper.selUserReviewPic(pk);
             reviewMap.get(pk).setPics(pics);
         }
         return reviews;
     }
 
-    public List<BookmarkShopVo> getUserBookmark(UserMyPageDto dto){
+    public List<BookmarkShopVo> getUserBookmark(UserMyPageDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         return mapper.selUserBookmark(dto);
     }
