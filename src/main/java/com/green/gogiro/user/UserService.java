@@ -51,16 +51,23 @@ public class UserService {
         dto.setUpw(hashedPw);
 
         if(dto.getEmail() == null||
-           dto.getUpw() == null||
-           dto.getName() == null ||
-           dto.getNickname() == null||
-           dto.getBirth() == null||
-           dto.getGender() == null) {
+           dto.getUpw() == null ||
+           dto.getName() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getName())
+           || dto.getNickname() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getNickname())
+           || dto.getBirth() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getBirth())
+           || dto.getGender() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getGender())) {
             throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
         }
 
         if(!Pattern.matches(REGEXP_USER_ID,dto.getEmail())){
             throw new RestApiException(UserErrorCode.REGEXP_EMAIL);
+        }
+
+        if(!Pattern.matches(REGEXP_USER_GENDER,dto.getGender())){
+            throw new RestApiException(UserErrorCode.REGEXP_GENDER);
+        }
+        if(!Pattern.matches(REGEXP_USER_TEL,dto.getTel())){
+            throw new RestApiException(UserErrorCode.REGEXP_TEL);
         }
 
         mapper.signupUser(dto);
