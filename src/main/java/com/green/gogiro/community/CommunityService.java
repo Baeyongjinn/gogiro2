@@ -76,14 +76,17 @@ public class CommunityService {
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updCommunity(dto);
-        mapper.delByCommunityPics(dto);
+        mapper.delCommunityPic(dto);
         String target = "/community/" + dto.getIboard();
         myFileUtils.delFolderTrigger(target);
-        for(MultipartFile file : dto.getFiles()) {
-            String saveFileNm = myFileUtils.transferTo(file, target);
-            dto.getPics().add(saveFileNm);
+        if(dto.getFiles()!=null) {
+            for(MultipartFile file : dto.getFiles()) {
+                String saveFileNm = myFileUtils.transferTo(file, target);
+                dto.getPics().add(saveFileNm);
+            }
+            mapper.insCommunityPics(dto);
         }
-        mapper.insCommunityPics(dto);
+
         CommunityPicsInsVo vo = CommunityPicsInsVo.builder()
                 .iboard(dto.getIboard())
                 .pics(dto.getPics())

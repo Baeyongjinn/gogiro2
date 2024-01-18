@@ -70,7 +70,7 @@
         and iboard = #{iboard}
     </delete>
 
-    <delete id="delPicCommunity">
+    <delete id="delCommunityPic">
         delete from t_commu_pics
         where iboard = #{iboard}
     </delete>

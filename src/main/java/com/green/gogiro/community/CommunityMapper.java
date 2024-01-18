@@ -17,7 +17,7 @@ public interface CommunityMapper {
 
     int updCommunity(CommunityUpdDto dto);
 
-    int delByCommunityPics(CommunityUpdDto dto);
+    int delCommunityPic(CommunityUpdDto dto);
 
     int selCommunityCount();
 
