@@ -34,4 +34,5 @@ public interface ShopMapper {
     void shopBookmarkOff(ShopBookmarkDto dto);
 
     ShopEntity selShopEntity(int ishop);
+    Integer selShopCategory(int imeat);
 }

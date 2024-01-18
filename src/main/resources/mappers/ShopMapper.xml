@@ -136,4 +136,9 @@
         WHERE ishop = #{ishop}
     </select>
 
+    <select id="selShopCategory">
+        SELECT imeat
+        FROM t_category
+        WHERE imeat = #{imeat}
+    </select>
 </mapper>

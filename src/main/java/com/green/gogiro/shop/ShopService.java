@@ -28,7 +28,10 @@ public class ShopService {
     private final MyFileUtils myFileUtils;
 
     public List<ShopSelVo> getShopList(ShopSelDto dto) {
-
+//        Integer category = mapper.selShopCategory(dto.getCategory());
+//        if (category == null) {
+//
+//        }
         List<ShopSelVo> list = mapper.selShopAll(dto);
         List<Integer> pk = new ArrayList<>();
         Map<Integer, ShopSelVo> map = new HashMap<>();
@@ -50,6 +53,10 @@ public class ShopService {
     }
 
     public ShopDetailVo getShopDetail(int ishop) {
+        ShopEntity entity = mapper.selShopEntity(ishop);
+        if (entity == null) {
+            throw new RestApiException(VALID_SHOP);
+        }
         int i;
         try {
             i= authenticationFacade.getLoginUserPk();
