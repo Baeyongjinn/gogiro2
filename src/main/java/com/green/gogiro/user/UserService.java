@@ -11,6 +11,8 @@ import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.security.JwtTokenProvider;
 import com.green.gogiro.security.MyPrincipal;
 import com.green.gogiro.security.MyUserDetails;
+import com.green.gogiro.shop.ShopMapper;
+import com.green.gogiro.shop.model.ShopFacilityVo;
 import com.green.gogiro.user.model.ReservationVo;
 import com.green.gogiro.user.model.*;
 import jakarta.servlet.http.Cookie;
@@ -36,6 +38,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class UserService {
     private final UserMapper mapper;
+    private final ShopMapper shopMapper;
 
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
@@ -206,7 +209,22 @@ public class UserService {
 
     public List<BookmarkShopVo> getUserBookmark(UserMyPageDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        return mapper.selUserBookmark(dto);
+        List<BookmarkShopVo> list= mapper.selUserBookmark(dto);
+        List<Integer> ishopList= new ArrayList<>();
+        Map<Integer, BookmarkShopVo> shopMap= new HashMap<>();
+        for(BookmarkShopVo vo: list) {
+            if(vo.getImeat()!=0){
+                ishopList.add(vo.getIshop());
+                shopMap.put(vo.getIshop(),vo);
+            }
+        }
+        List<ShopFacilityVo> facilityList= shopMapper.selShopFacility(ishopList);
+        for(ShopFacilityVo vo: facilityList) {
+            if(shopMap.get(vo.getIshop()).getImeat()!=0) {
+                shopMap.get(vo.getIshop()).getFacilities().add(vo.getFacility());
+            }
+        }
+        return list;
     }
 
     public ResVo delShopReview(ReviewDelDto dto) {
