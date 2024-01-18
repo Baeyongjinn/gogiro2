@@ -45,7 +45,6 @@ public class ButcherShopService {
         for (ButcherPicsVo pic : pics) {
             butMap.get(pic.getIbutcher()).getPics().add(pic.getPic());
         }
-
         return list;
     }
 
