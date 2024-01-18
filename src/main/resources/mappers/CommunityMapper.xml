@@ -80,6 +80,13 @@
         where iboard = #{iboard}
     </delete>
 
+    <delete id="delCommunityAllComment">
+        DELETE
+        FROM t_community_comment
+        WHERE iuser= #{iuser}
+        AND iboard= #{iboard}
+    </delete>
+
     <select id="checkCommunity">
         SELECT iboard
         FROM t_community

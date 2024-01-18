@@ -65,11 +65,6 @@ public class CommunityService {
         if(check == null){
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         }
-        //본인 게시글 확인
-        CommunityEntity entity = mapper.entityCommunity(dto.getIboard());
-        if(entity.getIboard() != dto.getIboard()) {
-            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_ENTITY);
-        }
         //제목을 입력하지 않는 경우
         if(dto.getTitle() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getTitle())) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
@@ -122,15 +117,13 @@ public class CommunityService {
 
     public ResVo delCommunity(CommunityDelDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
+        //게시글 여부 확인
         if(check == null){
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         }
-        CommunityEntity entity = mapper.entityCommunity(dto.getIboard());
-        if(entity.getIboard() != dto.getIboard()) {
-            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_ENTITY);
-        }
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        mapper.delPicCommunity(dto.getIboard());
+        mapper.delCommunityAllComment(dto);
+        mapper.delCommunityPic(dto.getIboard());
         mapper.delCommunity(dto);
         return new ResVo(SUCCESS);
     }
