@@ -135,7 +135,11 @@ public class ShopService {
     }
 
     public ResVo toggleShopBookmark(ShopBookmarkDto dto) {
+        ShopEntity entity = mapper.selShopEntity(dto.getIshop());
         dto.setIuser(authenticationFacade.getLoginUserPk());
+        if(entity == null) {
+            throw new RestApiException(VALID_SHOP);
+        }
         dto.setOn(mapper.selShopBookmark(dto) == null);
         if(dto.isOn()) {
             mapper.shopBookmarkOn(dto);
