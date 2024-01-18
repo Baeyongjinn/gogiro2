@@ -28,7 +28,6 @@ public class SecurityConfiguration {
                                                                     , "/error"
                                                                     , "/err"
                                                                     , "/"
-
                                                                     , "/static/**"
                                                                     , "/index.html"
                                                                     , "/static/**"
