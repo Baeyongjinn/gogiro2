@@ -29,6 +29,9 @@ public class ShopService {
 
     public List<ShopSelVo> getShopList(ShopSelDto dto) {
         Integer category = mapper.selShopCategory(dto.getCategory());
+        if(dto.getCategory() == 0){
+            category = Const.SUCCESS;
+        }
         if (category == null) {
             throw new RestApiException(INVALID_CATEGORY);
         }
