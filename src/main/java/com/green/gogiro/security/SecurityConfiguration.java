@@ -41,7 +41,6 @@ public class SecurityConfiguration {
                                                                 , "/api/shop", "/api/shop/**"
                                                                 , "/api/community")
                                 .permitAll()
-                        //.requestMatchers(HttpMethod.POST, "/api/community").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

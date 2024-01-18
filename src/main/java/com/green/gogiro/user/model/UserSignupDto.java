@@ -27,10 +27,10 @@ public class UserSignupDto {
     private String gender;
     @Schema(title = "주소")
     private String address;
+    @Schema(title = "전화번호",defaultValue = "010-0000-0000")
+    private String tel;
     @JsonIgnore
     private String pic;
     @JsonIgnore
     private MultipartFile file;
-    @Schema(title = "전화번호",defaultValue = " ")
-    private String tel;
 }
