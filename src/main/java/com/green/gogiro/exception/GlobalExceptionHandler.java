@@ -23,7 +23,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     // 대부분의 에러 잡음
     public ResponseEntity<Object> handleException(Exception e) {
         log.warn("handleException", e);
-        return handleExceptionInternal(CommonErrorCode.INTERNAL_SERBER_ERROR);
+        return handleExceptionInternal(CommonErrorCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(RestApiException.class)

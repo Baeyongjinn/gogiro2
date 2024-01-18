@@ -2,13 +2,11 @@ package com.green.gogiro.user;
 
 import static com.green.gogiro.common.Const.*;
 
-import com.green.gogiro.common.AppProperties;
-import com.green.gogiro.common.CookieUtils;
-import com.green.gogiro.common.MyFileUtils;
-import com.green.gogiro.common.ResVo;
+import com.green.gogiro.common.*;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.CommonErrorCode;
 import com.green.gogiro.exception.RestApiException;
+import com.green.gogiro.exception.UserErrorCode;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.security.JwtTokenProvider;
 import com.green.gogiro.security.MyPrincipal;
@@ -30,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 @Slf4j
@@ -51,13 +50,17 @@ public class UserService {
         String hashedPw = passwordEncoder.encode(dto.getUpw());
         dto.setUpw(hashedPw);
 
-        if(dto.getEmail()==null||
-           dto.getUpw()==null||
-           dto.getName()==null||
-           dto.getNickname()==null||
-           dto.getBirth()==null||
-           dto.getGender()==null) {
+        if(dto.getEmail() == null||
+           dto.getUpw() == null||
+           dto.getName() == null ||
+           dto.getNickname() == null||
+           dto.getBirth() == null||
+           dto.getGender() == null) {
             throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
+        }
+
+        if(!Pattern.matches(REGEXP_USER_ID,dto.getEmail())){
+            throw new RestApiException(UserErrorCode.REGEXP_EMAIL);
         }
 
         mapper.signupUser(dto);
@@ -150,7 +153,7 @@ public class UserService {
             throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
         }
         if(check == null) {
-           throw new RestApiException(AuthErrorCode.NOT_NICK_NAME);
+           throw new RestApiException(UserErrorCode.NOT_NICK_NAME);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         if(dto.getFile()!=null) {
