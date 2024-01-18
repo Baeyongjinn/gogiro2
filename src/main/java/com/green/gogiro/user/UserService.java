@@ -161,14 +161,17 @@ public class UserService {
 
 
     public ResVo updateUser(UserUpdDto dto) {
-        String check = mapper.checkNickname(dto.getNickname());
+
 
         if (dto.getNickname() == null ||
                 dto.getAddress() == null ||
                 dto.getTel() == null) {
             throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
         }
-        if (check == null) {
+        if (!Pattern.matches(REGEXP_USER_TEL,dto.getTel())) {
+            throw new RestApiException(UserErrorCode.REGEXP_TEL);
+        }
+        if (Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getNickname())) {
             throw new RestApiException(UserErrorCode.NOT_NICK_NAME);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
