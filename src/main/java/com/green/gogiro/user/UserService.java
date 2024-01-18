@@ -232,7 +232,7 @@ public class UserService {
 
     public ResVo delShopReview(ReviewDelDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        mapper.delShopReviewPics(dto.getIreview());
+        mapper.delShopReviewPics(dto);
         return new ResVo(mapper.delShopReview(dto));
     }
 }

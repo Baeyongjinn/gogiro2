@@ -31,7 +31,7 @@ public interface UserMapper {
 
     List<BookmarkShopVo> selUserBookmark(UserMyPageDto dto);
 
-    int delShopReviewPics(int ireview);
+    int delShopReviewPics(ReviewDelDto dto);
 
     int delShopReview(ReviewDelDto dto);
 
