@@ -2,6 +2,7 @@ package com.green.gogiro.community;
 
 import static com.green.gogiro.common.Const.*;
 import static com.green.gogiro.exception.AuthErrorCode.NOT_CONTENT;
+import static com.green.gogiro.exception.AuthErrorCode.SEARCH_COMMUNITY;
 
 
 import com.green.gogiro.common.Const;
@@ -98,6 +99,9 @@ public class CommunityService {
             throw new RestApiException(NOT_CONTENT);
         }
         List<CommunitySelVo> list = mapper.selCommunity(dto);
+        if(list.isEmpty()) {
+            throw new RestApiException(SEARCH_COMMUNITY);
+        }
         List<Integer> iboard = new ArrayList<>();
         Map<Integer,CommunitySelVo> boardMap = new HashMap<>();
         int count = mapper.selCommunityCount();
