@@ -74,6 +74,7 @@ public class CommunityService {
         mapper.updCommunity(dto);
         mapper.delByCommunityPics(dto);
         String target = "/community/" + dto.getIboard();
+        myFileUtils.delFolderTrigger(target);
         for(MultipartFile file : dto.getFiles()) {
             String saveFileNm = myFileUtils.transferTo(file, target);
             dto.getPics().add(saveFileNm);
@@ -123,6 +124,10 @@ public class CommunityService {
 
     public ResVo postCommunityComment(CommunityCommentInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
+        //내용을 입력하지 않는 경우
+        if(dto.getContents() == null) {
+            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
+        }
         return new ResVo(mapper.insCommunityComment(dto));
     }
 
