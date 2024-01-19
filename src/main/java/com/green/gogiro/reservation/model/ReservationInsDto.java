@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class ReservationInsDto {
     @JsonIgnore
+    private int ireser;
+    @JsonIgnore
     private int iuser;
     @Schema(title = "고기집pk")
     private int ishop;

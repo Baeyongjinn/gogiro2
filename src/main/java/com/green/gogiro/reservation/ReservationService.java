@@ -35,7 +35,7 @@ public class ReservationService {
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insReservation(dto);
-        return new ResVo(SUCCESS);
+        return new ResVo(dto.getIreser());
     }
 
     public ResVo postPickup(PickupInsDto dto) {
@@ -56,7 +56,7 @@ public class ReservationService {
                         .build();
                 mapper.insPickupMenu(menu);
             }
-        return new ResVo(SUCCESS);
+        return new ResVo(dto.getIpickup());
     }
 
     public ResVo cancelReservation(CancelReservationDto dto) {
