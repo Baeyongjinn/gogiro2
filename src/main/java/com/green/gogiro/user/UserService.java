@@ -86,7 +86,7 @@ public class UserService {
         if (!Pattern.matches(REGEXP_USER_GENDER, dto.getGender())) {
             throw new RestApiException(UserErrorCode.REGEXP_GENDER);
         }
-        if (!Pattern.matches(REGEXP_USER_TEL, dto.getTel()) || "010-0000-0000".equals(dto.getTel())) {
+        if (!Pattern.matches(REGEXP_USER_TEL, dto.getTel()) || "01000000000".equals(dto.getTel())) {
             throw new RestApiException(UserErrorCode.REGEXP_TEL);
         }
 
