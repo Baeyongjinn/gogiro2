@@ -134,5 +134,11 @@
         AND ibutcher= #{ibutcher}
     </delete>
 
+    <select id="selIbutcherForTest">
+        SELECT
+        MAX(ibutcher)
+        FROM t_butcher_shop
+    </select>
+
 
 </mapper>

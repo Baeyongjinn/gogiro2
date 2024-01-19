@@ -147,4 +147,5 @@
             MAX(ishop)
         FROM t_shop
     </select>
+
 </mapper>

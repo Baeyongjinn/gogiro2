@@ -38,4 +38,6 @@ public interface ButcherShopMapper {
 
     void butcherBookmarkOn(ButcherBookmarkDto dto);
     void butcherBookmarkOff(ButcherBookmarkDto dto);
+
+    int selIbutcherForTest();
 }
