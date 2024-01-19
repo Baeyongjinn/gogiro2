@@ -70,4 +70,13 @@ public class ReservationService {
         mapper.cancelPickup(dto);
         return new ResVo(SUCCESS);
     }
+
+    public ResVo putReservation(ReservationUpdDto dto) {
+        if(dto.getDate().equals("0000-00-00 00:00:00") || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getDate())){
+            throw new RestApiException(AuthErrorCode.NOT_DATE);
+        }
+        dto.setIuser(authenticationFacade.getLoginUserPk());
+        mapper.updReservation(dto);
+        return new ResVo(1);
+    }
 }

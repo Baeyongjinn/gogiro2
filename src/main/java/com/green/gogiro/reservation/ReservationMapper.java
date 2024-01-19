@@ -26,4 +26,7 @@ public interface ReservationMapper {
     int selReservationConfirmForTest(CancelReservationDto dto);
 
     int selPickupConfirmForTest(CancelPickupDto dto);
+
+    int updReservation(ReservationUpdDto dto);
+
 }

@@ -29,7 +29,7 @@ public class UserSignupDto {
     private String gender;
     @Schema(title = "주소")
     private String address;
-    @Schema(title = "전화번호",defaultValue = "010-0000-0000")
+    @Schema(title = "전화번호",defaultValue = "01000000000")
     private String tel;
     @JsonIgnore
     private String pic;

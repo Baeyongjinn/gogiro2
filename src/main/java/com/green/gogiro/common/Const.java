@@ -18,7 +18,7 @@ public class Const {
 
     public static final String REGEXP_USER_ID = "^[a-zA-Z0-9_-]+@([a-zA-Z0-9]{3,}\\.[a-z]{2,}|[a-zA-Z0-9]{3,}\\.[a-z]{2,}\\.[a-z]{2,})$";
 
-    public static final String REGEXP_USER_TEL = "^01[0-1|6-9]{1}-[\\d]{3,4}-[\\d]{4}$";
+    public static final String REGEXP_USER_TEL = "^01[0-1|6-9]{1}[\\d]{3,4}[\\d]{4}$";
 
     public static final String REGEXP_USER_GENDER = "^[남|여]{1}$";
 
