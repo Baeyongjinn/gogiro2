@@ -53,6 +53,12 @@ public class CommunityController {
         return service.selCommunity(dto);
     }
 
+    @GetMapping("{iboard}")
+    @Operation(summary = "커뮤니티 상세보기", description = "커뮤니티 상세보기 처리")
+    public CommunityDetailVo getDetailCommunity(@PathVariable int iboard) {
+        return service.getDetailCommunity(iboard);
+    }
+
     @DeleteMapping()
     @Operation(summary = "커뮤니티 삭제",description = "커뮤니티 삭제 처리")
     public ResVo delCommunity(CommunityDelDto dto) {

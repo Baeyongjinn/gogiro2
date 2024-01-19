@@ -39,7 +39,8 @@ public class SecurityConfiguration {
                         .permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/butcher-shop","/api/butcher-shop/**"
                                                                 , "/api/shop", "/api/shop/**"
-                                                                , "/api/community")
+                                                                , "/api/community"
+                                                                , "/api/community/**")
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )

@@ -121,6 +121,15 @@ public class CommunityService {
         return list;
     }
 
+    public CommunityDetailVo getDetailCommunity(int iboard){
+        CommunityDetailVo vo = mapper.selDetailCommunity(iboard);
+      List<CommunityCommentVo> comments =   mapper.selCommunityComments(iboard);
+      vo.setComments(comments);
+      return vo;
+    }
+
+
+
     public ResVo delCommunity(CommunityDelDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
         //게시글 여부 확인
