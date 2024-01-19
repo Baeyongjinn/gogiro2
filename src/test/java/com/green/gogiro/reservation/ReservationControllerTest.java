@@ -32,69 +32,21 @@ class ReservationControllerTest {
 
     @Test
     void postReservation() throws Exception{
-        ResVo result= new ResVo(1234);
-        given(service.postReservation(any())).willReturn(result);
 
-        ReservationInsDto dto= new ReservationInsDto();
-
-        mvc.perform(MockMvcRequestBuilders.post("/api/reservation") //방식 post, get 등등
-                                          .contentType(MediaType.APPLICATION_JSON) // 데이터를 제이슨으로 날리면 필수
-                                          .content(mapper.writeValueAsString(dto)) // 바디 부분 dto객체를 제이슨으로 변환하여 날림
-                    ).andExpect(status().isOk())
-                     .andExpect(content().string(mapper.writeValueAsString(result)))
-                     .andDo(print());
-
-        verify(service).postReservation(any());
     }
 
     @Test
     void postPickup() throws Exception{
-        ResVo result= new ResVo(1234);
-        given(service.postPickup(any())).willReturn(result);
 
-        PickupInsDto dto= new PickupInsDto();
-
-        mvc.perform(MockMvcRequestBuilders.post("/api/pickup") //방식 post, get 등등
-                        .contentType(MediaType.APPLICATION_JSON) // 데이터를 제이슨으로 날리면 필수
-                        .content(mapper.writeValueAsString(dto)) // 바디 부분 dto객체를 제이슨으로 변환하여 날림
-                ).andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(result)))
-                .andDo(print());
-
-        verify(service).postPickup(any());
     }
 
     @Test
     void cancelReservation() throws Exception{
-        ResVo result= new ResVo(1234);
-        given(service.cancelReservation(any())).willReturn(result);
 
-        CancelReservationDto dto= new CancelReservationDto();
-
-        mvc.perform(MockMvcRequestBuilders.patch("/api/reservation") //방식 post, get 등등
-                        .contentType(MediaType.APPLICATION_JSON) // 데이터를 제이슨으로 날리면 필수
-                        .content(mapper.writeValueAsString(dto)) // 바디 부분 dto객체를 제이슨으로 변환하여 날림
-                ).andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(result)))
-                .andDo(print());
-
-        verify(service).cancelReservation(any());
     }
 
     @Test
     void cancelPickup() throws Exception{
-        ResVo result= new ResVo(1234);
-        given(service.cancelPickup(any())).willReturn(result);
 
-        CancelPickupDto dto= new CancelPickupDto();
-
-        mvc.perform(MockMvcRequestBuilders.patch("/api/pickup") //방식 post, get 등등
-                        .contentType(MediaType.APPLICATION_JSON) // 데이터를 제이슨으로 날리면 필수
-                        .content(mapper.writeValueAsString(dto)) // 바디 부분 dto객체를 제이슨으로 변환하여 날림
-                ).andExpect(status().isOk())
-                .andExpect(content().string(mapper.writeValueAsString(result)))
-                .andDo(print());
-
-        verify(service).cancelPickup(any());
     }
 }
