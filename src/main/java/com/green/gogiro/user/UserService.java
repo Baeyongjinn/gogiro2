@@ -94,6 +94,13 @@ public class UserService {
         return new ResVo(result);
     }
 
+    public ResVo checkNickName(String nickName){
+        if(mapper.checkNickname(nickName) != null || Pattern.matches(nickName + REGEXP_PATTERN_SPACE_CHAR,nickName)){
+            throw new RestApiException(UserErrorCode.DUPLICATION_NICK_NAME);
+        }
+        return new ResVo(SUCCESS);
+    }
+
     //1:성공 , 2:비밀번호 다름, 3:아이디없음
     public UserSignVo signin(HttpServletRequest req,
                              HttpServletResponse res,

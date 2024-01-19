@@ -17,7 +17,8 @@ public enum UserErrorCode implements ErrorCode{
     NOT_NAME(HttpStatus.BAD_REQUEST,"이름을 입력해주세요"),
     NOT_NICK_NAME(HttpStatus.BAD_REQUEST,"닉네임을 입력해 주세요"),
     NOT_GENDER(HttpStatus.BAD_REQUEST,"성별을 선택해 주세요"),
-    NOT_TEL(HttpStatus.BAD_REQUEST,"전화번호를 입력해 주세요");
+    NOT_TEL(HttpStatus.BAD_REQUEST,"전화번호를 입력해 주세요"),
+    DUPLICATION_NICK_NAME(HttpStatus.BAD_REQUEST,"닉네임이 중복 되었습니다");
 
 
     private final HttpStatus httpStatus;
