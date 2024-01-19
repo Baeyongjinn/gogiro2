@@ -24,6 +24,8 @@ public class BookmarkShopVo {
     @Schema(title = "고기 종류")
     private String mtype;
 
+    private String pic;
+
     private List<String> facilities = new ArrayList<>();
     @JsonIgnore
     private String createdAt;

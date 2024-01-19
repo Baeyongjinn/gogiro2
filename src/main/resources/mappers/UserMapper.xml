@@ -85,13 +85,17 @@
         a.confirm,
         a.created_at AS createdAt,
         a.head_count AS headCount,
-        if(c.iuser IS NULL, 0 , 1) AS isBook
+        if(c.iuser IS NULL, 0 , 1) AS isBook,
+        d.pic
         FROM t_reservation a
         JOIN t_shop b
         ON a.ishop= b.ishop
         LEFT JOIN t_shop_bookmark c
         ON a.ishop= c.ishop AND a.iuser= c.iuser
+        LEFT JOIN t_shop_pic d
+        ON a.ishop= d.ishop
         WHERE a.iuser = #{iuser}
+        GROUP BY a.ishop
         union
         SELECT
         1 AS checkShop,
@@ -103,13 +107,17 @@
         a.confirm,
         a.created_at AS createdAt,
         1 AS headCount,
-        if(c.iuser IS NULL, 0 , 1) AS isBook
+        if(c.iuser IS NULL, 0 , 1) AS isBook,
+        d.pic
         FROM t_pickup a
         JOIN t_butcher_shop b
         ON a.ibutcher= b.ibutcher
         LEFT JOIN t_but_bookmark c
         ON a.ibutcher= c.ibutcher AND a.iuser= c.iuser
+        LEFT JOIN t_butcher_pic d
+        ON a.ibutcher= d.ibutcher
         WHERE a.iuser = #{iuser}
+        GROUP BY a.ipickup
         ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
@@ -123,13 +131,17 @@
         a.review,
         a.star,
         a.created_at AS createdAt,
-        if(c.iuser IS NULL, 0, 1) AS isBook
+        if(c.iuser IS NULL, 0, 1) AS isBook,
+        d.pic
         FROM t_shop_review a
         JOIN t_shop b
         ON a.ishop= b.ishop
         LEFT JOIN t_shop_bookmark c
         ON a.ishop= c.ishop
+        LEFT JOIN t_shop_pic d
+        ON a.ishop= d.ishop
         WHERE a.iuser = #{iuser}
+        GROUP BY a.ishop
         UNION
         SELECT
         1 AS checkShop,
@@ -139,13 +151,17 @@
         a.review,
         a.star,
         a.created_at AS createdAt,
-        if(c.iuser IS NULL, 0, 1) AS isBook
+        if(c.iuser IS NULL, 0, 1) AS isBook,
+        d.pic
         FROM t_but_review a
         JOIN t_butcher_shop b
         ON a.ibutcher= b.ibutcher
         LEFT JOIN t_but_bookmark c
         ON a.ibutcher= c.ibutcher
+        LEFT JOIN t_butcher_pic d
+        ON a.ibutcher= d.ibutcher
         WHERE a.iuser = #{iuser}
+        GROUP BY a.ibutcher
         ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
@@ -167,48 +183,55 @@
 
     <select id="selUserBookmark">
         SELECT
-            a.imeat,
-            a.ishop,
-            a.name,
-            a.location,
-            a.`open`,
-            a.tel,
-            c.mtype,
-            b.created_at AS createdAt
+        a.imeat,
+        a.ishop,
+        a.name,
+        a.location,
+        a.`open`,
+        a.tel,
+        c.mtype,
+        b.created_at AS createdAt,
+        d.pic
         FROM t_shop a
         JOIN (SELECT
-                  ishop,
-                  iuser,
-                  created_at
-              FROM t_shop_bookmark
-              ) b
+        ishop,
+        iuser,
+        created_at
+        FROM t_shop_bookmark
+        ) b
         ON a.ishop= b.ishop
         JOIN t_category c
         ON a.imeat = c.imeat
-        AND b.iuser= #{iuser}
+        AND b.iuser= 4
+        LEFT JOIN t_shop_pic d
+        ON a.ishop= d.ishop
+        GROUP BY a.ishop
         UNION
         SELECT
-            0 AS imeat,
-            a.ibutcher AS ishop,
-            a.name,
-            a.location,
-            a.`open`,
-            a.tel,
-            NULL mtype,
-            b.created_at AS createdAt
+        0 AS imeat,
+        a.ibutcher AS ishop,
+        a.name,
+        a.location,
+        a.`open`,
+        a.tel,
+        NULL mtype,
+        b.created_at AS createdAt,
+        d.pic
         FROM t_butcher_shop a
         JOIN (SELECT
-                  ibutcher,
-                  iuser,
-                  created_at
-              FROM t_but_bookmark
-              ) b
+        ibutcher,
+        iuser,
+        created_at
+        FROM t_but_bookmark
+        ) b
         ON a.ibutcher= b.ibutcher
-        AND b.iuser= #{iuser}
-        ORDER BY createdAt desc
+        AND b.iuser= 4
+        LEFT JOIN t_butcher_pic d
+        ON a.ibutcher= d.ibutcher
+        GROUP BY a.ibutcher
+        ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
-
     <delete id="delShopReviewPics">
         DELETE
         FROM

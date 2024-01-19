@@ -19,6 +19,7 @@ public class ReservationVo {
     private int cofirm;//(예약 및 픽업 승인)
     @Schema(title = "인원 수")
     private int headCount;
+    private String pic;
     @Schema(title = "북마크 여부",description = "0: 전 1: 후")
     private int isBook;
     @Schema(title = "예약 등록일")

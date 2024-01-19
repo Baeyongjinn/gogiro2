@@ -19,6 +19,7 @@ public class ReviewVo {
     private int star;//별점
     @Schema(title = "후기")
     private String review;//후기
+    private String pic;
     @Schema(title = "작성 날짜")
     private String createdAt;
     @Schema(title = "북마크 여부")
