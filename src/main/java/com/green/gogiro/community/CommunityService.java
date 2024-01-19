@@ -90,7 +90,6 @@ public class CommunityService {
                 .iboard(dto.getIboard())
                 .pics(dto.getPics())
                 .build();
-
         return vo;
     }
 
@@ -123,12 +122,10 @@ public class CommunityService {
 
     public CommunityDetailVo getDetailCommunity(int iboard){
         CommunityDetailVo vo = mapper.selDetailCommunity(iboard);
-      List<CommunityCommentVo> comments =   mapper.selCommunityComments(iboard);
-      vo.setComments(comments);
-      return vo;
+        List<CommunityCommentVo> comments = mapper.selCommunityComments(iboard);
+        vo.setComments(comments);
+        return vo;
     }
-
-
 
     public ResVo delCommunity(CommunityDelDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());

@@ -5,17 +5,21 @@ import com.green.gogiro.MockMvcConfig;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.community.model.CommunityDelDto;
 import com.green.gogiro.community.model.CommunityInsDto;
+import com.green.gogiro.community.model.CommunityPicsInsVo;
 import com.green.gogiro.community.model.CommunitySelVo;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,32 +42,43 @@ public class CommunityControllerTest {
     @Autowired
     private ObjectMapper mapper;
 
-//    @Test
-//    void postCommunity() throws Exception {
-//        ResVo result = new ResVo(1);
-//
-//        given(service.insCommunity(any())).willReturn(result);
-//
-//        CommunityInsDto dto = new CommunityInsDto();
-//        dto.setIuser(4);
-//        dto.setTitle("dd");
-//        dto.setContents("내용");
-//        List<String > pics = new ArrayList<>();
-//        pics.add("aa.jpg");
-//
-//        dto.setPics(pics);
-//
-//        mvc.perform(
-//                MockMvcRequestBuilders
-//                        .post("/api/community")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(mapper.writeValueAsString(dto))
-//                )
-//                .andExpect(status().isOk())
-//                .andExpect(content().string(mapper.writeValueAsString(result)))
-//                .andDo(print());
-//        verify(service).insCommunity(any());
-//    }
+    private MockMultipartFile mockMultipartFile;
+    @BeforeEach
+    public void before() throws Exception {
+        String fileNm = "cat.jpg";
+        String filePath = "D:/home/download/gksk/"+ fileNm;
+        FileInputStream fis = new FileInputStream(filePath);
+        this.mockMultipartFile = new MockMultipartFile("pic", fileNm, "jpg", fis);
+    }
+    @Test
+    void postCommunity() throws Exception {
+
+
+
+        CommunityInsDto dto = new CommunityInsDto();
+        dto.setIuser(4);
+        dto.setTitle("dd");
+        dto.setContents("내용");
+        List<String> pics = new ArrayList<>();
+        pics.add("aa.jpg");
+        CommunityPicsInsVo vo = CommunityPicsInsVo.builder()
+                .pics(pics)
+                .build();
+
+        given(service.insCommunity(any())).willReturn(vo);
+        dto.setPics(pics);
+
+        mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/api/community")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dto))
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(vo)))
+                .andDo(print());
+        verify(service).insCommunity(any());
+    }
 
 
     @Test
