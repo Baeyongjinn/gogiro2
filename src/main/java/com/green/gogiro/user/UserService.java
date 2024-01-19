@@ -49,8 +49,11 @@ public class UserService {
 
 
     public ResVo signup(UserSignupDto dto) {
-        if(!(checkNickName(dto.getNickname())==null)){
-            throw new RestApiException(UserErrorCode.DUPLICATION_NICK_NAME);
+        if(mapper.checkNickname(dto.getNickname()) != null || Pattern.matches(dto.getNickname() + REGEXP_PATTERN_SPACE_CHAR,dto.getNickname())){
+            throw new RestApiException(UserErrorCode.NEED_NICK_NAME_CHECK);
+        }
+        if(!dto.getUpw().equals(dto.getCheckUpw())){
+            throw new RestApiException(UserErrorCode.NOT_PASSWORD_CHECK);
         }
         String hashedPw = passwordEncoder.encode(dto.getUpw());
         dto.setUpw(hashedPw);
@@ -66,18 +69,24 @@ public class UserService {
             throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
         }
 
-        if(!Pattern.matches(REGEXP_USER_TEL,dto.getTel())) {
-            throw new RestApiException(UserErrorCode.REGEXP_TEL);
+
+
+        if (!Pattern.matches(REGEXP_USER_BIRTH,dto.getBirth())){
+            throw new RestApiException(UserErrorCode.REGEXP_BIRTH);
         }
 
         if (!Pattern.matches(REGEXP_USER_ID, dto.getEmail())) {
             throw new RestApiException(UserErrorCode.REGEXP_EMAIL);
         }
 
+        if(mapper.checkEmail(dto.getEmail()) != null){
+            throw new RestApiException(UserErrorCode.DUPLICATION_EMAIL);
+        }
+
         if (!Pattern.matches(REGEXP_USER_GENDER, dto.getGender())) {
             throw new RestApiException(UserErrorCode.REGEXP_GENDER);
         }
-        if (!Pattern.matches(REGEXP_USER_TEL, dto.getTel())) {
+        if (!Pattern.matches(REGEXP_USER_TEL, dto.getTel()) || "010-0000-0000".equals(dto.getTel())) {
             throw new RestApiException(UserErrorCode.REGEXP_TEL);
         }
 
