@@ -1,11 +1,12 @@
 package com.green.gogiro.user;
 
-import com.green.gogiro.common.AppProperties;
-import com.green.gogiro.common.CookieUtils;
-import com.green.gogiro.common.MyFileUtils;
+import com.green.gogiro.common.*;
 import com.green.gogiro.security.AuthenticationFacade;
 import com.green.gogiro.security.JwtTokenProvider;
 import com.green.gogiro.shop.ShopMapper;
+import com.green.gogiro.user.model.UserSigninDto;
+import com.green.gogiro.user.model.UserSignupDto;
+import com.green.gogiro.user.model.UserUpdDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +20,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.io.FileInputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)//스프링 컨테이너 올리기
 @Import({UserService.class})//얘는 빈 등록을 좀 해 줘
@@ -41,46 +44,18 @@ class UserServiceTest {
     private AuthenticationFacade authenticationFacade;
     @MockBean
     private MyFileUtils myFileUtils;
-    private MockMultipartFile file;
-
-    @BeforeEach
-    public void before() throws Exception {
-        String fileNm = "cat.jpg";
-        String filePath = "D:/home/download/gksk/"+ fileNm;
-        FileInputStream fis = new FileInputStream(filePath);
-        this.file = new MockMultipartFile("pic", fileNm, "jpg", fis);
-    }
 
     @Test
-    void signup() {
-    }
-
-    @Test
-    void signin() {
-    }
-
-    @Test
-    void signout() {
-    }
-
-    @Test
-    void getRefreshToken() {
-    }
-
-    @Test
-    void updateUser() {
-    }
-
-    @Test
-    void selUserInfo() {
-    }
-
-    @Test
-    void getReservation() {
-    }
-
-    @Test
-    void getUserReview() {
+    void updateUser() throws Exception{
+        String test= "테스트";
+        String tel= "010-1234-2345";
+        UserUpdDto dto= new UserUpdDto();
+        dto.setNickname(test);
+        dto.setAddress(test);
+        dto.setTel(tel);
+        ResVo vo= service.updateUser(dto);
+        assertEquals(Const.SUCCESS,vo.getResult());
+        verify(mapper).updateUser(any());
     }
 
     @Test
