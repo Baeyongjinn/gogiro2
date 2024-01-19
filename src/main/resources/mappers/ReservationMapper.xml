@@ -90,4 +90,13 @@
         WHERE iuser= #{iuser}
         AND ipickup= #{ipickup}
     </select>
+
+    <update id="updReservation">
+        UPDATE t_reservation
+        SET
+        date = #{date},
+        request = #{request},
+        head_count = #{headCount}
+        WHERE ireser = #{ireser}
+    </update>
 </mapper>
