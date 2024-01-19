@@ -23,13 +23,15 @@ public class SecurityConfiguration {
                 .httpBasic(http -> http.disable())
                 .formLogin(form -> form.disable())
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/user/signin"
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/**"
+                                                                    ,"/api/user/signin"
                                                                     , "/api/user/signup"
                                                                     , "/api/user/signup/**"
                                                                     , "/error"
                                                                     , "/err"
                                                                     , "/"
                                                                     , "/static/**"
+                                                                    , "/gogi/read"
                                                                     , "/index.html"
                                                                     , "/static/**"
                                                                     , "/swagger.html"
