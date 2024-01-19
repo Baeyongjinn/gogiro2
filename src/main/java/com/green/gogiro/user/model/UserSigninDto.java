@@ -8,6 +8,6 @@ import lombok.Data;
 public class UserSigninDto {
     @Schema(title = "이메일",defaultValue = "dd11@naver.com")
     private String email;
-    @Schema(title = "비밀번호",description = "1212")
+    @Schema(title = "비밀번호",defaultValue = "1212")
     private String upw;
 }

@@ -69,26 +69,40 @@
     <select id="selReservation">
         SELECT
         0 AS checkShop,
-        ireser,
-        ishop,
-        date,
-        request,
-        confirm,
-        created_at AS createdAt
-        FROM t_reservation
-        WHERE iuser= #{iuser}
-        UNION
+        a.ireser,
+        a.ishop,
+        b.name,
+        a.date,
+        a.request,
+        a.confirm,
+        a.created_at AS createdAt,
+        a.head_count AS headCount,
+        if(c.iuser IS NULL, 0 , 1) AS isBook
+        FROM t_reservation a
+        JOIN t_shop b
+        ON a.ishop= b.ishop
+        LEFT JOIN t_shop_bookmark c
+        ON a.ishop= c.ishop AND a.iuser= c.iuser
+        WHERE a.iuser = #{iuser}
+        union
         SELECT
         1 AS checkShop,
-        ipickup AS ireser,
-        ibutcher AS ishop,
-        date,
-        request,
-        confirm,
-        created_at AS createdAt
-        FROM t_pickup
-        WHERE iuser= #{iuser}
-        ORDER BY createdAt
+        a.ipickup AS ireser,
+        a.ibutcher AS ishop,
+        b.name,
+        a.date,
+        a.request,
+        a.confirm,
+        a.created_at AS createdAt,
+        1 AS headCount,
+        if(c.iuser IS NULL, 0 , 1) AS isBook
+        FROM t_pickup a
+        JOIN t_butcher_shop b
+        ON a.ibutcher= b.ibutcher
+        LEFT JOIN t_but_bookmark c
+        ON a.ibutcher= c.ibutcher AND a.iuser= c.iuser
+        WHERE a.iuser = #{iuser}
+        ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
 
