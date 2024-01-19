@@ -28,6 +28,6 @@ public class CommunitySelVo {
     @Schema(title = "사진")
     private List<String> pics = new ArrayList<>();
 
-    @JsonIgnore
+    @Schema(title = "게시글 총 갯수")
     private int count;
 }

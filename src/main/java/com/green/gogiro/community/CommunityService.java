@@ -109,7 +109,9 @@ public class CommunityService {
         for(CommunitySelVo vo : list) {
             iboard.add(vo.getIboard());
             boardMap.put(vo.getIboard(),vo);
+            vo.setCount(count);
         }
+
         List<CommunityPicsVo> pics = mapper.selPicCommunity(iboard);
         for(CommunityPicsVo pic : pics){
             boardMap.get(pic.getIboard()).getPics().add(pic.getPic());
