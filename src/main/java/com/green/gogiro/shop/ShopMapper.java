@@ -29,4 +29,6 @@ public interface ShopMapper {
 
     ShopEntity selShopEntity(int ishop);
     Integer selShopCategory(int imeat);
+
+    int selIshopForTest();
 }
