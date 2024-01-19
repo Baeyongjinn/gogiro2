@@ -72,6 +72,10 @@ public class ReservationService {
     }
 
     public ResVo putReservation(ReservationUpdDto dto) {
+
+        if(!Pattern.matches(REGEXP_DATE_TYPE5,dto.getDate())){
+            throw new RestApiException(AuthErrorCode.NOT_DATE);
+        }
         if(dto.getDate().equals("0000-00-00 00:00:00") || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getDate())){
             throw new RestApiException(AuthErrorCode.NOT_DATE);
         }
