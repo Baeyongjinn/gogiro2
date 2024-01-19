@@ -1,8 +1,10 @@
 package com.green.gogiro.user;
 
-import com.green.gogiro.user.model.UserInfoVo;
-import com.green.gogiro.user.model.UserSignupDto;
-import com.green.gogiro.user.model.UserUpdDto;
+import com.green.gogiro.reservation.ReservationMapper;
+import com.green.gogiro.reservation.model.PickupInsDto;
+import com.green.gogiro.reservation.model.ReservationInsDto;
+import com.green.gogiro.shop.ShopMapper;
+import com.green.gogiro.user.model.*;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,17 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import static org.junit.jupiter.api.Assertions.*;
 import com.green.gogiro.common.Const;
 
+import java.util.List;
+
 @MybatisTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class UserMapperTest {
     @Autowired
     private UserMapper mapper;
+    @Autowired
+    private ReservationMapper reservationMapper;
+    @Autowired
+    private ShopMapper shopMapper;
 
     @Test
     void signupUserTest() {
@@ -94,6 +102,41 @@ class UserMapperTest {
 
     @Test
     void selReservation() {
+        int iuser1= mapper.selIuserForTest();
+        int ishop= shopMapper.selIshopForTest();
+        String date1= "1234-12-23 12:12:12";
+        String request1= "테스트1234";
+        int headCount1= 12;
+        ReservationInsDto dto1= new ReservationInsDto();
+        dto1.setIuser(iuser1);
+        dto1.setIshop(ishop);
+        dto1.setDate(date1);
+        dto1.setRequest(request1);
+        dto1.setHeadCount(headCount1);
+        int insert1= reservationMapper.insReservation(dto1);
+        assertEquals(1, insert1);
+        UserMyPageDto uDto1= new UserMyPageDto();
+        uDto1.setIuser(iuser1);
+        List<ReservationVo> list1 = mapper.selReservation(uDto1);
+        assertEquals(date1, list1.get(0).getDate());
+        assertEquals(request1, list1.get(0).getRequest());
+
+        int iuser2= mapper.selIuserForTest();
+        int ibutcher= shopMapper.selIshopForTest();
+        String date2= "1234-12-23 12:12:12";
+        String request2= "테스트1234";
+        PickupInsDto dto2= new PickupInsDto();
+        dto2.setIuser(iuser2);
+        dto2.setIbutcher(ibutcher);
+        dto2.setDate(date2);
+        dto2.setRequest(request2);
+        int insert= reservationMapper.insPickup(dto2);
+        assertEquals(1, insert);
+        UserMyPageDto uDto= new UserMyPageDto();
+        uDto.setIuser(iuser2);
+        List<ReservationVo> list2 = mapper.selReservation(uDto);
+        assertEquals(date2, list2.get(0).getDate());
+        assertEquals(request2, list2.get(0).getRequest());
     }
 
     @Test
