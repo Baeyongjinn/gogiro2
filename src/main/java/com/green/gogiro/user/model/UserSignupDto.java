@@ -23,7 +23,7 @@ public class UserSignupDto {
     private String name;
     @Schema(title = "닉네임")
     private String nickname;
-    @Schema(title = "생년월일",defaultValue = "0000-00-00")
+    @Schema(title = "생년월일")
     private String birth;
     @Schema(title = "성별",description = "'남','여' 로  해야함 '남자','여자' X",defaultValue = "'남','여' 로  해야함 '남자','여자' X")
     private String gender;

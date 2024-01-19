@@ -72,6 +72,11 @@ public class UserController {
         return service.getReservation(dto);
     }
 
+    @PostMapping("signup/{nickname}")
+    @Operation(summary = "닉네임 중복 체크",description = "닉네임 중복 체크 처리")
+    public ResVo checkNickName(@PathVariable String nickname){
+        return service.checkNickName(nickname);
+    }
     @GetMapping("/review")
     @Operation(summary = "가게 후기 리스트", description = "회원이 작성한 후기 정보를 리스트로 처리")
     public List<ReviewVo> getUserReview(UserMyPageDto dto) {

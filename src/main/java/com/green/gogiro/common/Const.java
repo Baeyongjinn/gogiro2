@@ -20,7 +20,10 @@ public class Const {
 
     public static final String REGEXP_USER_TEL = "^01[0-1|6-9]{1}-[\\d]{3,4}-[\\d]{4}$";
 
-    public static final String REGEXP_USER_GENDER = "^[남|여]$";
+    public static final String REGEXP_USER_GENDER = "^[남|여]{1}$";
+
+    public static final String REGEXP_USER_BIRTH = "^(19[0-9][0-9]|20\\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$";
+
 
     public static final String REGEXP_DATE_TYPE5 =
             "\\d{4}-[01]\\d-[0-3]\\d\\s[0-2](\\d:[0-5]\\d:([0-5]\\d)?)?";

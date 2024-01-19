@@ -141,4 +141,11 @@
         FROM t_category
         WHERE imeat = #{imeat}
     </select>
+
+    <select id="selIshopForTest">
+        SELECT
+            MAX(ishop)
+        FROM t_shop
+    </select>
+
 </mapper>
