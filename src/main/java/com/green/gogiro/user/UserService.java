@@ -223,7 +223,7 @@ public class UserService {
         }
         List<ShopFacilityVo> facilityList= shopMapper.selShopFacility(ishopList);
         for(ShopFacilityVo vo: facilityList) {
-            if(shopMap.get(vo.getIshop()).getImeat()!=0) {
+            if(shopMap.get(vo.getIshop()).getImeat() != 0) {
                 shopMap.get(vo.getIshop()).getFacilities().add(vo.getFacility());
             }
         }

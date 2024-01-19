@@ -103,7 +103,7 @@ public class ButcherShopService {
         List<String> shopPics = mapper.selButcherShopPics(ibutcher);
         vo.setPics(shopPics);
         List<ReviewDetail> reviews = mapper.selReviewDetail(ibutcher);
-        List<Integer> ireview= new ArrayList<>();
+        List<Integer> ireview = new ArrayList<>();
         Map<Integer, ReviewDetail> map= new HashMap<>();
         for(ReviewDetail review: reviews) {
             ireview.add(review.getIreview());
