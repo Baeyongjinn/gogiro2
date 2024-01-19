@@ -49,7 +49,9 @@ public class UserService {
 
 
     public ResVo signup(UserSignupDto dto) {
-        String checkNickname = mapper.checkNickname(dto.getNickname());
+        if(!(checkNickName(dto.getNickname())==null)){
+            throw new RestApiException(UserErrorCode.DUPLICATION_NICK_NAME);
+        }
         String hashedPw = passwordEncoder.encode(dto.getUpw());
         dto.setUpw(hashedPw);
 

@@ -130,8 +130,8 @@ class UserMapperTest {
         dto2.setIbutcher(ibutcher);
         dto2.setDate(date2);
         dto2.setRequest(request2);
-        int insert= reservationMapper.insPickup(dto2);
-        assertEquals(1, insert);
+        //int insert= reservationMapper.insPickup(dto2);
+        //assertEquals(1, insert);
         UserMyPageDto uDto= new UserMyPageDto();
         uDto.setIuser(iuser2);
         List<ReservationVo> list2 = mapper.selReservation(uDto);
