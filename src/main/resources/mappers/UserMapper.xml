@@ -66,6 +66,14 @@
         WHERE nickname = #{nickname}
     </select>
 
+    <select id="checkEmail">
+        SELECT email
+        FROM t_user
+        WHERE email = #{email}
+    </select>
+
+
+
     <select id="selReservation">
         SELECT
         0 AS checkShop,

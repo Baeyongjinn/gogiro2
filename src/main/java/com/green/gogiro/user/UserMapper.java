@@ -35,4 +35,6 @@ public interface UserMapper {
 
     int delShopReview(ReviewDelDto dto);
 
+    String checkEmail(String email);
+
 }

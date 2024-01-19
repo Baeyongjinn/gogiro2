@@ -72,7 +72,7 @@ public class UserController {
         return service.getReservation(dto);
     }
 
-    @PostMapping("{nickname}")
+    @PostMapping("signup/{nickname}")
     @Operation(summary = "닉네임 중복 체크",description = "닉네임 중복 체크 처리")
     public ResVo checkNickName(@PathVariable String nickname){
         return service.checkNickName(nickname);
