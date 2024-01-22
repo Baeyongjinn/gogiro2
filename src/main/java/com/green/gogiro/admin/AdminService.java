@@ -18,7 +18,7 @@ public class AdminService {
 
         mapper.insStoreRegistration(dto);
 
-        String target = "/admin/shop/" + dto.getIshop() + "/shop_pic";
+        String target = "/shop/" + dto.getIshop() + "/shop_pic";
         StoreRegistrationPicsVo vo = new StoreRegistrationPicsVo();
         vo.setIshop(dto.getIshop());
 
@@ -58,6 +58,48 @@ public class AdminService {
         vo.setIshop(dto.getIshop());
         vo.setPic(fileNm);
         vo.setImenu(dto.getImenu());
+        return vo;
+    }
+
+    public ButcherPicVo insButcherShop(ButcherInsDto dto) {
+        mapper.insButcherShop(dto);
+
+        String target = "/butchershop/" + dto.getIbutcher() + "/butchershop_pic";
+        ButcherPicVo vo = new ButcherPicVo();
+        vo.setIbutcher(dto.getIbutcher());
+
+        for (MultipartFile file : dto.getFiles()) {
+            String saveFileNm = myFileUtils.transferTo(file, target);
+            vo.getPics().add(saveFileNm);
+        }
+        mapper.insButcherPics(dto);
+        return vo;
+    }
+
+    public ButcherMenuPicVo insButcherMenu(ButcherMenuInsDto dto) {
+        String target = "/butchershop/" + dto.getIbutcher() + "/menu";
+        String fileNm = myFileUtils.transferTo(dto.getPic(), target);
+        dto.setFileNm(fileNm);
+        mapper.insButcherMenu(dto);
+        ButcherMenuPicVo vo = new ButcherMenuPicVo();
+        vo.setIbutcher(dto.getIbutcher());
+        vo.setPic(fileNm);
+        vo.setIbutMenu(dto.getIbutMenu());
+        return vo;
+    }
+
+    public ButcherMenuPicVo updButcherMenu(ButcherMenuUpdDto dto) {
+        String picNm = mapper.selButcherMenuPicNm(dto.getIbutMenu());
+        String target = "/butchershop/" + dto.getIbutcher() + "/menu";
+        myFileUtils.delFolderTrigger2(target + "/" + picNm);
+
+        String fileNm = myFileUtils.transferTo(dto.getFile(), target);
+        dto.setFileNm(fileNm);
+        mapper.updButcherMenu(dto);
+        ButcherMenuPicVo vo = new ButcherMenuPicVo();
+        vo.setIbutcher(dto.getIbutcher());
+        vo.setPic(fileNm);
+        vo.setIbutMenu(dto.getIbutMenu());
         return vo;
     }
 }
