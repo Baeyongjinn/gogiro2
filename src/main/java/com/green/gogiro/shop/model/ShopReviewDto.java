@@ -28,6 +28,7 @@ public class ShopReviewDto {
 
     @Schema(title = "리뷰")
     @NotBlank(message = "내용을 입력해주세요.")
+    @Size(min = 1, max = 1000, message = "내용은 1000자 초과할 수 없습니다.")
     private String review;
 
     @Schema(title = "사진",description = "최대 5장")
