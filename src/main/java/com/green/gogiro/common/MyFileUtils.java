@@ -35,7 +35,7 @@ public class MyFileUtils {
     //확장자 얻어오기
     public String getExt(String fileNm) {
         if(!Pattern.matches(Const.REGEXP_PiC,fileNm)) {
-            throw new RestApiException(AuthErrorCode.REGEXP_PiC);
+            throw new RestApiException(AuthErrorCode.REGEXP_PIC);
         }
         return fileNm.substring(fileNm.lastIndexOf("."));
     }
