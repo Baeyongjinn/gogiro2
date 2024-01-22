@@ -15,7 +15,6 @@ import java.util.List;
 @Schema(title = "커뮤니티 등록 Dto")
 public class CommunityInsDto {
     @JsonIgnore
-    @Min(value = 1)
     private int iboard;
     @JsonIgnore
     private int iuser;

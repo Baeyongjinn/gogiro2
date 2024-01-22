@@ -25,7 +25,7 @@ public class CommunityController {
         //사진을 5장 초과했을 경우
         if(pics!=null){
             dto.setFiles(pics);
-            if(dto.getFiles().size() >= 5){
+            if(dto.getFiles().size() > 5){
                 throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
             }
         }
@@ -39,7 +39,7 @@ public class CommunityController {
         //사진을 5장 초과했을 경우
         if(pics!=null){
             dto.setFiles(pics);
-            if(dto.getFiles().size() >= 5){
+            if(dto.getFiles().size() > 5){
                 throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
             }
         }
