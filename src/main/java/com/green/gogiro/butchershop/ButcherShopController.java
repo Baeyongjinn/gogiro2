@@ -7,9 +7,11 @@ import com.green.gogiro.common.ResVo;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.apache.coyote.BadRequestException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,13 +26,13 @@ public class ButcherShopController {
 
     @GetMapping
     @Operation(summary = "정육점 리스트 보기",description = "정육점 리스트 보기 처리")
-    public List<ButcherSelVo> getButList(ButcherSelDto dto){
+    public List<ButcherSelVo> getButList(@Valid ButcherSelDto dto){
         return service.getButList(dto);
     }
 
     @PostMapping
     @Operation(summary = "후기 등록",description = "후기 등록 처리")
-    public ButcherReviewPIcsInsDto postButReview(@RequestPart(required = false) List<MultipartFile> pics, @RequestPart ButcherReviewDto dto){
+    public ButcherReviewPIcsInsDto postButReview(@Valid @RequestPart(required = false) List<MultipartFile> pics, @Valid @RequestPart ButcherReviewDto dto){
         dto.setPics(pics);
         if(dto.getPics() == null || dto.getPics().isEmpty()){
             throw new RestApiException(AuthErrorCode.MUST_PHOTO);
@@ -40,13 +42,13 @@ public class ButcherShopController {
 
     @GetMapping("/{ibutcher}")
     @Operation(summary = "정육점 상세 보기",description = "정육점 상세 보기 처리")
-    public ButcherShopDetailVo getButDetail(@PathVariable int ibutcher){
+    public ButcherShopDetailVo getButDetail(@Valid @PathVariable int ibutcher){
         return service.getShopDetail(ibutcher);
     }
 
     @PostMapping("/bookmark")
     @Operation(summary = "정육점 북마크 ON/OFF",description = "정육점 북마크 토글 처리")
-    public ResVo toggleButcherBookmark(@RequestBody ButcherBookmarkDto dto) {
+    public ResVo toggleButcherBookmark(@Valid @RequestBody ButcherBookmarkDto dto) {
         return service.toggleButcherBookmark(dto);
     }
 

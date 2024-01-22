@@ -112,9 +112,9 @@ public class ShopService {
 
         mapper.insShopReview(dto);
 
-        if (Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getReview())){
-            throw new RestApiException(NOT_CONTENT);
-        }
+//        if (Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getReview())){
+////            throw new RestApiException(NOT_CONTENT);
+////        }
 
         String target = "/shop/"+dto.getIshop()+"/review/" + dto.getIreview() + "/";
         ShopReviewPicsInsDto pDto = new ShopReviewPicsInsDto();

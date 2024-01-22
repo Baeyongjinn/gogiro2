@@ -30,22 +30,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockMvcConfig
 @WebMvcTest(ButcherShopControllerTest.class)
 class ButcherShopControllerTest {
-    @Autowired
-    private MockMvc mvc;
-    @MockBean
-    private ShopService service;
-    @Autowired
-    private ObjectMapper mapper;
-
-    @Test
-    void getButListTest() {
-    }
-
-    @Test
-    void postButReviewTest() {
-    }
-
-    @Test
-    void getShopDetailTest() {
-    }
+//    @Autowired
+//    private MockMvc mvc;
+//    @MockBean
+//    private ShopService service;
+//    @Autowired
+//    private ObjectMapper mapper;
+//
+//    @Test
+//    void getButListTest() {
+//    }
+//
+//    @Test
+//    void postButReviewTest() {
+//    }
+//
+//    @Test
+//    void getShopDetailTest() {
+//    }
 }

@@ -193,9 +193,10 @@ public class UserService {
 //        if (!Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getNickname())) {
 //            throw new RestApiException(UserErrorCode.NOT_NICK_NAME);
 //        }
+        String path = "/user/" + dto.getIuser();
+        myFileUtils.delFolderTrigger(path);
         dto.setIuser(authenticationFacade.getLoginUserPk());
         if (dto.getFile() != null) {
-            String path = "/user/" + dto.getIuser();
             String savedPicFileNm = myFileUtils.transferTo(dto.getFile(), path);
             dto.setPic(savedPicFileNm);
         }

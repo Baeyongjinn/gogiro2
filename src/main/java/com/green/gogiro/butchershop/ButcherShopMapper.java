@@ -18,6 +18,10 @@ public interface ButcherShopMapper {
 
     int insButcherReviewPic(ButcherReviewPIcsInsDto dto);
 
+    int selReviewCount(int ibutcher);
+
+    int selListCount();
+
 
 
     ButcherShopDetailVo selButcherShopDetail(ButDto dto);
