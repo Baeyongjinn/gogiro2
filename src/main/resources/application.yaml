@@ -33,3 +33,17 @@ springdoc:
 
 server:
   port: 8080
+
+
+
+---
+
+
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+
+file:
+  dir: /home/download/
