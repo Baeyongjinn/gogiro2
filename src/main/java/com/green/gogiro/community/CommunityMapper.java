@@ -23,6 +23,8 @@ public interface CommunityMapper {
 
     List<CommunitySelVo> selCommunity(CommunitySelDto dto);
 
+    List<String> selByCommunityPics(int iboard);
+
     List<CommunityPicsVo> selPicCommunity(List<Integer> iboard);
 
     List<CommunityCommentVo> selCommunityComments(int iboard);

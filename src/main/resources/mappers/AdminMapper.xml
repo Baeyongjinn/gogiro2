@@ -20,4 +20,26 @@
             #{ishop}, #{pic}
         </foreach>
     </insert>
+
+    <insert id="insShopMenu" useGeneratedKeys="true" keyProperty="imenu">
+        INSERT INTO
+        t_shop_menu
+        (ishop,menu,price,pic)
+        VALUES
+        (#{ishop},#{menu},#{price},#{fileNm})
+    </insert>
+
+    <update id="updShopMenu">
+        UPDATE t_shop_menu
+        SET menu = #{menu}
+            , price = #{price}
+            , pic = #{fileNm}
+        WHERE imenu = #{imenu}
+    </update>
+
+    <select id="selPicNm">
+        SELECT pic
+        FROM t_shop_menu
+        WHERE imenu = #{imenu}
+    </select>
 </mapper>

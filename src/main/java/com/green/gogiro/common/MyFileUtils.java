@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class MyFileUtils {
     private final String uploadPrefixPath;
 
-    public MyFileUtils(@Value("${file.dir}")String uploadPrefixPath) {
+    public MyFileUtils(@Value("${file.dir}") String uploadPrefixPath) {
         this.uploadPrefixPath = uploadPrefixPath;
     }
 
@@ -34,9 +34,9 @@ public class MyFileUtils {
 
     //확장자 얻어오기
     public String getExt(String fileNm) {
-        if(!Pattern.matches(Const.REGEXP_PiC,fileNm)) {
-            throw new RestApiException(AuthErrorCode.REGEXP_PIC);
-        }
+//        if (!Pattern.matches(Const.REGEXP_PiC, fileNm)) {
+//            throw new RestApiException(AuthErrorCode.REGEXP_PIC);
+//        }
         return fileNm.substring(fileNm.lastIndexOf("."));
     }
 
@@ -67,16 +67,16 @@ public class MyFileUtils {
     }
 
     public void delFolderTrigger(String relativePath) {
-        delFolder(uploadPrefixPath+ relativePath);
+        delFolder(uploadPrefixPath + relativePath);
     }
 
     public void delFolder(String folderPath) {
-        File folder= new File(folderPath);
-        if(folder.exists()) {
-            File[] files= folder.listFiles();
+        File folder = new File(folderPath);
+        if (folder.exists()) {
+            File[] files = folder.listFiles();
 
-            for(File file: files) {
-                if(file.isDirectory()) {
+            for (File file : files) {
+                if (file.isDirectory()) {
                     delFolder(file.getAbsolutePath());
                 } else {
                     file.delete();
@@ -84,6 +84,16 @@ public class MyFileUtils {
                 folder.delete();
             }
         }
+    }
+
+    public void delFolderTrigger2(String relativePath) {
+        delFolder2(uploadPrefixPath + relativePath);
+    }
+
+
+    public void delFolder2(String folderPath) {
+        File file = new File(folderPath);
+        file.delete();
     }
 
 }

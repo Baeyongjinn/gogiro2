@@ -126,4 +126,10 @@
         WHERE iuser= #{iuser}
         AND icomment= #{icomment}
     </delete>
+
+    <select id="selByCommunityPics">
+        SELECT pic
+        FROM t_commu_pics
+        WHERE iboard = #{iboard}
+    </select>
 </mapper>

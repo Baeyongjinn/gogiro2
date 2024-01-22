@@ -1,16 +1,12 @@
 package com.green.gogiro.admin;
 
 
-import com.green.gogiro.admin.model.StoreRegistrationDto;
-import com.green.gogiro.admin.model.StoreRegistrationPicsVo;
+import com.green.gogiro.admin.model.*;
 import com.green.gogiro.exception.RestApiException;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -31,6 +27,22 @@ public class AdminController {
             throw new RestApiException(MUST_PHOTO);
         }
         return service.insRegistration(dto);
+    }
+
+    @PostMapping("/shop/menu")
+    public ShopMenuPicsVo insShopMenu(@RequestPart(required = false) MultipartFile pic, @RequestPart ShopMenuDto dto){
+        if(pic != null) {
+            dto.setPic(pic);
+        }
+        return service.insShopMenu(dto);
+    }
+
+    @PutMapping("/shop/menu")
+    public ShopMenuPicsVo updShopMenu(@RequestPart(required = false) MultipartFile pic, @RequestPart ShopMenuUpdDto dto) {
+        if(pic != null) {
+            dto.setPic(pic);
+        }
+        return service.updShopMenu(dto);
     }
 
 }

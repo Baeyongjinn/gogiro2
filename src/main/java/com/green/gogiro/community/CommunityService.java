@@ -125,6 +125,8 @@ public class CommunityService {
 
     public CommunityDetailVo getDetailCommunity(int iboard){
         CommunityDetailVo vo = mapper.selDetailCommunity(iboard);
+        List<String> pics = mapper.selByCommunityPics(iboard);
+        vo.setPics(pics);
         List<CommunityCommentVo> comments = mapper.selCommunityComments(iboard);
         vo.setComments(comments);
         return vo;

@@ -28,5 +28,6 @@ public class ButcherReviewDto {
     @Size(min = 1,max = 50)
     private String review;
     @Schema(title = "리뷰 사진",description = "최대 5장")
+    @JsonIgnore
     private List<MultipartFile> pics;
 }
