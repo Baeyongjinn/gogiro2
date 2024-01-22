@@ -20,11 +20,11 @@ public class CommunityUpdDto {
     private int iboard;
     @Schema(title = "제목")
     @NotBlank
-    @Size(min = 1, max = 50, message = "50자 이상 작성 할 수 없습니다.")
+    @Size(min = 1, max = 50, message = "50자 초과 작성 할 수 없습니다.")
     private String title;
     @Schema(title = "내용")
     @NotBlank
-    @Size(min = 1, max = 300, message = "300자 이상 작성 할 수 없습니다.")
+    @Size(min = 1, max = 300, message = "300자 초과 작성 할 수 없습니다.")
     private String contents;
     @Schema(title = "사진")
     private List<String> pics = new ArrayList<>();
