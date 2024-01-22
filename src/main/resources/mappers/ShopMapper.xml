@@ -26,6 +26,20 @@
         )
     </select>
 
+    <select id="selReviewCount">
+        SELECT COUNT(*) AS `count`
+        FROM t_shop_review
+        WHERE ishop = #{ishop}
+    </select>
+
+    <select id="selShopListCount">
+        SELECT COUNT(*) AS `count`
+        FROM t_shop
+        <if test="category > 0">
+            WHERE imeat = #{category}
+        </if>
+    </select>
+
     <select id="selShopPics">
         SELECT pic
         FROM t_shop_pic

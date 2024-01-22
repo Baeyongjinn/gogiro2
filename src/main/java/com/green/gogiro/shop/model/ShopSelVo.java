@@ -14,6 +14,7 @@ public class ShopSelVo {
     private String name;
     @Schema(title = "위치")
     private String location;
+    private int count;
     @Schema(title = "사진")
     private List<String> pics = new ArrayList<>();
     private List<String> facilities = new ArrayList<>();

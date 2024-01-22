@@ -46,6 +46,7 @@ public class ShopService {
         for (ShopSelVo vo : shopList) {
             shopPk.add(vo.getIshop());
             shopMap.put(vo.getIshop(), vo);
+            vo.setCount(mapper.selShopListCount(dto.getCategory()));
         }
 
         List<ShopPicsVo> picList = mapper.selShopPicList(shopPk);
@@ -73,6 +74,7 @@ public class ShopService {
         }
         ShopDto dto = new ShopDto(i,ishop);
         ShopDetailVo shopDetailList = mapper.selShopDetail(dto);
+        shopDetailList.setCount(mapper.selReviewCount(ishop));
         List<String> facilityList = mapper.shopFacilities(ishop);
         List<ShopDetailMenu> menuList = mapper.selMenuDetail(ishop);
         List<String> picList = mapper.selShopPics(ishop);
