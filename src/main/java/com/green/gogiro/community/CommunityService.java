@@ -12,6 +12,7 @@ import com.green.gogiro.community.model.*;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.security.AuthenticationFacade;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,14 +32,14 @@ public class CommunityService {
 
     public CommunityPicsInsVo insCommunity(CommunityInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        //제목을 입력하지 않는 경우
-        if(dto.getTitle() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getTitle())) {
-            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
-        }
-        //내용을 입력하지 않는 경우
-        if(dto.getContents() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getContents())) {
-            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
-        }
+//        //제목을 입력하지 않는 경우
+//        if(dto.getTitle() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getTitle())) {
+//            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
+//        }
+//        //내용을 입력하지 않는 경우
+//        if(dto.getContents() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getContents())) {
+//            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
+//        }
         mapper.insCommunity(dto);
         if(dto.getFiles()!=null){
             String target = "/community/" + dto.getIboard();
@@ -49,7 +50,7 @@ public class CommunityService {
             mapper.insCommunityPics(dto);
         }
 
-        //autu_increment 0 값일때
+        //auto_increment 0 값일때
         if(dto.getIboard() == 0) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY);
         }
@@ -66,14 +67,14 @@ public class CommunityService {
         if(check == null){
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         }
-        //제목을 입력하지 않는 경우
-        if(dto.getTitle() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getTitle())) {
-            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
-        }
-        //내용을 입력하지 않는 경우
-        if(dto.getContents() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getContents())) {
-            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
-        }
+//        //제목을 입력하지 않는 경우
+//        if(dto.getTitle() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getTitle())) {
+//            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
+//        }
+//        //내용을 입력하지 않는 경우
+//        if(dto.getContents() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getContents())) {
+//            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
+//        }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updCommunity(dto);
         mapper.delCommunityPic(dto);
@@ -144,10 +145,10 @@ public class CommunityService {
 
     public ResVo postCommunityComment(CommunityCommentInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        //내용을 입력하지 않는 경우
-        if(dto.getContents() == null) {
-            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
-        }
+//        //내용을 입력하지 않는 경우
+//        if(dto.getContents() == null) {
+//            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
+//        }
         return new ResVo(mapper.insCommunityComment(dto));
     }
 

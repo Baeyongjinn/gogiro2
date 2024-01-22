@@ -5,6 +5,7 @@ import com.green.gogiro.community.model.*;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,8 +20,8 @@ public class CommunityController {
 
     @PostMapping()
     @Operation(summary = "커뮤니티 등록",description = "커뮤니티 등록 처리")
-    public CommunityPicsInsVo postCommunity(@RequestPart(required = false) List<MultipartFile> pics
-            , @RequestPart CommunityInsDto dto) {
+    public CommunityPicsInsVo postCommunity(@RequestPart(required = false)@Valid List<MultipartFile> pics
+            , @RequestPart @Valid CommunityInsDto dto) {
         //사진을 5장 초과했을 경우
         if(pics!=null){
             dto.setFiles(pics);
@@ -28,14 +29,13 @@ public class CommunityController {
                 throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
             }
         }
-
         return service.insCommunity(dto);
     }
 
     @PutMapping()
     @Operation(summary = "커뮤니티 수정", description = "커뮤니티 수정 처리")
-    public CommunityPicsInsVo putCommunity(@RequestPart(required = false) List<MultipartFile> pics
-            , @RequestPart CommunityUpdDto dto) {
+    public CommunityPicsInsVo putCommunity(@Valid @RequestPart(required = false) List<MultipartFile> pics
+            ,@Valid @RequestPart CommunityUpdDto dto) {
         //사진을 5장 초과했을 경우
         if(pics!=null){
             dto.setFiles(pics);
@@ -43,7 +43,6 @@ public class CommunityController {
                 throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
             }
         }
-
         return service.updCommunity(dto);
     }
 
@@ -67,7 +66,7 @@ public class CommunityController {
 
     @PostMapping("/comment")
     @Operation(summary = "커뮤니티 댓글 작성",description = "커뮤니티 댓글 작성 처리")
-    public ResVo postCommunityComment(@RequestBody CommunityCommentInsDto dto) {
+    public ResVo postCommunityComment(@Valid @RequestBody CommunityCommentInsDto dto) {
         return service.postCommunityComment(dto);
     }
 
