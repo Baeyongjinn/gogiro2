@@ -15,6 +15,7 @@ public class ButcherSelVo {
     @Schema(title = "위치")
     private String location;
     @Schema(title = "사진")
+    private int count;
     private List<String> pics = new ArrayList<>();
 
 }

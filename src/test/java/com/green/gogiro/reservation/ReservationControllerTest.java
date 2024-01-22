@@ -26,27 +26,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockMvcConfig
 @WebMvcTest(ReservationController.class)
 class ReservationControllerTest {
-    @Autowired private MockMvc mvc;
-    @Autowired private ObjectMapper mapper;
-    @MockBean private ReservationService service;
-
-    @Test
-    void postReservation() throws Exception{
-
-    }
-
-    @Test
-    void postPickup() throws Exception{
-
-    }
-
-    @Test
-    void cancelReservation() throws Exception{
-
-    }
-
-    @Test
-    void cancelPickup() throws Exception{
-
-    }
+//    @Autowired private MockMvc mvc;
+//    @Autowired private ObjectMapper mapper;
+//    @MockBean private ReservationService service;
+//
+//    @Test
+//    void postReservation() throws Exception{
+//
+//    }
+//
+//    @Test
+//    void postPickup() throws Exception{
+//
+//    }
+//
+//    @Test
+//    void cancelReservation() throws Exception{
+//
+//    }
+//
+//    @Test
+//    void cancelPickup() throws Exception{
+//
+//    }
 }

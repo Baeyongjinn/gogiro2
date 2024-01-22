@@ -1,7 +1,9 @@
 package com.green.gogiro.butchershop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.green.gogiro.common.Const;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
@@ -10,6 +12,8 @@ public class ButcherSelDto {
     private int page;
     @Schema(title = "검색",defaultValue = " ")
     private String search;
+
+
 
     @JsonIgnore
     private int startIdx;
