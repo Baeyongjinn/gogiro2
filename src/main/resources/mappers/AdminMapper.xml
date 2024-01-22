@@ -42,4 +42,44 @@
         FROM t_shop_menu
         WHERE imenu = #{imenu}
     </select>
+
+    <insert id="insButcherShop" useGeneratedKeys="true" keyProperty="ibutcher">
+        INSERT INTO
+        t_butcher_shop
+        (name,location,open,tel,x,y)
+        VALUES
+        (#{name},#{location},#{open},#{tel},#{x},#{y})
+    </insert>
+
+    <insert id="insButcherPics">
+        INSERT INTO
+        t_butcher_pic
+        (ibutcher, pic)
+        VALUES
+        <foreach collection="pics" item="pic" open="(" close=")" separator="),( ">
+            #{ibutcher}, #{pic}
+        </foreach>
+    </insert>
+
+    <insert id="insButcherMenu" useGeneratedKeys="true" keyProperty="ibutMenu">
+        INSERT INTO
+        t_but_menu
+        (ibutcher,menu,price,pic)
+        VALUES
+        (#{ibutcher},#{menu},#{price},#{fileNm})
+    </insert>
+
+    <select id="selButcherMenuPicNm">
+        SELECT pic
+        FROM t_but_menu
+        WHERE ibut_menu = #{ibutMenu}
+    </select>
+
+    <update id="updButcherMenu">
+        UPDATE t_but_menu
+        SET menu = #{menu}
+        , price = #{price}
+        , pic = #{fileNm}
+        WHERE ibut_menu = #{ibutMenu}
+    </update>
 </mapper>

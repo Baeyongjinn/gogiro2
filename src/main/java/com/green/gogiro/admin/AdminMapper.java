@@ -1,9 +1,6 @@
 package com.green.gogiro.admin;
 
-import com.green.gogiro.admin.model.ShopMenuDto;
-import com.green.gogiro.admin.model.ShopMenuUpdDto;
-import com.green.gogiro.admin.model.StoreRegistrationDto;
-import com.green.gogiro.admin.model.StoreRegistrationPicsVo;
+import com.green.gogiro.admin.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -16,4 +13,16 @@ public interface AdminMapper {
     int updShopMenu(ShopMenuUpdDto dto);
 
     String selPicNm(int imenu);
+
+    int insButcherShop(ButcherInsDto dto);
+
+    int insButcherPics(ButcherInsDto dto);
+
+    int insButcherMenu(ButcherMenuInsDto dto);
+
+    String selButcherMenuPicNm(int ibutMenu);
+
+    int updButcherMenu(ButcherMenuUpdDto dto);
+
+
 }
