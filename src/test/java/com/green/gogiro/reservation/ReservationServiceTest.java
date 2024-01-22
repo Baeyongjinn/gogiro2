@@ -19,28 +19,28 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(SpringExtension.class)
 @Import({ReservationService.class})
 class ReservationServiceTest {
-    @MockBean
-    private ReservationMapper mapper;
-    @Autowired
-    private ReservationService service;
-
-    @Test
-    void postReservationTest() throws Exception{
+//    @MockBean
+//    private ReservationMapper mapper;
+//    @Autowired
+//    private ReservationService service;
+//
+//    @Test
+//    void postReservationTest() throws Exception{
+//
+//    }
+//
+//    @Test
+//    void postPickupTest() throws Exception{
+//
+//    }
+//
+//    @Test
+//    void cancelReservationTest() throws Exception{
+//
+//    }
+//
+//    @Test
+//    void cancelPickupTest() throws Exception{
 
     }
-
-    @Test
-    void postPickupTest() throws Exception{
-
-    }
-
-    @Test
-    void cancelReservationTest() throws Exception{
-
-    }
-
-    @Test
-    void cancelPickupTest() throws Exception{
-
-    }
-}
+//}

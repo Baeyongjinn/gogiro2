@@ -40,12 +40,14 @@ public class ButcherShopService {
         if(dto.getPage() <= 0){
             throw new RestApiException(AuthErrorCode.INVALID_PAGE);
         }
+        int count = mapper.selListCount();
         List<ButcherSelVo> list = mapper.selButcherShopAll(dto);
         List<Integer> pk = new ArrayList<>();
         Map<Integer, ButcherSelVo> butMap = new HashMap<>();
         for (ButcherSelVo vo : list) {
             pk.add(vo.getIbutcher());
             butMap.put(vo.getIbutcher(), vo);
+            vo.setCount(count);
         }
         List<ButcherPicsVo> pics = mapper.selButcherShopPicList(pk);
         for (ButcherPicsVo pic : pics) {
@@ -96,6 +98,7 @@ public class ButcherShopService {
         } catch(Exception e) {
             i= 0;
         }
+        int count = mapper.selReviewCount(ibutcher);
         ButDto dto= new ButDto(i, ibutcher);
         ButcherShopDetailVo vo = mapper.selButcherShopDetail(dto);
         List<DetailMenu> menus = mapper.selMenuDetail(ibutcher);
@@ -114,6 +117,7 @@ public class ButcherShopService {
             map.get(pic.getIreview()).getPics().add(pic.getPic());
         }
         vo.setReviews(reviews);
+        vo.setCount(count);
         return vo;
     }
 

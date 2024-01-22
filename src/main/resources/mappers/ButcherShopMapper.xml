@@ -13,6 +13,17 @@
         LIMIT #{startIdx}, #{rowCount}
     </select>
 
+    <select id="selListCount">
+        SELECT COUNT(*) AS `count`
+        FROM t_butcher_shop
+    </select>
+
+    <select id="selReviewCount">
+        SELECT COUNT(*) AS `count`
+        FROM t_but_review
+        WHERE ibutcher = #{ibutcher}
+    </select>
+
     <select id="selButcherShopPicList">
         SELECT
             ibutcher,
