@@ -17,15 +17,15 @@ public interface CommunityMapper {
 
     int updCommunity(CommunityUpdDto dto);
 
-    int delCommunityPic(CommunityUpdDto dto);
+    int delCommunityPic(List<Integer> icommuPics);
 
     int selCommunityCount();
 
-    List<CommunityBySelPicsDto> selCommunityPics(int iboard);
+    List<CommunityBySelPicsDto> selCommunityPics(List<Integer> icommuPics);
 
     List<CommunitySelVo> selCommunity(CommunitySelDto dto);
 
-    List<String> selByCommunityPics(int iboard);
+    List<CommunityBySelPicsDto> selByCommunityPics(int iboard);
 
     List<CommunityPicsVo> selPicCommunity(List<Integer> iboard);
 

@@ -95,7 +95,11 @@
 
     <delete id="delCommunityPic">
         delete from t_commu_pics
-        where iboard = #{iboard}
+        where icommu_pics  in (
+        <foreach collection="icommuPics" item="icommuPics" separator=",">
+        #{icommuPics}
+        </foreach>
+        )
     </delete>
 
     <delete id="delCommunityAllComment">
@@ -128,14 +132,20 @@
     </delete>
 
     <select id="selByCommunityPics">
-        SELECT pic
+        SELECT icommu_pics as icommuPics, pic
         FROM t_commu_pics
         WHERE iboard = #{iboard}
     </select>
 
     <select id="selCommunityPics">
-        SELECT icommu_pics as icommuPics,pic
+        SELECT icommu_pics as icommuPics, pic
         FROM t_commu_pics
-        WHERE iboard = #{iboard}
+        WHERE icommu_pics in (
+        <foreach collection="icommuPics" item="icommuPics" separator=",">
+        #{icommuPics}
+        </foreach>
+        )
     </select>
+
+
 </mapper>

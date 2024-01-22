@@ -18,6 +18,8 @@ public class CommunityUpdDto {
     @Schema(title = "커뮤니티pk")
     @Min(value = 1)
     private int iboard;
+    @Schema(title = "삭제할 사진pk")
+    private List<Integer> icommuPics;
     @Schema(title = "제목")
     @NotBlank
     @Size(min = 1, max = 50, message = "50자 초과 작성 할 수 없습니다.")

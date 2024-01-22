@@ -23,7 +23,7 @@ public class CommunityDetailVo {
     @Schema(title = "작성일")
     private String createdAt;
     @Schema(title = "사진")
-    private List<String> pics = new ArrayList<>();
+    private List<CommunityBySelPicsDto> pics = new ArrayList<>();
     @Schema
     private List<CommunityCommentVo> comments = new ArrayList<>();
 }
