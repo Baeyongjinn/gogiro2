@@ -136,6 +136,8 @@ public class CommunityService {
         if(check == null){
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         }
+        String target = "/community/" + dto.getIboard();
+        myFileUtils.delFolderTrigger(target);
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.delCommunityAllComment(dto);
         mapper.delCommunityPic(dto.getIboard());
