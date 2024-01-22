@@ -18,6 +18,7 @@ import com.green.gogiro.user.model.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
@@ -177,21 +178,21 @@ public class UserService {
                 .build();
     }
 
-
+    //유저 정보 수정
     public ResVo updateUser(UserUpdDto dto) {
 
 
-        if (dto.getNickname() == null ||
-                dto.getAddress() == null ||
-                dto.getTel() == null) {
-            throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
-        }
-        if (!Pattern.matches(REGEXP_USER_TEL,dto.getTel())) {
-            throw new RestApiException(UserErrorCode.REGEXP_TEL);
-        }
-        if (Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getNickname())) {
-            throw new RestApiException(UserErrorCode.NOT_NICK_NAME);
-        }
+//        if (dto.getNickname() == null ||
+//                dto.getAddress() == null ||
+//                dto.getTel() == null) {
+//            throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
+//        }
+////        if (!Pattern.matches(REGEXP_USER_TEL,dto.getTel())) {
+////            throw new RestApiException(UserErrorCode.REGEXP_TEL);
+////        }
+//        if (!Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getNickname())) {
+//            throw new RestApiException(UserErrorCode.NOT_NICK_NAME);
+//        }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         if (dto.getFile() != null) {
             String path = "/user/" + dto.getIuser();

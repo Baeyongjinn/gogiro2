@@ -1,5 +1,7 @@
 package com.green.gogiro.common;
 
+import com.green.gogiro.exception.AuthErrorCode;
+import com.green.gogiro.exception.RestApiException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -7,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Getter
 @Component
@@ -31,6 +34,9 @@ public class MyFileUtils {
 
     //확장자 얻어오기
     public String getExt(String fileNm) {
+        if(!Pattern.matches(Const.REGEXP_PiC,fileNm)) {
+            throw new RestApiException(AuthErrorCode.REGEXP_PiC);
+        }
         return fileNm.substring(fileNm.lastIndexOf("."));
     }
 

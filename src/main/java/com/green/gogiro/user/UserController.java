@@ -1,21 +1,31 @@
 package com.green.gogiro.user;
 
+import com.green.gogiro.common.Const;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
+import com.green.gogiro.exception.UserErrorCode;
 import com.green.gogiro.user.model.ReservationVo;
 import com.green.gogiro.user.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/user")
+@Slf4j
 public class UserController {
     private final UserService service;
 
@@ -53,10 +63,11 @@ public class UserController {
     @PutMapping
     @Operation(summary = "회원정보 수정", description = "회원정보 수정 처리")
     public ResVo putUser(@RequestPart(required = false) MultipartFile pic,
-                            @RequestPart UserUpdDto dto) {
+                            @Valid @RequestPart UserUpdDto dto) {
         if(pic!=null) {
             dto.setFile(pic);
         }
+
         return service.updateUser(dto);
     }
 
