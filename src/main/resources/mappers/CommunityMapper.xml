@@ -132,4 +132,10 @@
         FROM t_commu_pics
         WHERE iboard = #{iboard}
     </select>
+
+    <select id="selCommunityPics">
+        SELECT icommu_pics as icommuPics,pic
+        FROM t_commu_pics
+        WHERE iboard = #{iboard}
+    </select>
 </mapper>
