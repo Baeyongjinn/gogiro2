@@ -121,7 +121,20 @@
         ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
-
+    <select id="selUserReservationCount">
+        SELECT
+            SUM(count)
+        FROM (
+            SELECT
+                COUNT(*) AS count
+            FROM t_reservation
+            WHERE iuser= #{iuser}
+            union
+            SELECT
+                COUNT(*) AS count
+            FROM t_pickup
+            WHERE iuser= #{iuser}) a
+    </select>
     <select id="selUserReview">
         SELECT
         0 AS checkShop,
@@ -141,7 +154,6 @@
         LEFT JOIN t_shop_pic d
         ON a.ishop= d.ishop
         WHERE a.iuser = #{iuser}
-        GROUP BY a.ishop
         UNION
         SELECT
         1 AS checkShop,
@@ -161,11 +173,23 @@
         LEFT JOIN t_butcher_pic d
         ON a.ibutcher= d.ibutcher
         WHERE a.iuser = #{iuser}
-        GROUP BY a.ibutcher
         ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
-
+    <select id="selUserReviewCount">
+        SELECT
+            SUM(count)
+        FROM (
+            SELECT
+                COUNT(*) AS count
+            FROM t_shop_review
+            WHERE iuser= #{iuser}
+            union
+            SELECT
+                COUNT(*) AS count
+            FROM t_but_review
+            WHERE iuser= #{iuser}) a
+    </select>
     <select id="selUserReviewPic">
         SELECT
             pic
@@ -202,7 +226,7 @@
         ON a.ishop= b.ishop
         JOIN t_category c
         ON a.imeat = c.imeat
-        AND b.iuser= 4
+        AND b.iuser= #{iuser}
         LEFT JOIN t_shop_pic d
         ON a.ishop= d.ishop
         GROUP BY a.ishop
@@ -225,12 +249,26 @@
         FROM t_but_bookmark
         ) b
         ON a.ibutcher= b.ibutcher
-        AND b.iuser= 4
+        AND b.iuser= #{iuser}
         LEFT JOIN t_butcher_pic d
         ON a.ibutcher= d.ibutcher
         GROUP BY a.ibutcher
         ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
+    </select>
+    <select id="selUserBookmarkCount">
+        SELECT
+            SUM(count)
+        FROM (
+            SELECT
+                COUNT(*) AS count
+            FROM t_shop_bookmark
+            WHERE iuser= #{iuser}
+            union
+            SELECT
+                COUNT(*) AS count
+            FROM t_but_bookmark
+            WHERE iuser= #{iuser}) a
     </select>
     <delete id="delShopReviewPics">
         DELETE
