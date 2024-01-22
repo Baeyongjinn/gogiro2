@@ -210,19 +210,27 @@ public class UserService {
 
     public List<ReservationVo> getReservation(UserMyPageDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        return mapper.selReservation(dto);
+        int count= mapper.selUserReservationCount(dto.getIuser());
+        List<ReservationVo> list= mapper.selReservation(dto);
+        for(ReservationVo vo: list) {
+            vo.setCount(count);
+        }
+        return list;
     }
 
     public List<ReviewVo> getUserReview(UserMyPageDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         List<ReviewVo> reviews = mapper.selUserReview(dto);
+        int count= mapper.selUserReviewCount(dto.getIuser());
         List<ReviewPk> reviewPkList = new ArrayList<>();
         Map<ReviewPk, ReviewVo> reviewMap = new HashMap<>();
         for (ReviewVo vo : reviews) {
+            vo.setCount(count);
             ReviewPk pk = new ReviewPk(vo.getCheckShop(), vo.getIreview());
             reviewMap.put(pk, vo);
             reviewPkList.add(pk);
         }
+
         for (ReviewPk pk : reviewPkList) {
             List<String> pics = mapper.selUserReviewPic(pk);
             reviewMap.get(pk).setPics(pics);
@@ -235,12 +243,16 @@ public class UserService {
         List<BookmarkShopVo> list= mapper.selUserBookmark(dto);
         List<Integer> ishopList= new ArrayList<>();
         Map<Integer, BookmarkShopVo> shopMap= new HashMap<>();
+        int count= mapper.selUserBookmarkCount(dto.getIuser());
         for(BookmarkShopVo vo: list) {
+            vo.setCount(count);
             if(vo.getImeat()!=0){
                 ishopList.add(vo.getIshop());
                 shopMap.put(vo.getIshop(),vo);
+
             }
         }
+
         List<ShopFacilityVo> facilityList= shopMapper.selShopFacility(ishopList);
         for(ShopFacilityVo vo: facilityList) {
             if(shopMap.get(vo.getIshop()).getImeat() != 0) {

@@ -63,7 +63,7 @@ public class UserController {
     @PutMapping
     @Operation(summary = "회원정보 수정", description = "회원정보 수정 처리")
     public ResVo putUser(@RequestPart(required = false) MultipartFile pic,
-                            @Valid @RequestPart UserUpdDto dto) {
+                         @Valid @RequestPart UserUpdDto dto) {
         if(pic!=null) {
             dto.setFile(pic);
         }

@@ -25,11 +25,17 @@ public interface UserMapper {
 
     List<ReservationVo> selReservation(UserMyPageDto dto);
 
+    int selUserReservationCount(int iuser);
+
     List<ReviewVo> selUserReview(UserMyPageDto dto);
+
+    int selUserReviewCount(int iuser);
 
     List<String> selUserReviewPic(ReviewPk pk);
 
     List<BookmarkShopVo> selUserBookmark(UserMyPageDto dto);
+
+    int selUserBookmarkCount(int iuser);
 
     int delShopReviewPics(ReviewDelDto dto);
 
