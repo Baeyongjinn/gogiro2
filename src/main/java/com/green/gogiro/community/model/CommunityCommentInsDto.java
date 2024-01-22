@@ -11,13 +11,12 @@ import lombok.Data;
 @Data
 public class CommunityCommentInsDto {
     @Schema(title = "커뮤니티pk")
-    @Min(value = 1)
     private int iboard;
 
     @JsonIgnore
     private int iuser;
     @Schema(title = "댓글내용")
     @NotBlank
-    @Size(min = 1, max = 300, message = "300자 이상 작성 할 수 없습니다.")
+    @Size(min = 1, max = 300, message = "300자 초과 작성 할 수 없습니다.")
     private String contents;
 }
