@@ -63,7 +63,7 @@ class UserMapperTest {
     }
 
     @Test
-    void updUserPic() {
+    void updUserPicTest() {
         int iuser= mapper.selIuserForTest();
 
         UserInfoVo before= mapper.selUserInfo(iuser);
@@ -80,7 +80,7 @@ class UserMapperTest {
     }
 
     @Test
-    void updateUser() {
+    void updateUserTest() {
         int iuser= mapper.selIuserForTest();
 
         UserInfoVo before= mapper.selUserInfo(iuser);
@@ -106,7 +106,7 @@ class UserMapperTest {
     }
 
     @Test
-    void selReservation() {
+    void selReservationTest() {
         int iuser= mapper.selIuserForTest();
         int ishop= shopMapper.selIshopForTest();
         String date1= "1111-11-11 11:11:11";
@@ -151,7 +151,7 @@ class UserMapperTest {
 
 
     @Test
-    void delShopReview() {
+    void delShopReviewTest() {
         if(mapper.selShopReviewPicForTest1()!=0) {
             ReviewTestVo shopReview = mapper.selShopReviewPicForTest2(mapper.selShopReviewPicForTest1());
             ReviewDelDto delShopReview = new ReviewDelDto();
