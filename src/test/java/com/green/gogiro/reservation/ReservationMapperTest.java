@@ -82,5 +82,36 @@ class ReservationMapperTest {
         }
         assertEquals(menus.size(), mapper.selPickupMenusForTest(dto.getIpickup()));
     }
-
+    @Test
+    void cancelReservationTest() {
+        CancelReservationDto dto= mapper.selReservationForCancelTest();
+        int cancelReservation= mapper.cancelReservation(dto);
+        assertEquals(1, cancelReservation);
+        assertEquals(1,mapper.selReservationConfirmForTest(dto.getIreser()));
+    }
+    @Test
+    void cancelPickupTest() {
+        CancelPickupDto dto= mapper.selPickupForCancelTest();
+        int cancelPickup= mapper.cancelPickup(dto);
+        assertEquals(1, cancelPickup);
+        assertEquals(1,mapper.selPickupConfirmForTest(dto.getIpickup()));
+    }
+    @Test
+    void updReservationTest() {
+        CancelReservationDto dto= mapper.selReservationForCancelTest();
+        ReservationUpdDto updDto= new ReservationUpdDto();
+        updDto.setIreser(dto.getIreser());
+        String date= "1234-11-11 11:11:11";
+        String request= "테스트요청";
+        int headCount= 4;
+        updDto.setDate(date);
+        updDto.setRequest(request);
+        updDto.setHeadCount(headCount);
+        int updReservation= mapper.updReservation(updDto);
+        assertEquals(1, updReservation);
+        ReservationTestVo vo= mapper.selReservationForTest(dto.getIreser());
+        assertEquals(date, vo.getDate());
+        assertEquals(request, vo.getRequest());
+        assertEquals(headCount, vo.getHeadCount());
+    }
 }

@@ -74,4 +74,32 @@
         FROM t_pickup_menu
         WHERE ipickup = #{ipickup}
     </select>
+    <select id="selReservationForCancelTest">
+        SELECT
+            ireser,
+            iuser
+        FROM t_reservation
+        WHERE confirm= 0
+        LIMIT 0, 1
+    </select>
+    <select id="selReservationConfirmForTest">
+        SELECT
+            confirm
+        FROM t_reservation
+        where ireser= #{ireser}
+    </select>
+    <select id="selPickupForCancelTest">
+        SELECT
+            ipickup,
+            iuser
+        FROM t_pickup
+        WHERE confirm= 0
+        LIMIT 0, 1
+    </select>
+    <select id="selPickupConfirmForTest">
+        SELECT
+            confirm
+        FROM t_pickup
+        where ipickup= #{ipickup}
+    </select>
 </mapper>
