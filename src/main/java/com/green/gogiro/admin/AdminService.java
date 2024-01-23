@@ -2,8 +2,11 @@ package com.green.gogiro.admin;
 
 import com.green.gogiro.admin.model.*;
 import com.green.gogiro.common.MyFileUtils;
+import com.green.gogiro.exception.AuthErrorCode;
+import com.green.gogiro.exception.RestApiException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,8 +19,10 @@ public class AdminService {
 
     public StoreRegistrationPicsVo insRegistration(StoreRegistrationDto dto) {
 
+        if(dto.getPics().size() > 5) {
+            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        }
         mapper.insStoreRegistration(dto);
-
         String target = "/shop/" + dto.getIshop() + "/shop_pic";
         StoreRegistrationPicsVo vo = new StoreRegistrationPicsVo();
         vo.setIshop(dto.getIshop());
@@ -26,7 +31,6 @@ public class AdminService {
             String saveFileNm = myFileUtils.transferTo(file, target);
             vo.getPics().add(saveFileNm);
         }
-
         mapper.insStoreRegistrationPics(vo);
         return vo;
     }
@@ -64,6 +68,9 @@ public class AdminService {
     public ButcherPicVo insButcherShop(ButcherInsDto dto) {
         mapper.insButcherShop(dto);
 
+        if(dto.getPics().size() > 5) {
+            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        }
         String target = "/butchershop/" + dto.getIbutcher() + "/butchershop_pic";
         ButcherPicVo vo = new ButcherPicVo();
         vo.setIbutcher(dto.getIbutcher());
