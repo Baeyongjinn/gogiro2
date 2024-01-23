@@ -297,5 +297,27 @@
         where ireview= #{ireview}
         AND iuser= #{iuser}
     </delete>
+    <select id="selShopReviewPicForTest1">
+        SELECT
+            MAX(ireview)
+        FROM t_shop_review_pic
+    </select>
 
+    <select id="selShopReviewPicForTest2">
+        SELECT
+            ireview, iuser
+        FROM t_shop_review
+        WHERE ireview= #{ireview}
+    </select>
+    <select id="selButReviewPicForTest1">
+        SELECT
+            MAX(ireview)
+        FROM t_but_review_pic
+    </select>
+    <select id="selButReviewPicForTest2">
+        SELECT
+            ireview, iuser
+        FROM t_but_review
+        WHERE ireview= #{ireview}
+    </select>
 </mapper>

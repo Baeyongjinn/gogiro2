@@ -149,24 +149,36 @@ class UserMapperTest {
         assertEquals(request2, list.get(1).getRequest());
     }
 
-    @Test
-    void selUserReview() {
-
-    }
-
-    @Test
-    void selUserReviewPic() {
-    }
-
-    @Test
-    void selUserBookmark() {
-    }
-
-    @Test
-    void delShopReviewPics() {
-    }
 
     @Test
     void delShopReview() {
+        if(mapper.selShopReviewPicForTest1()!=0) {
+            ReviewTestVo shopReview = mapper.selShopReviewPicForTest2(mapper.selShopReviewPicForTest1());
+            ReviewDelDto delShopReview = new ReviewDelDto();
+            delShopReview.setIuser(shopReview.getIuser());
+            delShopReview.setIreview(shopReview.getIreview());
+            delShopReview.setCheckShop(0);
+            ReviewPk pk1 = new ReviewPk(0, shopReview.getIreview());
+            List<String> shopReviewPics = mapper.selUserReviewPic(pk1);
+            int delShopReviewPic = mapper.delShopReviewPics(delShopReview);
+            int delShopReviewCnt = mapper.delShopReview(delShopReview);
+            assertEquals(shopReviewPics.size(), delShopReviewPic);
+            assertEquals(1, delShopReviewCnt);
+            assertNotEquals(shopReview.getIreview(), mapper.selShopReviewPicForTest1());
+        }
+        if(mapper.selButReviewPicForTest1()!=0) {
+            ReviewTestVo butcherReview = mapper.selButReviewPicForTest2(mapper.selButReviewPicForTest1());
+            ReviewDelDto delButcherReview = new ReviewDelDto();
+            delButcherReview.setIuser(butcherReview.getIuser());
+            delButcherReview.setIreview(butcherReview.getIreview());
+            delButcherReview.setCheckShop(1);
+            ReviewPk pk2 = new ReviewPk(1, butcherReview.getIreview());
+            List<String> butcherReviewPics = mapper.selUserReviewPic(pk2);
+            int delButcherReviewPic = mapper.delShopReviewPics(delButcherReview);
+            int delButcherReviewCnt = mapper.delShopReview(delButcherReview);
+            assertEquals(butcherReviewPics.size(), delButcherReviewPic);
+            assertEquals(1, delButcherReviewCnt);
+            assertNotEquals(butcherReview.getIreview(), mapper.selButReviewPicForTest1());
+        }
     }
 }

@@ -43,4 +43,12 @@ public interface UserMapper {
 
     String checkEmail(String email);
 
+    int selShopReviewPicForTest1();
+
+    ReviewTestVo selShopReviewPicForTest2(int ireview);
+
+    int selButReviewPicForTest1();
+
+    ReviewTestVo selButReviewPicForTest2(int ireview);
+
 }
