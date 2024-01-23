@@ -24,6 +24,8 @@ public class CommunityDetailVo {
     private String createdAt;
     @Schema(title = "사진")
     private List<CommunityBySelPicsDto> pics = new ArrayList<>();
+    @Schema(title = "이전글 다음글")
+    private List<CommunitySelBeAfDto> beAf = new ArrayList<>();
     @Schema
     private List<CommunityCommentVo> comments = new ArrayList<>();
 }
