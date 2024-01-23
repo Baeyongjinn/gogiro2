@@ -21,6 +21,8 @@ public interface CommunityMapper {
 
     int selCommunityCount();
 
+    List<CommunitySelBeAfDto> beforeTitleNextTitle(int iboard);
+
     List<CommunityBySelPicsDto> selCommunityPics(List<Integer> icommuPics);
 
     List<CommunitySelVo> selCommunity(CommunitySelDto dto);

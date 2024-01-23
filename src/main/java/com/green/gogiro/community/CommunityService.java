@@ -134,11 +134,13 @@ public class CommunityService {
         if(entity == null) {
             throw new RestApiException(VALID_BOARD);
         }
+        List<CommunitySelBeAfDto> bDto = mapper.beforeTitleNextTitle(iboard);
         CommunityDetailVo vo = mapper.selDetailCommunity(iboard);
         List<CommunityBySelPicsDto> pics = mapper.selByCommunityPics(iboard);
         vo.setPics(pics);
         List<CommunityCommentVo> comments = mapper.selCommunityComments(iboard);
         vo.setComments(comments);
+        vo.setBeAf(bDto);
         return vo;
     }
 

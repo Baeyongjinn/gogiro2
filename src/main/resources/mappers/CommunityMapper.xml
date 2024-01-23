@@ -146,6 +146,22 @@
         </foreach>
         )
     </select>
+    
+    <select id="beforeTitleNextTitle">
+        (SELECT
+        iboard, title
+        FROM t_community
+        WHERE iboard <![CDATA[<=]]> #{iboard}
+        ORDER BY iboard DESC
+        LIMIT 1,1)
+        UNION
+        (SELECT
+        iboard, title
+        FROM t_community
+        WHERE iboard >= #{iboard}
+        ORDER BY iboard
+        LIMIT 1,1)
+    </select>
 
 
 </mapper>
