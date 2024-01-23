@@ -11,6 +11,8 @@ public class ReservationVo {
     private int ireser;//(예약pk)
     @Schema(title = "식당pk")
     private int ishop;//(식당pk)
+    @Schema(title="가게이름")
+    private String name;
     @Schema(title = "예약날짜",defaultValue = "0000-00-00")
     private String date;//(예약 시간)
     @Schema(title = "요청 사항")

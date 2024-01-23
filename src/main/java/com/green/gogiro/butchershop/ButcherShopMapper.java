@@ -44,4 +44,6 @@ public interface ButcherShopMapper {
     void butcherBookmarkOff(ButcherBookmarkDto dto);
 
     int selIbutcherForTest();
+
+    List<Integer> selIbutMenuForTest(int ibutcher);
 }

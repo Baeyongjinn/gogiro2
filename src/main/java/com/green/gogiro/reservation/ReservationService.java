@@ -43,16 +43,16 @@ public class ReservationService {
         || dto.getDate().equals("0000-00-00 00:00:00")){
             throw new RestApiException(AuthErrorCode.REGEXP_DATE_TYPE);
         }
-        if(dto.getIbutMenus() != null || !(dto.getIbutMenus().size() == dto.getCounts().size())) {
+        if(dto.getMenus() != null) {
             throw new RestApiException(AuthErrorCode.INVALID_MENU_OR_COUNT);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insPickup(dto);
-            for (int i = 0; i < dto.getIbutMenus().size(); i++) {
+            for (int i = 0; i < dto.getMenus().size(); i++) {
                 PickupMenuDto menu = PickupMenuDto.builder()
                         .ipickup(dto.getIpickup())
-                        .ibutMenu(dto.getIbutMenus().get(i))
-                        .count(dto.getCounts().get(i))
+                        .ibutMenu(dto.getMenus().get(i).getIbutMenu())
+                        .count(dto.getMenus().get(i).getCount())
                         .build();
                 mapper.insPickupMenu(menu);
             }

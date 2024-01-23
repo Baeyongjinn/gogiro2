@@ -26,9 +26,8 @@ public class CommunityInsDto {
     @NotBlank
     @Size(min = 1, max = 300, message = "300자 초과 작성 할 수 없습니다.")
     private String contents;
-    @Schema(title = "사진")
+    @JsonIgnore
     private List<String> pics = new ArrayList<>();
-
     @JsonIgnore
     private List<MultipartFile> files;
 }
