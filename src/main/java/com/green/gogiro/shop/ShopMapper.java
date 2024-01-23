@@ -28,8 +28,8 @@ public interface ShopMapper {
     int insShopReviewPic(ShopReviewPicsInsDto dto);
 
     Integer selShopBookmark(ShopBookmarkDto dto);
-    void shopBookmarkOn(ShopBookmarkDto dto);
-    void shopBookmarkOff(ShopBookmarkDto dto);
+    int shopBookmarkOn(ShopBookmarkDto dto);
+    int shopBookmarkOff(ShopBookmarkDto dto);
 
     ShopEntity selShopEntity(int ishop);
     Integer selShopCategory(int imeat);
