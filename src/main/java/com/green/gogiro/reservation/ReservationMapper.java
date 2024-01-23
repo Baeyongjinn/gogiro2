@@ -23,4 +23,11 @@ public interface ReservationMapper {
 
     int selPickupMenusForTest(int ipickup);
 
+    CancelReservationDto selReservationForCancelTest();
+
+    int selReservationConfirmForTest(int ireser);
+
+    CancelPickupDto selPickupForCancelTest();
+
+    int selPickupConfirmForTest(int ipickup);
 }
