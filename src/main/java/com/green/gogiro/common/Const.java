@@ -22,7 +22,7 @@ public class Const {
 
     public static final String REGEXP_USER_GENDER = "^[남|여]{1}$";
 
-    public static final String REGEXP_PiC = "^([\\S]+(\\.(?i)(jpg|png|gif|bmp|webp))$)";
+    public static final String REGEXP_PIC = "^([\\S\\s]+(\\.(?i)(jpg|png|gif|bmp|webp))$)";
 
     public static final String REGEXP_USER_BIRTH = "^(19[0-9][0-9]|20\\d{2})(0[0-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])$";
 

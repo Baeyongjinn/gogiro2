@@ -1,8 +1,7 @@
 package com.green.gogiro.community;
 
 import static com.green.gogiro.common.Const.*;
-import static com.green.gogiro.exception.AuthErrorCode.NOT_CONTENT;
-import static com.green.gogiro.exception.AuthErrorCode.SEARCH_COMMUNITY;
+import static com.green.gogiro.exception.AuthErrorCode.*;
 
 
 import com.green.gogiro.common.Const;
@@ -131,6 +130,10 @@ public class CommunityService {
     }
 
     public CommunityDetailVo getDetailCommunity(int iboard) {
+        CommunityEntity entity = mapper.entityCommunity(iboard);
+        if(entity == null) {
+            throw new RestApiException(VALID_BOARD);
+        }
         CommunityDetailVo vo = mapper.selDetailCommunity(iboard);
         List<CommunityBySelPicsDto> pics = mapper.selByCommunityPics(iboard);
         vo.setPics(pics);

@@ -30,6 +30,8 @@ public class SecurityConfiguration {
                                                                     , "/error"
                                                                     , "/err"
                                                                     , "/"
+                                                                    , "/pic"
+                                                                    , "/pic/**"
                                                                     , "/static/**"
                                                                     , "/gogi/read"
                                                                     , "/index.html"
