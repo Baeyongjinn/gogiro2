@@ -30,6 +30,7 @@ public class AdminController {
     }
 
     @PostMapping("/shop/menu")
+    @Operation(summary = "가게 메뉴 등록", description = "가게 메뉴 등록 처리")
     public ShopMenuPicsVo insShopMenu(@RequestPart(required = false) MultipartFile pic, @RequestPart ShopMenuDto dto){
         if(pic != null) {
             dto.setPic(pic);
@@ -38,6 +39,7 @@ public class AdminController {
     }
 
     @PutMapping("/shop/menu")
+    @Operation(summary = "가게 메뉴 사진 등록", description = "가게 메뉴 사진 등록 처리")
     public ShopMenuPicsVo updShopMenu(@RequestPart(required = false) MultipartFile pic, @RequestPart ShopMenuUpdDto dto) {
         if(pic != null) {
             dto.setPic(pic);
@@ -56,6 +58,7 @@ public class AdminController {
     }
 
     @PostMapping("/butcher-shop/menu")
+    @Operation(summary = "정육점 메뉴 등록", description = "정육점 메뉴 등록 처리")
     public ButcherMenuPicVo postButcherMenu(@RequestPart(required = false) MultipartFile pic, @RequestPart ButcherMenuInsDto dto){
         if(pic != null) {
             dto.setPic(pic);
@@ -64,6 +67,7 @@ public class AdminController {
     }
 
     @PutMapping("/butcher-shop/menu")
+    @Operation(summary = "정육점 메뉴 사진 등록", description = "정육점 메뉴 사진 등록 처리")
     public ButcherMenuPicVo updButcherMenu(@RequestPart(required = false) MultipartFile pic, @RequestPart ButcherMenuUpdDto dto) {
         if(pic != null) {
             dto.setFile(pic);
