@@ -17,6 +17,8 @@ public interface CommunityMapper {
 
     int updCommunity(CommunityUpdDto dto);
 
+    CommunityUpdDto selIuserIboardForTest();
+
     int delCommunityPic(List<Integer> icommuPics);
 
     int selCommunityCount();

@@ -17,6 +17,11 @@
             ( #{iboard}, #{pic} )
         </foreach>
     </insert>
+    <select id="selIuserIboardForTest">
+        select iuser, iboard
+        from t_community
+        limit 0, 1
+    </select>
 
     <update id="updCommunity">
         update t_community
