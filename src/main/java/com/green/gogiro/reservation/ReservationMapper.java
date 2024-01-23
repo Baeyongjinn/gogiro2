@@ -17,16 +17,17 @@ public interface ReservationMapper {
 
     int cancelPickup(CancelPickupDto dto);
 
-    List<ReservationInsDto> selReservationForTest(ReservationInsDto dto);
-
-    List<PickupInsDto> selPickupForTest(PickupInsDto dto);
-
-    List<PickupMenuDto> selPickupMenuForTest(PickupMenuDto dto);
-
-    int selReservationConfirmForTest(CancelReservationDto dto);
-
-    int selPickupConfirmForTest(CancelPickupDto dto);
-
     int updReservation(ReservationUpdDto dto);
 
+    ReservationTestVo selReservationForTest(int ireser);
+
+    int selPickupMenusForTest(int ipickup);
+
+    CancelReservationDto selReservationForCancelTest();
+
+    int selReservationConfirmForTest(int ireser);
+
+    CancelPickupDto selPickupForCancelTest();
+
+    int selPickupConfirmForTest(int ipickup);
 }

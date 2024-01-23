@@ -23,7 +23,6 @@ public interface ButcherShopMapper {
     int selListCount();
 
 
-
     ButcherShopDetailVo selButcherShopDetail(ButDto dto);
 
     List<DetailMenu> selMenuDetail(int ibutcher);
@@ -44,4 +43,6 @@ public interface ButcherShopMapper {
     void butcherBookmarkOff(ButcherBookmarkDto dto);
 
     int selIbutcherForTest();
+
+    List<Integer> selIbutMenuForTest(int ibutcher);
 }

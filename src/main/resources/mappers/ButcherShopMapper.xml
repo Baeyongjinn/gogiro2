@@ -151,5 +151,10 @@
         FROM t_butcher_shop
     </select>
 
-
+    <select id="selIbutMenuForTest">
+        SELECT
+            ibut_menu
+        FROM t_but_menu
+        WHERE ibutcher= #{ibutcher}
+    </select>
 </mapper>
