@@ -49,48 +49,6 @@
         AND iuser= #{iuser}
     </update>
 
-    <select id="selReservationForTest">
-        SELECT
-            *
-        FROM t_reservation
-        WHERE iuser= #{iuser}
-        AND ishop= #{ishop}
-        AND date= #{date}
-    </select>
-
-    <select id="selPickupForTest">
-        SELECT
-            *
-        FROM t_pickup
-        WHERE iuser= #{iuser}
-        AND ibutcher= #{ibutcher}
-        AND date= #{date}
-    </select>
-
-    <select id="selPickupMenuForTest">
-        SELECT
-            *
-        FROM t_pickup_menu
-        WHERE ipickup= #{ipickup}
-        AND ibut_menu= #{ibutMenu}
-    </select>
-
-    <select id="selReservationConfirmForTest">
-        SELECT
-            confirm
-        FROM t_reservation
-        WHERE iuser= #{iuser}
-        AND ireser= #{ireser}
-    </select>
-
-    <select id="selPickupConfirmForTest">
-        SELECT
-            confirm
-        FROM t_pickup
-        WHERE iuser= #{iuser}
-        AND ipickup= #{ipickup}
-    </select>
-
     <update id="updReservation">
         UPDATE t_reservation
         SET
@@ -99,4 +57,21 @@
         head_count = #{headCount}
         WHERE ireser = #{ireser}
     </update>
+
+    <select id="selReservationForTest">
+        SELECT
+            iuser,
+            ishop,
+            date,
+            request,
+            head_count AS headCount
+        FROM t_reservation
+        where ireser= #{ireser}
+    </select>
+    <select id="selPickupMenusForTest">
+        SELECT
+            count(*)
+        FROM t_pickup_menu
+        WHERE ipickup = #{ipickup}
+    </select>
 </mapper>

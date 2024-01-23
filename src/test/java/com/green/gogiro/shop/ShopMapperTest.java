@@ -1,46 +1,16 @@
 package com.green.gogiro.shop;
 
 import org.junit.jupiter.api.Test;
+import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+@MybatisTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ShopMapperTest {
-
-    @Test
-    void selShopAll() {
-    }
-
-    @Test
-    void selShopPics() {
-    }
-
-    @Test
-    void selShopPicList() {
-    }
-
-    @Test
-    void selShopDetail() {
-    }
-
-    @Test
-    void selShopFacility() {
-    }
-
-    @Test
-    void selMenuDetail() {
-    }
-
-    @Test
-    void selReviewDetail() {
-    }
-
-    @Test
-    void selReviewPicDetail() {
-    }
-
-    @Test
-    void shopFacilities() {
-    }
+    @Autowired
+    private ShopMapper shopMapper;
 
     @Test
     void insShopReview() {
@@ -50,9 +20,6 @@ class ShopMapperTest {
     void insShopReviewPic() {
     }
 
-    @Test
-    void selShopBookmark() {
-    }
 
     @Test
     void shopBookmarkOn() {
@@ -60,9 +27,5 @@ class ShopMapperTest {
 
     @Test
     void shopBookmarkOff() {
-    }
-
-    @Test
-    void selShopEntity() {
     }
 }
