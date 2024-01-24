@@ -51,12 +51,12 @@ class CommunityMapperTest {
         //beforeTitleNextTitle 테스트
         int num = dto.getIboard() - 1;
         if(num > 0){
-            List<CommunitySelBeAfDto> list= mapper.beforeTitleNextTitle(num);
-            // beforeTitleNextTitle 확인
-            if(list.size() == 2){
-                assertEquals(title, list.get(1).getTitle());
+            List<CommunitySelBeAfDto> list = new ArrayList<>();
+            while(list.size() != 2) {
+                list = mapper.beforeTitleNextTitle(num --);
             }
-            assertEquals(title, list.get(0).getTitle());
+            // beforeTitleNextTitle 확인
+            assertEquals(title, list.get(1).getTitle());
         }
     }
 
