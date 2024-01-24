@@ -43,7 +43,7 @@ public class ReservationService {
         || dto.getDate().equals("0000-00-00 00:00:00")){
             throw new RestApiException(AuthErrorCode.REGEXP_DATE_TYPE);
         }
-        if(dto.getMenus() != null) {
+        if(dto.getMenus() == null) {
             throw new RestApiException(AuthErrorCode.INVALID_MENU_OR_COUNT);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
