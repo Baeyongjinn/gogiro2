@@ -163,9 +163,20 @@
     </select>
 <!-- Test Xml  -->
 
-    <select id="selcommunitydel">
+    <select id="selCommunityDel1">
         select iboard
         from t_community
         limit 0, 1
     </select>
+
+    <select id="selCommunityDel2">
+        select icommu_pics
+        from t_commu_pics
+        where iboard = #{iboard}
+    </select>
+
+    <delete id="delCommunityDel">
+        delete from t_commu_pics
+        where iboard = #{iboard}
+    </delete>
 </mapper>

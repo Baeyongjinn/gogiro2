@@ -3,6 +3,7 @@ package com.green.gogiro.community;
 import com.green.gogiro.common.Const;
 import com.green.gogiro.community.model.CommunityDelDto;
 import com.green.gogiro.community.model.CommunityInsDto;
+import com.green.gogiro.community.model.CommunitySelBeAfDto;
 import com.green.gogiro.community.model.CommunityUpdDto;
 import com.green.gogiro.user.UserMapper;
 import org.junit.jupiter.api.Test;
@@ -28,54 +29,74 @@ class CommunityMapperTest {
     void insCommunity() {
         int iuser = userMapper.selIuserForTest();
         CommunityInsDto dto = new CommunityInsDto();
+        //insCommunity 테스트
         dto.setIuser(iuser);
         String title = "제목";
         dto.setTitle(title);
         String contents = "내용";
         dto.setContents(contents);
+        //insCommunityPics 테스트
         List<String> pics = new ArrayList<>();
         pics.add("aa");
         pics.add("bb");
         dto.setPics(pics);
 
+        //insCommunity 확인
         assertEquals(Const.SUCCESS, mapper.insCommunity(dto));
+        //auto_increment 확인
         assertTrue(dto.getIboard() > 0);
-
+        //insCommunityPics 확인
         assertEquals(pics.size(), mapper.insCommunityPics(dto));
 
+        //beforeTitleNextTitle 테스트
+        int num = dto.getIboard() - 1;
+        if(num > 0){
+            List<CommunitySelBeAfDto> list= mapper.beforeTitleNextTitle(num);
+            // beforeTitleNextTitle 확인
+            if(list.size() == 2){
+                assertEquals(title, list.get(1).getTitle());
+            }
+            assertEquals(title, list.get(0).getTitle());
+        }
     }
 
     @Test
     void updCommunity() {
         CommunityUpdDto dto = mapper.selIuserIboardForTest();
+        //updCommunity 테스트
         String title = "제목";
         dto.setTitle(title);
         String contents = "내용";
         dto.setContents(contents);
 
+        //insCommunityPics(upd) 테스트
         List<String> pics = new ArrayList<>();
         pics.add("aa");
         pics.add("bb");
         dto.setPics(pics);
 
+        //updCommunity 확인
         assertEquals(Const.SUCCESS, mapper.updCommunity(dto));
+        //insCommunityPics(upd) 확인
         assertEquals(pics.size(), mapper.insCommunityPics(dto));
 
-        List<Integer> icommuPics = new ArrayList<>();
-    }
-
-    @Test
-    void delCommunityPic() {
-
+        //delCommunityPic 테스트
+        int result = mapper.selCommunityDel1();
+        List<Integer> selicommuPics = mapper.selCommunityDel2(result);
+        int result2 = mapper.delCommunityDel(result);
+        //delCommunityPic 삭제된 갯수와 사진 pk갯수 확인
+        assertEquals(result2, selicommuPics.size());
+        List<Integer> selicommuPics2 = mapper.selCommunityDel2(result);
+        //delCommunityPic 0개, 사진 pk갯수 2차 확인
+        assertEquals(0, selicommuPics2.size());
     }
 
     @Test
     void selCommunityCount() {
+        int result = mapper.selCommunityCount();
+
     }
 
-    @Test
-    void beforeTitleNextTitle() {
-    }
 
     @Test
     void selCommunityPics() {
