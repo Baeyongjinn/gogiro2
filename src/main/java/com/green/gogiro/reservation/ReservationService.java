@@ -27,10 +27,10 @@ public class ReservationService {
         ShopEntity entity = shopMapper.selShopEntity(dto.getIshop());
         if(entity == null){
             throw new RestApiException(AuthErrorCode.VALID_SHOP);
-        }if(entity.getIshop() != dto.getIshop()){
+        } else if(entity.getIshop() != dto.getIshop()){
             throw new RestApiException(AuthErrorCode.CHECK_SHOP);
         }
-        if(dto.getDate().equals("0000-00-00 00:00:00") || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getDate())){
+        if(dto.getDate().equals("0000-00-00 00:00:00")){
             throw new RestApiException(AuthErrorCode.NOT_DATE);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
@@ -39,21 +39,20 @@ public class ReservationService {
     }
 
     public ResVo postPickup(PickupInsDto dto) {
-        if(dto.getDate() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getDate()) || !Pattern.matches(REGEXP_DATE_TYPE5,dto.getDate())
-        || dto.getDate().equals("0000-00-00 00:00:00")){
+        if(dto.getDate() == null || dto.getDate().equals("0000-00-00 00:00:00")){
             throw new RestApiException(AuthErrorCode.REGEXP_DATE_TYPE);
         }
-        if(dto.getMenus() == null) {
+        if(dto.getMenus() == null||dto.getMenus().isEmpty()) {
             throw new RestApiException(AuthErrorCode.INVALID_MENU_OR_COUNT);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insPickup(dto);
-            for (int i = 0; i < dto.getMenus().size(); i++) {
+            for (PickupMenuDto m: dto.getMenus()) {
                 PickupMenuDto menu = PickupMenuDto.builder()
-                        .ipickup(dto.getIpickup())
-                        .ibutMenu(dto.getMenus().get(i).getIbutMenu())
-                        .count(dto.getMenus().get(i).getCount())
-                        .build();
+                                                  .ipickup(dto.getIpickup())
+                                                  .ibutMenu(m.getIbutMenu())
+                                                  .count(m.getCount())
+                                                  .build();
                 mapper.insPickupMenu(menu);
             }
         return new ResVo(dto.getIpickup());
@@ -72,15 +71,11 @@ public class ReservationService {
     }
 
     public ResVo putReservation(ReservationUpdDto dto) {
-
-        if(!Pattern.matches(REGEXP_DATE_TYPE5,dto.getDate())){
-            throw new RestApiException(AuthErrorCode.NOT_DATE);
-        }
-        if(dto.getDate().equals("0000-00-00 00:00:00") || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getDate())){
+        if(dto.getDate().equals("0000-00-00 00:00:00")){
             throw new RestApiException(AuthErrorCode.NOT_DATE);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updReservation(dto);
-        return new ResVo(1);
+        return new ResVo(SUCCESS);
     }
 }
