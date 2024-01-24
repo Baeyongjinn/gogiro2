@@ -39,8 +39,9 @@ public class AdminController {
     }
 
     @PutMapping("/shop")
-    public ShopPicsVo updShopPics(@RequestPart(required = false) List<MultipartFile> files,@RequestPart ShopUpdDto dto){
-        dto.setFiles(files);
+    @Operation(summary = "가게 사진 수정",description = "가게 사진 수정 처리")
+    public ShopPicsVo updShopPics(@RequestPart(required = false) List<MultipartFile> pics,@RequestPart ShopUpdDto dto){
+        dto.setFiles(pics);
         return service.updShopPics(dto);
     }
 
