@@ -21,7 +21,7 @@ public class AdminService {
 
     public StoreRegistrationPicsVo insRegistration(StoreRegistrationDto dto) {
 
-        if(dto.getPics().size() > 5) {
+        if (dto.getPics().size() > 5) {
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
         mapper.insStoreRegistration(dto);
@@ -33,28 +33,28 @@ public class AdminService {
             String saveFileNm = myFileUtils.transferTo(file, target);
             vo.getPics().add(saveFileNm);
         }
-        if(dto.getIfacil() != null || dto.getIfacil().get(0) != 0 ){
-        mapper.insShopFacility(dto);
+        if (dto.getIfacil() != null || dto.getIfacil().get(0) != 0) {
+            mapper.insShopFacility(dto);
         }
         mapper.insStoreRegistrationPics(vo);
         return vo;
     }
 
-    public ShopPicsVo updShopPics(ShopUpdDto dto){
-        if(dto.getPics().size() > 5) {
+    public ShopPicsVo updShopPics(ShopUpdDto dto) {
+        if (dto.getPics().size() > 5) {
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
         String target = "/shop/" + dto.getIshop() + "/shop_pic";
-        if(!dto.getIshopPics().isEmpty()) {
+        if (dto.getIshopPics() != null && !dto.getIshopPics().isEmpty()) {
             List<ShopSelPicsNumDto> sDto = mapper.selShopPics(dto.getIshopPics());
-            for(ShopSelPicsNumDto pics : sDto) {
+            for (ShopSelPicsNumDto pics : sDto) {
                 myFileUtils.delFolderTrigger2(target + "/" + pics.getPic());
             }
             mapper.delShopPics(dto.getIshopPics());
         }
         if (dto.getFiles() != null) {
-            for(MultipartFile file : dto.getFiles()) {
-                String saveFileNm = myFileUtils.transferTo(file,target);
+            for (MultipartFile file : dto.getFiles()) {
+                String saveFileNm = myFileUtils.transferTo(file, target);
                 dto.getPics().add(saveFileNm);
             }
             mapper.insShopPic(dto);
@@ -80,7 +80,7 @@ public class AdminService {
 
     public ShopMenuPicsVo updShopMenu(ShopMenuUpdDto dto) {
         String picNm = mapper.selPicNm(dto.getImenu());
-        log.info("picNm: {}",picNm);
+        log.info("picNm: {}", picNm);
         String target = "/shop/" + dto.getIshop() + "/menu";
         myFileUtils.delFolderTrigger2(target + "/" + picNm);
 
@@ -98,7 +98,7 @@ public class AdminService {
     public ButcherPicVo insButcherShop(ButcherInsDto dto) {
         mapper.insButcherShop(dto);
 
-        if(dto.getPics().size() > 5) {
+        if (dto.getPics().size() > 5) {
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
         String target = "/butchershop/" + dto.getIbutcher() + "/butchershop_pic";
