@@ -7,7 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class ButcherMenuUpdDto {
     private int ibutMenu;
     private int ibutcher;
-    private int price;
     @JsonIgnore
     private String fileNm;
     @JsonIgnore

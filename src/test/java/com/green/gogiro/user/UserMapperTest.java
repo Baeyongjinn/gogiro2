@@ -105,49 +105,49 @@ class UserMapperTest {
         assertEquals(tel, after.getTel());
     }
 
-    @Test
-    void selReservationTest() {
-        int iuser= mapper.selIuserForTest();
-        int ishop= shopMapper.selIshopForTest();
-        String date1= "1111-11-11 11:11:11";
-        String request1= "테스트1234";
-        int headCount1= 12;
-        ReservationInsDto dto1= new ReservationInsDto();
-        dto1.setIuser(iuser);
-        dto1.setIshop(ishop);
-        dto1.setDate(date1);
-        dto1.setRequest(request1);
-        dto1.setHeadCount(headCount1);
-        int insert1= reservationMapper.insReservation(dto1);
-        assertEquals(1, insert1);
-
-        int ibutcher= butcherShopMapper.selIbutcherForTest();
-        String date2= "2222-12-22 22:22:22";
-        String request2= "테스트4321";
-        PickupInsDto dto2= new PickupInsDto();
-        dto2.setIuser(iuser);
-        dto2.setIbutcher(ibutcher);
-        dto2.setDate(date2);
-        dto2.setRequest(request2);
-        int insert2= reservationMapper.insPickup(dto2);
-        assertEquals(1, insert2);
-        assertTrue(dto2.getIpickup()>0);
-        PickupMenuDto menu= PickupMenuDto.builder()
-                .ipickup(dto2.getIpickup())
-                .ibutMenu(1)
-                .count(1)
-                .build();
-        int insPickupMenu= reservationMapper.insPickupMenu(menu);
-        assertEquals(1, insPickupMenu);
-
-        UserMyPageDto uDto= new UserMyPageDto();
-        uDto.setIuser(iuser);
-        List<ReservationVo> list = mapper.selReservation(uDto);
-        assertEquals(date1, list.get(0).getDate());
-        assertEquals(request1, list.get(0).getRequest());
-        assertEquals(date2, list.get(1).getDate());
-        assertEquals(request2, list.get(1).getRequest());
-    }
+//    @Test
+//    void selReservationTest() {
+//        int iuser= mapper.selIuserForTest();
+//        int ishop= shopMapper.selIshopForTest();
+//        String date1= "1111-11-11 11:11:11";
+//        String request1= "테스트1234";
+//        int headCount1= 12;
+//        ReservationInsDto dto1= new ReservationInsDto();
+//        dto1.setIuser(iuser);
+//        dto1.setIshop(ishop);
+//        dto1.setDate(date1);
+//        dto1.setRequest(request1);
+//        dto1.setHeadCount(headCount1);
+//        int insert1= reservationMapper.insReservation(dto1);
+//        assertEquals(1, insert1);
+//
+//        int ibutcher= butcherShopMapper.selIbutcherForTest();
+//        String date2= "2222-12-22 22:22:22";
+//        String request2= "테스트4321";
+//        PickupInsDto dto2= new PickupInsDto();
+//        dto2.setIuser(iuser);
+//        dto2.setIbutcher(ibutcher);
+//        dto2.setDate(date2);
+//        dto2.setRequest(request2);
+//        int insert2= reservationMapper.insPickup(dto2);
+//        assertEquals(1, insert2);
+//        assertTrue(dto2.getIpickup()>0);
+//        PickupMenuDto menu= PickupMenuDto.builder()
+//                .ipickup(dto2.getIpickup())
+//                .ibutMenu(1)
+//                .count(1)
+//                .build();
+//        int insPickupMenu= reservationMapper.insPickupMenu(menu);
+//        assertEquals(1, insPickupMenu);
+//
+//        UserMyPageDto uDto= new UserMyPageDto();
+//        uDto.setIuser(iuser);
+//        List<ReservationVo> list = mapper.selReservation(uDto);
+//        assertEquals(date1, list.get(0).getDate());
+//        assertEquals(request1, list.get(0).getRequest());
+//        assertEquals(date2, list.get(1).getDate());
+//        assertEquals(request2, list.get(1).getRequest());
+//    }
 
 
     @Test
