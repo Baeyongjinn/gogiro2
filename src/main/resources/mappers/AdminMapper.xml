@@ -31,9 +31,7 @@
 
     <update id="updShopMenu">
         UPDATE t_shop_menu
-        SET menu = #{menu}
-            , price = #{price}
-            , pic = #{fileNm}
+        SET pic = #{fileNm}
         WHERE imenu = #{imenu}
     </update>
 
@@ -77,9 +75,7 @@
 
     <update id="updButcherMenu">
         UPDATE t_but_menu
-        SET menu = #{menu}
-        , price = #{price}
-        , pic = #{fileNm}
+        SET pic = #{fileNm}
         WHERE ibut_menu = #{ibutMenu}
     </update>
 

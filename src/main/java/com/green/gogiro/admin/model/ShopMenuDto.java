@@ -6,14 +6,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 public class ShopMenuDto {
-    @JsonIgnore
+
     private int imenu;
 
     private int ishop;
-
-    private String menu;
-
-    private int price;
     @JsonIgnore
     private MultipartFile pic;
     @JsonIgnore
