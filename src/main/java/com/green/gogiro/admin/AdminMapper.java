@@ -18,7 +18,11 @@ public interface AdminMapper {
 
     int insButcherShop(ButcherInsDto dto);
 
+    //수정
     int insButcherPics(ButcherInsDto dto);
+
+    //수정
+    int insButcherPics(ButcherPicsUpdDto dto);
 
     int insButcherMenu(ButcherMenuInsDto dto);
 
@@ -33,6 +37,10 @@ public interface AdminMapper {
     int delShopPics(List<Integer> ishopPics);
 
     int insShopPic(ShopUpdDto dto);
+
+    int delButcherPics(List<Integer> ibutPics);
+
+    List<ButcherPicsProcVo> selButcherPics(List<Integer> ibutPics);
 
 
 

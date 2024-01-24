@@ -9,9 +9,10 @@ import java.util.List;
 @Data
 public class ButcherPicsUpdDto {
     private int ibutcher;
+    private List<Integer> ibutPics;
+    @JsonIgnore
     private List<String> pics;
     @JsonIgnore
     private List<MultipartFile> files;
-    private List<Integer> ibutPics;
 
 }

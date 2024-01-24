@@ -112,12 +112,31 @@
 
     <select id="selShopPics">
         SELECT ishop_pics as ishopPics, pic
-        FROM t_shop_pics
+        FROM t_shop_pic
         WHERE ishop_pics in (
         <foreach collection="ishopPics" item="ishopPics" separator=",">
             #{ishopPics}
         </foreach>
         )
+    </select>
+
+    <delete id="delButcherPics">
+        DELETE
+        FROM t_butcher_pic
+        WHERE ibut_pics IN
+        <foreach collection="ibutPics" item="ibutPics" open="(" close=")" separator=",">
+            #{ibutPics}
+        </foreach>
+    </delete>
+    <select id="selButcherPics">
+        SELECT
+        ibut_pics,
+        pic
+        FROM t_butcher_pic
+        WHERE ibut_pics IN
+        <foreach collection="ibutPics" item="ibutPics" open="(" close=")" separator=",">
+            #{ibutPics}
+        </foreach>
     </select>
 
 </mapper>

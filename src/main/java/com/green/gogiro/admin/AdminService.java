@@ -41,7 +41,7 @@ public class AdminService {
     }
 
     public ShopPicsVo updShopPics(ShopUpdDto dto) {
-        if (dto.getPics().size() > 5) {
+        if (dto.getFiles().size() > 5) {
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
         String target = "/shop/" + dto.getIshop() + "/shop_pic";
@@ -98,7 +98,7 @@ public class AdminService {
     public ButcherPicVo insButcherShop(ButcherInsDto dto) {
         mapper.insButcherShop(dto);
 
-        if (dto.getPics().size() > 5) {
+        if (dto.getFiles().size() > 5) {
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
         String target = "/butchershop/" + dto.getIbutcher() + "/butchershop_pic";
@@ -137,6 +137,36 @@ public class AdminService {
         vo.setIbutcher(dto.getIbutcher());
         vo.setPic(fileNm);
         vo.setIbutMenu(dto.getIbutMenu());
+        return vo;
+    }
+
+    public ButcherPicVo updButcherPic(ButcherPicsUpdDto dto) {
+        if (dto.getFiles()!=null && dto.getFiles().size() > 5) {
+            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        }
+        String path = "/butchershop/" + dto.getIbutcher() + "/butchershop_pic/";
+        if (dto.getIbutPics() != null && !dto.getIbutPics().isEmpty()) {
+            List<ButcherPicsProcVo> picList = mapper.selButcherPics(dto.getIbutPics());
+            if(!picList.isEmpty()) {
+                for (ButcherPicsProcVo vo : picList) {
+                    myFileUtils.delFolderTrigger2(path + "/" + vo.getPic());
+                }
+                mapper.delButcherPics(dto.getIbutPics());
+            }
+        }
+        if(dto.getFiles() != null) {
+            for (MultipartFile pic : dto.getFiles()) {
+                String fileNm = myFileUtils.transferTo(pic, path);
+                dto.getPics().add(fileNm);
+            }
+        mapper.insButcherPics(dto);
+        }
+
+
+        ButcherPicVo vo = new ButcherPicVo();
+        vo.setIbutcher(dto.getIbutcher());
+        vo.setPics(dto.getPics());
+
         return vo;
     }
 }
