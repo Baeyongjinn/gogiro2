@@ -80,7 +80,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ErrorResponse.builder()
                 .code(errorCode.name())
                 .message(errorCode.getMessage())
-                .valid(validationErrorList)
+                .valids(validationErrorList)
                 .build();
     }
 }
