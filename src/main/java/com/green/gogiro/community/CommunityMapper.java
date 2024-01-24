@@ -17,7 +17,6 @@ public interface CommunityMapper {
 
     int updCommunity(CommunityUpdDto dto);
 
-    CommunityUpdDto selIuserIboardForTest();
 
     int delCommunityPic(List<Integer> icommuPics);
 
@@ -52,5 +51,13 @@ public interface CommunityMapper {
     int delCommunityComment(CommunityCommentDelDto dto);
 
     //-------------test
-    int selcommunitydel();
+
+    CommunityUpdDto selIuserIboardForTest();
+
+    int selCommunityDel1();
+
+    List<Integer> selCommunityDel2(int iboard);
+
+    int delCommunityDel(int iboard);
+
 }
