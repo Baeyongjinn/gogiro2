@@ -114,7 +114,7 @@ public class AdminService {
     }
 
     public ButcherMenuPicVo insButcherMenu(ButcherMenuInsDto dto) {
-        String target = "/butchershop/" + dto.getIbutcher() + "/menu";
+        String target = "/butcher/" + dto.getIbutcher() + "/menu";
         String fileNm = myFileUtils.transferTo(dto.getPic(), target);
         dto.setFileNm(fileNm);
         mapper.insButcherMenu(dto);
@@ -127,7 +127,7 @@ public class AdminService {
 
     public ButcherMenuPicVo updButcherMenu(ButcherMenuUpdDto dto) {
         String picNm = mapper.selButcherMenuPicNm(dto.getIbutMenu());
-        String target = "/butchershop/" + dto.getIbutcher() + "/menu";
+        String target = "/butcher/" + dto.getIbutcher() + "/menu";
         myFileUtils.delFolderTrigger2(target + "/" + picNm);
 
         String fileNm = myFileUtils.transferTo(dto.getFile(), target);
@@ -144,12 +144,12 @@ public class AdminService {
         if (dto.getFiles()!=null && dto.getFiles().size() > 5) {
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
-        String path = "/butchershop/" + dto.getIbutcher() + "/butchershop_pic/";
+        String path = "/butcher/" + dto.getIbutcher() + "/butchershop_pic";
         if (dto.getIbutPics() != null && !dto.getIbutPics().isEmpty()) {
             List<ButcherPicsProcVo> picList = mapper.selButcherPics(dto.getIbutPics());
             if(!picList.isEmpty()) {
                 for (ButcherPicsProcVo vo : picList) {
-                    myFileUtils.delFolderTrigger2(path + "/" + vo.getPic());
+                    myFileUtils.delFolderTrigger2(path + "/" +vo.getPic());
                 }
                 mapper.delButcherPics(dto.getIbutPics());
             }
