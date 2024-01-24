@@ -41,7 +41,9 @@ public class AdminController {
     @PutMapping("/shop")
     @Operation(summary = "가게 사진 수정",description = "가게 사진 수정 처리")
     public ShopPicsVo updShopPics(@RequestPart(required = false) List<MultipartFile> pics,@RequestPart ShopUpdDto dto){
-        dto.setFiles(pics);
+        if(pics != null) {
+            dto.setFiles(pics);
+        }
         return service.updShopPics(dto);
     }
 
@@ -80,5 +82,14 @@ public class AdminController {
             dto.setFile(pic);
         }
         return service.updButcherMenu(dto);
+    }
+
+    @PutMapping("/butcher-shop")
+    @Operation(summary = "정육점 가게 사진 변경", description = "정육점 사진 변경 처리")
+    public ButcherPicVo putButcherPic(@RequestPart(required = false) List<MultipartFile> pics, @RequestPart ButcherPicsUpdDto dto) {
+        if(pics!=null){
+            dto.setFiles(pics);
+        }
+        return service.updButcherPic(dto);
     }
 }
