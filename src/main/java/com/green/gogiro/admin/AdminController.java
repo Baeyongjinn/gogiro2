@@ -38,6 +38,12 @@ public class AdminController {
         return service.insShopMenu(dto);
     }
 
+    @PutMapping("/shop")
+    public ShopPicsVo updShopPics(@RequestPart(required = false) List<MultipartFile> files,@RequestPart ShopUpdDto dto){
+        dto.setFiles(files);
+        return service.updShopPics(dto);
+    }
+
     @PutMapping("/shop/menu")
     @Operation(summary = "가게 메뉴 사진 등록", description = "가게 메뉴 사진 등록 처리")
     public ShopMenuPicsVo updShopMenu(@RequestPart(required = false) MultipartFile pic, @RequestPart ShopMenuUpdDto dto) {

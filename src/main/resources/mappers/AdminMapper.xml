@@ -82,4 +82,42 @@
         , pic = #{fileNm}
         WHERE ibut_menu = #{ibutMenu}
     </update>
+
+    <insert id="insShopFacility">
+        INSERT INTO t_shop_facilities
+        (ishop,ifacil)
+        VALUES
+        <foreach collection="ifacil" item="ifacil" separator=",">
+            (#{ishop},#{ifacil})
+        </foreach>
+    </insert>
+
+    <insert id="insShopPic">
+        INSERT INTO t_shop_pic
+        ( ishop, pic )
+        VALUES
+        <foreach collection="pics" item="pic" separator=",">
+            ( #{ishop}, #{pic} )
+        </foreach>
+    </insert>
+
+    <delete id="delShopPics">
+        delete from t_shop_pic
+        where ishop_pics  in (
+        <foreach collection="ishopPics" item="ishopPics" separator=",">
+            #{ishopPics}
+        </foreach>
+        )
+    </delete>
+
+    <select id="selShopPics">
+        SELECT ishop_pics as ishopPics, pic
+        FROM t_shop_pics
+        WHERE ishop_pics in (
+        <foreach collection="ishopPics" item="ishopPics" separator=",">
+            #{ishopPics}
+        </foreach>
+        )
+    </select>
+
 </mapper>

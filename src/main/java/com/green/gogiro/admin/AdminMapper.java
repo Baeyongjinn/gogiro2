@@ -3,6 +3,8 @@ package com.green.gogiro.admin;
 import com.green.gogiro.admin.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface AdminMapper {
     int insStoreRegistrationPics(StoreRegistrationPicsVo dto);
@@ -23,6 +25,17 @@ public interface AdminMapper {
     String selButcherMenuPicNm(int ibutMenu);
 
     int updButcherMenu(ButcherMenuUpdDto dto);
+
+    int insShopFacility(StoreRegistrationDto dto);
+
+    List<ShopSelPicsNumDto> selShopPics(List<Integer> ishopPics);
+
+    int delShopPics(List<Integer> ishopPics);
+
+    int insShopPic(ShopUpdDto dto);
+
+
+
 
 
 }
