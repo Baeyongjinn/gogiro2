@@ -82,4 +82,61 @@
         , pic = #{fileNm}
         WHERE ibut_menu = #{ibutMenu}
     </update>
+
+    <insert id="insShopFacility">
+        INSERT INTO t_shop_facilities
+        (ishop,ifacil)
+        VALUES
+        <foreach collection="ifacil" item="ifacil" separator=",">
+            (#{ishop},#{ifacil})
+        </foreach>
+    </insert>
+
+    <insert id="insShopPic">
+        INSERT INTO t_shop_pic
+        ( ishop, pic )
+        VALUES
+        <foreach collection="pics" item="pic" separator=",">
+            ( #{ishop}, #{pic} )
+        </foreach>
+    </insert>
+
+    <delete id="delShopPics">
+        delete from t_shop_pic
+        where ishop_pics  in (
+        <foreach collection="ishopPics" item="ishopPics" separator=",">
+            #{ishopPics}
+        </foreach>
+        )
+    </delete>
+
+    <select id="selShopPics">
+        SELECT ishop_pics as ishopPics, pic
+        FROM t_shop_pic
+        WHERE ishop_pics in (
+        <foreach collection="ishopPics" item="ishopPics" separator=",">
+            #{ishopPics}
+        </foreach>
+        )
+    </select>
+
+    <delete id="delButcherPics">
+        DELETE
+        FROM t_butcher_pic
+        WHERE ibut_pics IN
+        <foreach collection="ibutPics" item="ibutPics" open="(" close=")" separator=",">
+            #{ibutPics}
+        </foreach>
+    </delete>
+    <select id="selButcherPics">
+        SELECT
+        ibut_pics,
+        pic
+        FROM t_butcher_pic
+        WHERE ibut_pics IN
+        <foreach collection="ibutPics" item="ibutPics" open="(" close=")" separator=",">
+            #{ibutPics}
+        </foreach>
+    </select>
+
 </mapper>

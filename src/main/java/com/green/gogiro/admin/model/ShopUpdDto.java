@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ButcherPicsUpdDto {
-    private int ibutcher;
-    private List<Integer> ibutPics;
+public class ShopUpdDto {
+    private int ishop;
+    private List<Integer> ishopPics;
+
     @JsonIgnore
     private List<String> pics = new ArrayList<>();
     @JsonIgnore
     private List<MultipartFile> files;
-
 }
