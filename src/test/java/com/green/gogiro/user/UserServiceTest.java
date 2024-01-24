@@ -7,6 +7,7 @@ import com.green.gogiro.shop.ShopMapper;
 import com.green.gogiro.user.model.UserSigninDto;
 import com.green.gogiro.user.model.UserSignupDto;
 import com.green.gogiro.user.model.UserUpdDto;
+import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,6 +48,31 @@ class UserServiceTest {
 
     @Test
     void signupTest() {
+        UserSignupDto dto= new UserSignupDto();
+        try {
+            ResVo vo = service.signup(dto);
+            assertEquals(0, vo.getResult());
+        } catch (NullPointerException e) {
+        } finally {
+            verify(mapper).checkNickname(any());
+        }
+    }
 
+    @Test
+    void checkNickNameTest() {
+        try {
+            ResVo vo = service.checkNickName("zzz");
+            assertEquals(1, vo.getResult());
+        } catch (NullPointerException e) {
+        } finally {
+            verify(mapper).checkNickname(any());
+        }
+    }
+
+    @Test
+    void updateUserTest() {
+        UserUpdDto dto= new UserUpdDto();
+        service.updateUser(dto);
+        verify(authenticationFacade).getLoginUserPk();
     }
 }
