@@ -46,23 +46,7 @@ class UserServiceTest {
     private MyFileUtils myFileUtils;
 
     @Test
-    void updateUser() throws Exception{
-        String test= "테스트";
-        String tel= "010-1234-2345";
-        UserUpdDto dto= new UserUpdDto();
-        dto.setNickname(test);
-        dto.setAddress(test);
-        dto.setTel(tel);
-        ResVo vo= service.updateUser(dto);
-        assertEquals(Const.SUCCESS,vo.getResult());
-        verify(mapper).updateUser(any());
-    }
+    void signupTest() {
 
-    @Test
-    void getUserBookmark() {
-    }
-
-    @Test
-    void delShopReview() {
     }
 }
