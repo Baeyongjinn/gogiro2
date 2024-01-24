@@ -50,4 +50,7 @@ public interface CommunityMapper {
     int insCommunityComment(CommunityCommentInsDto dto);
 
     int delCommunityComment(CommunityCommentDelDto dto);
+
+    //-------------test
+    int selcommunitydel();
 }

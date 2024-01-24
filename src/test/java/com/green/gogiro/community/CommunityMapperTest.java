@@ -60,11 +60,13 @@ class CommunityMapperTest {
 
         assertEquals(Const.SUCCESS, mapper.updCommunity(dto));
         assertEquals(pics.size(), mapper.insCommunityPics(dto));
+
+        List<Integer> icommuPics = new ArrayList<>();
     }
 
     @Test
     void delCommunityPic() {
-        CommunityDelDto dto = new CommunityDelDto();
+
     }
 
     @Test

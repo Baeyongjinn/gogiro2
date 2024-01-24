@@ -161,6 +161,11 @@
         ORDER BY iboard
         LIMIT 1,1)
     </select>
+<!-- Test Xml  -->
 
-
+    <select id="selcommunitydel">
+        select iboard
+        from t_community
+        limit 0, 1
+    </select>
 </mapper>

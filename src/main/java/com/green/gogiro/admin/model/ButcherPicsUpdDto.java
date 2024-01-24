@@ -12,4 +12,6 @@ public class ButcherPicsUpdDto {
     private List<String> pics;
     @JsonIgnore
     private List<MultipartFile> files;
+    private List<Integer> ibutPics;
+
 }
