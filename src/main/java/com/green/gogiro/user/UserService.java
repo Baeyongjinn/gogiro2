@@ -207,7 +207,6 @@ public class UserService {
             if(vo.getImeat()!=0){
                 ishopList.add(vo.getIshop());
                 shopMap.put(vo.getIshop(),vo);
-
             }
         }
 
