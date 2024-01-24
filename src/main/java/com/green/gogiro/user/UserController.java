@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping("/signup")
     @Operation(summary = "회원가입", description = "회원가입 처리")
     public ResVo signup(@RequestPart(required = false) MultipartFile pic,
-                        @RequestPart UserSignupDto dto) {
+                        @RequestPart @Valid UserSignupDto dto) {
         if(pic!=null) {
             dto.setFile(pic);
         }

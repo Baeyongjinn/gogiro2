@@ -4,7 +4,6 @@ import static com.green.gogiro.common.Const.*;
 
 import com.green.gogiro.common.*;
 import com.green.gogiro.exception.AuthErrorCode;
-import com.green.gogiro.exception.CommonErrorCode;
 import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.exception.UserErrorCode;
 import com.green.gogiro.security.AuthenticationFacade;
@@ -18,14 +17,11 @@ import com.green.gogiro.user.model.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,7 +46,7 @@ public class UserService {
 
 
     public ResVo signup(UserSignupDto dto) {
-        if(mapper.checkNickname(dto.getNickname()) != null || Pattern.matches(dto.getNickname() + REGEXP_PATTERN_SPACE_CHAR,dto.getNickname())){
+        if(mapper.checkNickname(dto.getNickname()) != null){
             throw new RestApiException(UserErrorCode.NEED_NICK_NAME_CHECK);
         }
         if(!dto.getUpw().equals(dto.getCheckUpw())){
@@ -59,35 +55,11 @@ public class UserService {
         String hashedPw = passwordEncoder.encode(dto.getUpw());
         dto.setUpw(hashedPw);
 
-        if (dto.getEmail() == null ||
-                dto.getUpw() == null ||
-                dto.getTel() == null ||
-                dto.getName() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getName())
-                || dto.getNickname() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getNickname())
-                || dto.getBirth() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getBirth())
-                || dto.getGender() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getGender())
-                || dto.getAddress() == null || Pattern.matches(REGEXP_PATTERN_SPACE_CHAR, dto.getAddress())) {
-            throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
-        }
-
-
-
-        if (!Pattern.matches(REGEXP_USER_BIRTH,dto.getBirth())){
-            throw new RestApiException(UserErrorCode.REGEXP_BIRTH);
-        }
-
-        if (!Pattern.matches(REGEXP_USER_ID, dto.getEmail())) {
-            throw new RestApiException(UserErrorCode.REGEXP_EMAIL);
-        }
-
         if(mapper.checkEmail(dto.getEmail()) != null){
             throw new RestApiException(UserErrorCode.DUPLICATION_EMAIL);
         }
 
-        if (!Pattern.matches(REGEXP_USER_GENDER, dto.getGender())) {
-            throw new RestApiException(UserErrorCode.REGEXP_GENDER);
-        }
-        if (!Pattern.matches(REGEXP_USER_TEL, dto.getTel()) || "01000000000".equals(dto.getTel())) {
+        if ("01000000000".equals(dto.getTel())) {
             throw new RestApiException(UserErrorCode.REGEXP_TEL);
         }
 
@@ -100,10 +72,7 @@ public class UserService {
             mapper.updUserPic(dto);
         }
 
-        int result = dto.getIuser();
-        log.info("dto: {}", dto);
-        //iuser값 return
-        return new ResVo(result);
+        return new ResVo(dto.getIuser());
     }
 
     public ResVo checkNickName(String nickName){
@@ -180,26 +149,15 @@ public class UserService {
 
     //유저 정보 수정
     public ResVo updateUser(UserUpdDto dto) {
-
-
-//        if (dto.getNickname() == null ||
-//                dto.getAddress() == null ||
-//                dto.getTel() == null) {
-//            throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
-//        }
-////        if (!Pattern.matches(REGEXP_USER_TEL,dto.getTel())) {
-////            throw new RestApiException(UserErrorCode.REGEXP_TEL);
-////        }
-//        if (!Pattern.matches(REGEXP_PATTERN_SPACE_CHAR,dto.getNickname())) {
-//            throw new RestApiException(UserErrorCode.NOT_NICK_NAME);
-//        }
-        String path = "/user/" + dto.getIuser();
-        myFileUtils.delFolderTrigger(path);
         dto.setIuser(authenticationFacade.getLoginUserPk());
+
         if (dto.getFile() != null) {
+            String path = "/user/" + dto.getIuser();
+            myFileUtils.delFolderTrigger(path);
             String savedPicFileNm = myFileUtils.transferTo(dto.getFile(), path);
             dto.setPic(savedPicFileNm);
         }
+
         mapper.updateUser(dto);
         return new ResVo(SUCCESS);
     }

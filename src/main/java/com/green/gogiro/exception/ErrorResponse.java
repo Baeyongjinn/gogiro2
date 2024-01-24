@@ -14,9 +14,9 @@ public class ErrorResponse {
     private final String code;
     private final String message;
 
-    // Errors가 없다면 응답이 내려가지 않게 처리
+    // valids가 null이 아니고 size 1이상 이라면 JSON으로 만들어진다. 아니면 안 만들어진다.
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private final List<ValidationError> valid;
+    private final List<ValidationError> valids;
 
     @Getter
     @Builder
