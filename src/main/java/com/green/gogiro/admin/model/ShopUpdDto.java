@@ -15,5 +15,5 @@ public class ShopUpdDto {
     @JsonIgnore
     private List<String> pics = new ArrayList<>();
     @JsonIgnore
-    private List<MultipartFile> files = new ArrayList<>();
+    private List<MultipartFile> files;
 }

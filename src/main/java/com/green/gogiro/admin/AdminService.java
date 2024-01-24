@@ -41,7 +41,7 @@ public class AdminService {
     }
 
     public ShopPicsVo updShopPics(ShopUpdDto dto) {
-        if (dto.getFiles().size() > 5) {
+        if (dto.getFiles()!=null && dto.getFiles().size() > 5) {
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
         String target = "/shop/" + dto.getIshop() + "/shop_pic";
@@ -101,7 +101,7 @@ public class AdminService {
         if (dto.getFiles().size() > 5) {
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
-        String target = "/butchershop/" + dto.getIbutcher() + "/butchershop_pic";
+        String target = "/butcher/" + dto.getIbutcher() + "/butchershop_pic";
         ButcherPicVo vo = new ButcherPicVo();
         vo.setIbutcher(dto.getIbutcher());
 

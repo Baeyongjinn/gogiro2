@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class ShopPicsVo {
     private int ishop;
-    private List<String> pics = new ArrayList<>();
+    private List<String> pics;
 }
