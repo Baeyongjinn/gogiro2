@@ -13,7 +13,10 @@ import java.util.List;
 public class StoreRegistrationDto {
     @JsonIgnore
     private int ishop;
+    @NotBlank
     private int imeat;
+    @NotBlank
+    private List<Integer> ifacil;
     @NotBlank
     @Size(min = 1, max = 30, message = "30자 이상 작성할 수 없습니다.")
     private String name;

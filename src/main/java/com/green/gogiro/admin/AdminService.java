@@ -10,6 +10,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -31,7 +33,35 @@ public class AdminService {
             String saveFileNm = myFileUtils.transferTo(file, target);
             vo.getPics().add(saveFileNm);
         }
+        if(dto.getIfacil() != null || dto.getIfacil().get(0) != 0 ){
+        mapper.insShopFacility(dto);
+        }
         mapper.insStoreRegistrationPics(vo);
+        return vo;
+    }
+
+    public ShopPicsVo updShopPics(ShopUpdDto dto){
+        if(dto.getPics().size() > 5) {
+            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        }
+        String target = "/shop/" + dto.getIshop() + "/shop_pic";
+        if(!dto.getIshopPics().isEmpty()) {
+            List<ShopSelPicsNumDto> sDto = mapper.selShopPics(dto.getIshopPics());
+            for(ShopSelPicsNumDto pics : sDto) {
+                myFileUtils.delFolderTrigger2(target + "/" + pics.getPic());
+            }
+            mapper.delShopPics(dto.getIshopPics());
+        }
+        if (dto.getFiles() != null) {
+            for(MultipartFile file : dto.getFiles()) {
+                String saveFileNm = myFileUtils.transferTo(file,target);
+                dto.getPics().add(saveFileNm);
+            }
+            mapper.insShopPic(dto);
+        }
+        ShopPicsVo vo = new ShopPicsVo();
+        vo.setIshop(dto.getIshop());
+        vo.setPics(dto.getPics());
         return vo;
     }
 
