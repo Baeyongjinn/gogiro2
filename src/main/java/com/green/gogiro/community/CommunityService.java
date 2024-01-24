@@ -76,7 +76,7 @@ public class CommunityService {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updCommunity(dto);
         String target = "/community/" + dto.getIboard();
-        if (!dto.getIcommuPics().isEmpty()) {
+        if (dto.getIcommuPics() != null && !dto.getIcommuPics().isEmpty()) {
             List<CommunityBySelPicsDto> cDto = mapper.selCommunityPics(dto.getIcommuPics());
             for (CommunityBySelPicsDto pics : cDto) {
                 log.info("pics: {}", pics.getPic());
