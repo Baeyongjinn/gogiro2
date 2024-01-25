@@ -95,29 +95,29 @@
         LEFT JOIN t_shop_pic d
         ON a.ishop= d.ishop
         WHERE a.iuser = #{iuser}
-        GROUP BY a.ishop
-        union
+        GROUP BY a.ireser
+        UNION
         SELECT
-        1 AS checkShop,
-        a.ipickup AS ireser,
-        a.ibutcher AS ishop,
+        distinct 1 AS checkShop,
+        e.ipickup AS ireser,
+        e.ibutcher AS ishop,
         b.name,
-        a.date,
-        a.request,
-        a.confirm,
-        a.created_at AS createdAt,
+        e.date,
+        e.request,
+        e.confirm,
+        e.created_at AS createdAt,
         1 AS headCount,
         if(c.iuser IS NULL, 0 , 1) AS isBook,
         d.pic
-        FROM t_pickup a
+        FROM t_pickup e
         JOIN t_butcher_shop b
-        ON a.ibutcher= b.ibutcher
+        ON e.ibutcher= b.ibutcher
         LEFT JOIN t_but_bookmark c
-        ON a.ibutcher= c.ibutcher AND a.iuser= c.iuser
+        ON e.ibutcher= c.ibutcher AND e.iuser= c.iuser
         LEFT JOIN t_butcher_pic d
-        ON a.ibutcher= d.ibutcher
-        WHERE a.iuser = #{iuser}
-        GROUP BY a.ipickup
+        ON e.ibutcher= d.ibutcher
+        WHERE e.iuser = #{iuser}
+        GROUP BY e.ipickup
         ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
