@@ -5,6 +5,7 @@ import com.green.gogiro.community.model.*;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Tag(name = "고기 잡담", description = "고기 잡담 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/community")
