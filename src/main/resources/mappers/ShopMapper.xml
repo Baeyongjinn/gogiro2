@@ -162,4 +162,14 @@
         FROM t_shop
     </select>
 
+    <select id="selMainShop">
+        SELECT a.ishop, a.NAME, b.menu, b.price, c.pic
+        FROM t_shop a
+        JOIN t_shop_menu b
+        ON a.ishop = b.ishop
+        JOIN t_shop_pic c
+        ON a.ishop = c.ishop
+        GROUP BY a.ishop
+        ORDER BY RAND() LIMIT 4;
+    </select>
 </mapper>
