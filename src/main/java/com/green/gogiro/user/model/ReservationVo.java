@@ -18,7 +18,7 @@ public class ReservationVo {
     @Schema(title = "요청 사항")
     private String request;//(요청 사항)
     @Schema(title = "예약 및 픽업 승인(0:대기, 1: 취소 2: 확정")
-    private int cofirm;//(예약 및 픽업 승인)
+    private int confirm;//(예약 및 픽업 승인)
     @Schema(title = "인원 수")
     private int headCount;
     @Schema(title = "가게 사진")
