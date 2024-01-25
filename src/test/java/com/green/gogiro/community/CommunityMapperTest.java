@@ -1,10 +1,7 @@
 package com.green.gogiro.community;
 
 import com.green.gogiro.common.Const;
-import com.green.gogiro.community.model.CommunityDelDto;
-import com.green.gogiro.community.model.CommunityInsDto;
-import com.green.gogiro.community.model.CommunitySelBeAfDto;
-import com.green.gogiro.community.model.CommunityUpdDto;
+import com.green.gogiro.community.model.*;
 import com.green.gogiro.user.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -52,12 +49,19 @@ class CommunityMapperTest {
         int num = dto.getIboard() - 1;
         if(num > 0){
             List<CommunitySelBeAfDto> list = new ArrayList<>();
-            while(list.size() != 2) {
+            while(list.size() != 2)
+            // beforeTitleNextTitle 확인
+            assertEquals(title, list.get(1).getTitle());{
                 list = mapper.beforeTitleNextTitle(num --);
             }
-            // beforeTitleNextTitle 확인
-            assertEquals(title, list.get(1).getTitle());
         }
+
+        List<CommunityBySelPicsDto> list = mapper.selByCommunityPics(dto.getIboard());
+        List<Integer> i = new ArrayList<>();
+        for(CommunityBySelPicsDto z : list){
+            i.add(z.getIcommuPics());
+        }
+        List<CommunityBySelPicsDto> list2 = mapper.selCommunityPics(i);
     }
 
     @Test
@@ -100,6 +104,22 @@ class CommunityMapperTest {
 
     @Test
     void selCommunityPics() {
+        List<CommunityBySelPicsDto> list = new ArrayList<>();
+
+        CommunityBySelPicsDto dto = new CommunityBySelPicsDto();
+        dto.setIcommuPics(1);
+        dto.setPic("aaa");
+
+        CommunityBySelPicsDto dto1 = new CommunityBySelPicsDto();
+        dto1.setIcommuPics(2);
+        dto1.setPic("bbb");
+
+        list.add(dto);
+        list.add(dto1);
+
+        list = mapper.selCommunityPics(list)
+
+        assertEquals(list, );
     }
 
     @Test
