@@ -2,13 +2,17 @@ package com.green.gogiro.user.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
 public class ReviewDelDto {
     @Schema(title="가게구분(0: 고기집 1: 정육점)")
+    @Pattern(regexp = "^[0-1]{1}$")
     private int checkShop;
     @Schema(title="리뷰pk")
+    @Min(value = 1)
     private int ireview;
     @JsonIgnore
     private int iuser;

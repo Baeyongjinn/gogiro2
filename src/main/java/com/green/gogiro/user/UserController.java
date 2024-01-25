@@ -46,7 +46,7 @@ public class UserController {
     @Operation(summary = "로그인", description = "로그인 처리")
     public UserSignVo signin(HttpServletRequest req,
                         HttpServletResponse res,
-                        @RequestBody UserSigninDto dto) {
+                        @Valid @RequestBody UserSigninDto dto) {
         return service.signin(req,res,dto);
     }
 
@@ -104,7 +104,7 @@ public class UserController {
 
     @DeleteMapping("/review")
     @Operation(summary = "가게 후기 삭제", description = "회원이 작성한 가게 후기 삭제 처리")
-    public ResVo delShopReview(@RequestBody ReviewDelDto dto) {
+    public ResVo delShopReview(@RequestBody @Valid ReviewDelDto dto) {
         return service.delShopReview(dto);
     }
 }
