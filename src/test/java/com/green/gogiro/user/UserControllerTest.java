@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.gogiro.MockMvcConfig;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.security.JwtTokenProvider;
+import com.green.gogiro.user.model.UserSignVo;
+import com.green.gogiro.user.model.UserSigninDto;
 import com.green.gogiro.user.model.UserSignupDto;
 import org.junit.jupiter.api.Test;
 import org.springdoc.core.properties.SwaggerUiConfigProperties;
@@ -12,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,6 +23,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -29,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @MockMvcConfig
-@WebMvcTest(UserController.class)//빈 등록된 컨트롤러를 객체화시킴
+@WebMvcTest(UserController.class)
 class UserControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -43,7 +49,7 @@ class UserControllerTest {
     @Test
     @WithMockUser
     public void signupTest() throws Exception{
-        final int expected= 12;
+        final int EXPECTED= 12;
         UserSignupDto dto= new UserSignupDto();
         dto.setEmail("zxcasd@naver.com");
         dto.setUpw("1234");
@@ -56,7 +62,7 @@ class UserControllerTest {
         dto.setTel("01012345678");
         MockMultipartFile file = new MockMultipartFile("pic", "tooth.png", "multipart/form-data", "uploadFile".getBytes(StandardCharsets.UTF_8));
         MockMultipartFile request = new MockMultipartFile("dto", null, "application/json", mapper.writeValueAsString(dto).getBytes(StandardCharsets.UTF_8));
-        given(service.signup(any())).willReturn(new ResVo(expected));
+        given(service.signup(any())).willReturn(new ResVo(EXPECTED));
         MvcResult mr= mvc.perform(
                         MockMvcRequestBuilders
                                 .multipart(HttpMethod.POST,"/api/user/signup")
@@ -72,7 +78,28 @@ class UserControllerTest {
         verify(service).signup(any());
         String content= mr.getResponse().getContentAsString();
         ResVo result= mapper.readValue(content,ResVo.class);
-        assertEquals(expected, result.getResult());
+        assertEquals(EXPECTED, result.getResult());
     }
+    @Test
+    @WithMockUser
+    void signinTest() throws Exception{
+        final UserSignVo vo= UserSignVo.builder().result(23).build();
+        UserSigninDto dto= new UserSigninDto();
+        dto.setEmail("dd11@naver.com");
+        dto.setUpw("1212");
+        String json= mapper.writeValueAsString(dto);
 
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.post("api/user/signin")
+                                                        .contentType(MediaType.APPLICATION_JSON)
+
+                                                        .content(json)
+                                                        .with(csrf()))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
+        verify(service).signin(any(), any(),any());
+        String content= mr.getResponse().getContentAsString();
+        UserSignVo result= mapper.readValue(content, UserSignVo.class);
+        assertEquals(vo.getResult(), result.getResult());
+    }
 }
