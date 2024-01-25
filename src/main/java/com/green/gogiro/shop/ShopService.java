@@ -151,4 +151,13 @@ public class ShopService {
             return new ResVo(Const.OFF);
         }
     }
+
+    public ShopMainVo selMainPage() {
+        List<ShopMainGogiVo> gogiVoList = mapper.selMainShop();
+        List<ShopMainCommuVo> commuVoList = mapper.selMainCommunity();
+        ShopMainVo vo = new ShopMainVo();
+        vo.setGogi(gogiVoList);
+        vo.setCommu(commuVoList);
+        return vo;
+    }
 }

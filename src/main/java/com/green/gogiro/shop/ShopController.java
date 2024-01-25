@@ -52,5 +52,9 @@ public class ShopController {
         return service.toggleShopBookmark(dto);
     }
 
-
+    @GetMapping("/main")
+    @Operation(summary = "메인페이지", description = "메인페이지 처리")
+    public ShopMainVo selMainCommunity() {
+        return service.selMainPage();
+    }
 }

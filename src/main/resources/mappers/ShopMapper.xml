@@ -172,4 +172,13 @@
         GROUP BY a.ishop
         ORDER BY RAND() LIMIT 4
     </select>
+
+    <select id="selMainCommunity">
+        SELECT a.iboard,b.pic
+        FROM t_community a
+        JOIN t_commu_pics b
+        ON a.iboard = b.iboard
+        GROUP BY b.iboard
+        ORDER BY RAND() LIMIT 4
+    </select>
 </mapper>

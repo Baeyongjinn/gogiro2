@@ -35,4 +35,8 @@ public interface ShopMapper {
     Integer selShopCategory(int imeat);
 
     int selIshopForTest();
+
+    List<ShopMainGogiVo> selMainShop();
+    List<ShopMainCommuVo> selMainCommunity();
+
 }
