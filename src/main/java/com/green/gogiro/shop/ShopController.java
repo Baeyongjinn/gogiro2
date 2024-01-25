@@ -6,6 +6,7 @@ import com.green.gogiro.common.ResVo;
 import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.shop.model.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 import static com.green.gogiro.exception.AuthErrorCode.MUST_PHOTO;
 import static com.green.gogiro.exception.AuthErrorCode.SIZE_PHOTO;
 
+@Tag(name = "고기집",description = "고기집 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/shop")

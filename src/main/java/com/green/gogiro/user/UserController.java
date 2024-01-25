@@ -8,6 +8,7 @@ import com.green.gogiro.exception.UserErrorCode;
 import com.green.gogiro.user.model.ReservationVo;
 import com.green.gogiro.user.model.*;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.regex.Pattern;
 
+@Tag(name = "유저 기능",description = "유저 기능 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/user")
@@ -44,7 +46,7 @@ public class UserController {
     @Operation(summary = "로그인", description = "로그인 처리")
     public UserSignVo signin(HttpServletRequest req,
                         HttpServletResponse res,
-                        @RequestBody UserSigninDto dto) {
+                        @Valid @RequestBody UserSigninDto dto) {
         return service.signin(req,res,dto);
     }
 
@@ -102,7 +104,7 @@ public class UserController {
 
     @DeleteMapping("/review")
     @Operation(summary = "가게 후기 삭제", description = "회원이 작성한 가게 후기 삭제 처리")
-    public ResVo delShopReview(@RequestBody ReviewDelDto dto) {
+    public ResVo delShopReview(@RequestBody @Valid ReviewDelDto dto) {
         return service.delShopReview(dto);
     }
 }

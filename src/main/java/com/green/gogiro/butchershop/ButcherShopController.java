@@ -7,6 +7,7 @@ import com.green.gogiro.common.ResVo;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Tag(name = "정육점",description = "정육점 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/butcher-shop")

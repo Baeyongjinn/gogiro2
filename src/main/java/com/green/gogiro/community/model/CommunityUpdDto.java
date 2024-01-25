@@ -18,7 +18,7 @@ public class CommunityUpdDto {
     @Schema(title = "커뮤니티pk")
     @Min(value = 1)
     private int iboard;
-    @Schema(title = "삭제할 사진pk")
+    @Schema(title = "삭제할 사진pk",example = "[]")
     private List<Integer> icommuPics;
     @Schema(title = "제목")
     @NotBlank

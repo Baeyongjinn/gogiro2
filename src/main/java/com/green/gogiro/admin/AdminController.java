@@ -4,6 +4,7 @@ package com.green.gogiro.admin;
 import com.green.gogiro.admin.model.*;
 import com.green.gogiro.exception.RestApiException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static com.green.gogiro.exception.AuthErrorCode.MUST_PHOTO;
 
+@Tag(name = "관리자", description = "관리자 API")
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
