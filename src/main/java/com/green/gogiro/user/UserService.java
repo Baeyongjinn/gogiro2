@@ -170,8 +170,10 @@ public class UserService {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         int count= mapper.selUserReservationCount(dto.getIuser());
         List<ReservationVo> list= mapper.selReservation(dto);
-        for(ReservationVo vo: list) {
-            vo.setCount(count);
+        if(!list.isEmpty()) {
+            for(ReservationVo vo: list) {
+                vo.setCount(count);
+            }
         }
         return list;
     }
