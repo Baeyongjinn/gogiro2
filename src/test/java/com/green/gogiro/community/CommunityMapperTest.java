@@ -104,22 +104,7 @@ class CommunityMapperTest {
 
     @Test
     void selCommunityPics() {
-        List<CommunityBySelPicsDto> list = new ArrayList<>();
 
-        CommunityBySelPicsDto dto = new CommunityBySelPicsDto();
-        dto.setIcommuPics(1);
-        dto.setPic("aaa");
-
-        CommunityBySelPicsDto dto1 = new CommunityBySelPicsDto();
-        dto1.setIcommuPics(2);
-        dto1.setPic("bbb");
-
-        list.add(dto);
-        list.add(dto1);
-
-        list = mapper.selCommunityPics(list)
-
-        assertEquals(list, );
     }
 
     @Test

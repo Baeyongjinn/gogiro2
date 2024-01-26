@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -84,14 +85,14 @@ class UserControllerTest {
     @WithMockUser
     void signinTest() throws Exception{
         final UserSignVo vo= UserSignVo.builder().result(23).build();
+        given(service.signin(any(),any(),any())).willReturn(vo);
         UserSigninDto dto= new UserSigninDto();
         dto.setEmail("dd11@naver.com");
         dto.setUpw("1212");
         String json= mapper.writeValueAsString(dto);
 
-        MvcResult mr= mvc.perform(MockMvcRequestBuilders.post("api/user/signin")
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.post("/api/user/signin")
                                                         .contentType(MediaType.APPLICATION_JSON)
-
                                                         .content(json)
                                                         .with(csrf()))
                          .andExpect(status().isOk())
