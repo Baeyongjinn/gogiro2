@@ -62,18 +62,15 @@ class UserControllerTest {
         MockMultipartFile file = new MockMultipartFile("pic", "a.jpg", "multipart/form-data", "uploadFile".getBytes(StandardCharsets.UTF_8));
         MockMultipartFile request = new MockMultipartFile("dto", null, "application/json", mapper.writeValueAsString(dto).getBytes(StandardCharsets.UTF_8));
         given(service.signup(any())).willReturn(new ResVo(EXPECTED));
-        MvcResult mr= mvc.perform(
-                        MockMvcRequestBuilders
-                                .multipart(HttpMethod.POST,"/api/user/signup")
-                                .file(file)
-                                .file(request)
-                                .accept(MediaType.APPLICATION_JSON)
-                                .contentType(MediaType.MULTIPART_FORM_DATA)
-                                .with(csrf())
-                )
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.multipart(HttpMethod.POST,"/api/user/signup")
+                                                        .file(file)
+                                                        .file(request)
+                                                        .accept(MediaType.APPLICATION_JSON)
+                                                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                                                        .with(csrf()))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
         verify(service).signup(any());
         String content= mr.getResponse().getContentAsString();
         ResVo result= mapper.readValue(content,ResVo.class);
@@ -124,10 +121,10 @@ class UserControllerTest {
         final UserSignVo vo= UserSignVo.builder().result(123).build();
         given(service.getRefreshToken(any())).willReturn(vo);
         MvcResult mr= mvc.perform(MockMvcRequestBuilders.get("/api/user/refresh-token")
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
+                                                        .with(csrf()))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
         verify(service).getRefreshToken(any());
         String content= mr.getResponse().getContentAsString();
         ResVo result= mapper.readValue(content, ResVo.class);
@@ -144,18 +141,15 @@ class UserControllerTest {
         MockMultipartFile file = new MockMultipartFile("pic", "aaa.jpg", "multipart/form-data", "uploadFile".getBytes(StandardCharsets.UTF_8));
         MockMultipartFile request = new MockMultipartFile("dto", null, "application/json", mapper.writeValueAsString(dto).getBytes(StandardCharsets.UTF_8));
         given(service.updateUser(any())).willReturn(new ResVo(EXPECTED));
-        MvcResult mr= mvc.perform(
-                        MockMvcRequestBuilders
-                                .multipart(HttpMethod.PUT,"/api/user")
-                                .file(file)
-                                .file(request)
-                                .accept(MediaType.APPLICATION_JSON)
-                                .contentType(MediaType.MULTIPART_FORM_DATA)
-                                .with(csrf())
-                )
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.multipart(HttpMethod.PUT,"/api/user")
+                                                        .file(file)
+                                                        .file(request)
+                                                        .accept(MediaType.APPLICATION_JSON)
+                                                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                                                        .with(csrf()))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
         verify(service).updateUser(any());
         String content= mr.getResponse().getContentAsString();
         ResVo result= mapper.readValue(content,ResVo.class);
@@ -169,10 +163,10 @@ class UserControllerTest {
         vo.setName(name);
         given(service.selUserInfo()).willReturn(vo);
         MvcResult mr= mvc.perform(MockMvcRequestBuilders.get("/api/user")
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
+                                                        .with(csrf()))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
         verify(service).selUserInfo();
         String content= mr.getResponse().getContentAsString();
         UserInfoVo result= mapper.readValue(content, UserInfoVo.class);
@@ -181,7 +175,6 @@ class UserControllerTest {
     @Test
     @WithMockUser
     void getReservationTest() throws Exception {
-        UserMyPageDto dto= new UserMyPageDto();
         List<ReservationVo> list= new ArrayList<>();
         ReservationVo vo1= new ReservationVo();
         vo1.setIreser(100);
@@ -206,19 +199,91 @@ class UserControllerTest {
     }
     @Test
     @WithMockUser
-    void checkNickNameTest() throws Exception {}
+    void checkNickNameTest() throws Exception {
+        final int EXPECTED= 234;
+        ResVo vo= new ResVo(EXPECTED);
+        given(service.checkNickName(any())).willReturn(vo);
+        String nickname= "test";
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.post("/api/user/signup/"+nickname)
+                                                        .with(csrf())
+                                                        .param("nickname",nickname))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
+        verify(service).checkNickName(any());
+        String content= mr.getResponse().getContentAsString();
+        ResVo result= mapper.readValue(content, ResVo.class);
+        assertEquals(vo.getResult(), result.getResult());
+
+    }
     @Test
     @WithMockUser
     void getUserReviewTest() throws Exception {
-        UserMyPageDto dto= new UserMyPageDto();
+        List<ReviewVo> list= new ArrayList();
+        ReviewVo vo1= new ReviewVo();
+        vo1.setIreview(123);
+        ReviewVo vo2= new ReviewVo();
+        vo2.setIreview(456);
+        list.add(vo1);
+        list.add(vo2);
+        given(service.getUserReview(any())).willReturn(list);
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.get("/api/user/review")
+                                                        .with(csrf())
+                                                        .param("page","1"))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
+        verify(service).getUserReview(any());
+        String content= mr.getResponse().getContentAsString();
+        List<ReviewVo> result= mapper.readValue(content, new TypeReference<>() {});
+
+        for(int i=0; i<result.size(); i++) {
+            assertEquals(list.get(i).getIreview(),result.get(i).getIreview());
+        }
     }
     @Test
     @WithMockUser
     void getUserBookmark() throws Exception {
-        UserMyPageDto dto= new UserMyPageDto();
+        List<BookmarkShopVo> list= new ArrayList();
+        BookmarkShopVo vo1= new BookmarkShopVo();
+        vo1.setIshop(321);
+        BookmarkShopVo vo2= new BookmarkShopVo();
+        vo2.setIshop(654);
+        list.add(vo1);
+        list.add(vo2);
+        given(service.getUserBookmark(any())).willReturn(list);
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.get("/api/user/bookmark")
+                                                        .with(csrf())
+                                                        .param("page","1"))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
+        verify(service).getUserBookmark(any());
+        String content= mr.getResponse().getContentAsString();
+        List<BookmarkShopVo> result= mapper.readValue(content, new TypeReference<>() {});
+
+        for(int i=0; i<result.size(); i++) {
+            assertEquals(list.get(i).getIshop(),result.get(i).getIshop());
+        }
     }
     @Test
     @WithMockUser
-    void delShopReview() throws Exception {}
-
+    void delShopReview() throws Exception {
+        ReviewDelDto dto= new ReviewDelDto();
+        dto.setCheckShop(0);
+        dto.setIreview(1);
+        ResVo vo= new ResVo(66);
+        given(service.delShopReview(any())).willReturn(vo);
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.delete("/api/user/review")
+                                                        .contentType(MediaType.APPLICATION_JSON)
+                                                        .content(mapper.writeValueAsString(dto))
+                                                        .with(csrf()))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
+        verify(service).delShopReview(any());
+        String content= mr.getResponse().getContentAsString();
+        ResVo result= mapper.readValue(content, ResVo.class);
+        assertEquals(vo.getResult(), result.getResult());
+    }
 }
