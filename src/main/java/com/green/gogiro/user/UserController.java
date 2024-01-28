@@ -1,10 +1,7 @@
 package com.green.gogiro.user;
 
-import com.green.gogiro.common.Const;
+
 import com.green.gogiro.common.ResVo;
-import com.green.gogiro.exception.AuthErrorCode;
-import com.green.gogiro.exception.RestApiException;
-import com.green.gogiro.exception.UserErrorCode;
 import com.green.gogiro.user.model.ReservationVo;
 import com.green.gogiro.user.model.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,16 +9,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
-import java.util.regex.Pattern;
+
 
 @Tag(name = "유저 기능",description = "유저 기능 API")
 @RequiredArgsConstructor
@@ -73,7 +66,7 @@ public class UserController {
         return service.updateUser(dto);
     }
 
-    @GetMapping("")
+    @GetMapping
     @Operation(summary = "유저 정보 보기", description = "유저 정보 보기 처리")
     public UserInfoVo getUserInfo() {
         return service.selUserInfo();

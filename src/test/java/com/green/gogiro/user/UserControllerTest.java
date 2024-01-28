@@ -1,12 +1,11 @@
 package com.green.gogiro.user;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.gogiro.MockMvcConfig;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.security.JwtTokenProvider;
-import com.green.gogiro.user.model.UserSignVo;
-import com.green.gogiro.user.model.UserSigninDto;
-import com.green.gogiro.user.model.UserSignupDto;
+import com.green.gogiro.user.model.*;
 import org.junit.jupiter.api.Test;
 import org.springdoc.core.properties.SwaggerUiConfigProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -61,7 +59,7 @@ class UserControllerTest {
         dto.setGender("남");
         dto.setAddress("대구어딘가");
         dto.setTel("01012345678");
-        MockMultipartFile file = new MockMultipartFile("pic", "tooth.png", "multipart/form-data", "uploadFile".getBytes(StandardCharsets.UTF_8));
+        MockMultipartFile file = new MockMultipartFile("pic", "a.jpg", "multipart/form-data", "uploadFile".getBytes(StandardCharsets.UTF_8));
         MockMultipartFile request = new MockMultipartFile("dto", null, "application/json", mapper.writeValueAsString(dto).getBytes(StandardCharsets.UTF_8));
         given(service.signup(any())).willReturn(new ResVo(EXPECTED));
         MvcResult mr= mvc.perform(
@@ -103,4 +101,124 @@ class UserControllerTest {
         UserSignVo result= mapper.readValue(content, UserSignVo.class);
         assertEquals(vo.getResult(), result.getResult());
     }
+    @Test
+    @WithMockUser
+    void signoutTest() throws Exception{
+        final ResVo vo= new ResVo(45);
+        given(service.signout(any())).willReturn(vo);
+
+
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.post("/api/user/signout")
+                                                        .with(csrf()))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
+        verify(service).signout(any());
+        String content= mr.getResponse().getContentAsString();
+        ResVo result= mapper.readValue(content, ResVo.class);
+        assertEquals(vo.getResult(), result.getResult());
+    }
+    @Test
+    @WithMockUser
+    void getRefreshToken() throws Exception{
+        final UserSignVo vo= UserSignVo.builder().result(123).build();
+        given(service.getRefreshToken(any())).willReturn(vo);
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.get("/api/user/refresh-token")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+        verify(service).getRefreshToken(any());
+        String content= mr.getResponse().getContentAsString();
+        ResVo result= mapper.readValue(content, ResVo.class);
+        assertEquals(vo.getResult(), result.getResult());
+    }
+    @Test
+    @WithMockUser
+    void putUserTest() throws Exception{
+        final int EXPECTED= 21;
+        UserUpdDto dto= new UserUpdDto();
+        dto.setNickname("테스트");
+        dto.setAddress("대구어딘가");
+        dto.setTel("01012345678");
+        MockMultipartFile file = new MockMultipartFile("pic", "aaa.jpg", "multipart/form-data", "uploadFile".getBytes(StandardCharsets.UTF_8));
+        MockMultipartFile request = new MockMultipartFile("dto", null, "application/json", mapper.writeValueAsString(dto).getBytes(StandardCharsets.UTF_8));
+        given(service.updateUser(any())).willReturn(new ResVo(EXPECTED));
+        MvcResult mr= mvc.perform(
+                        MockMvcRequestBuilders
+                                .multipart(HttpMethod.PUT,"/api/user")
+                                .file(file)
+                                .file(request)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.MULTIPART_FORM_DATA)
+                                .with(csrf())
+                )
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+        verify(service).updateUser(any());
+        String content= mr.getResponse().getContentAsString();
+        ResVo result= mapper.readValue(content,ResVo.class);
+        assertEquals(EXPECTED, result.getResult());
+    }
+    @Test
+    @WithMockUser
+    void getUserInfoTest() throws Exception{
+        final UserInfoVo vo= new UserInfoVo();
+        String name= "userInfoTest";
+        vo.setName(name);
+        given(service.selUserInfo()).willReturn(vo);
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.get("/api/user")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+        verify(service).selUserInfo();
+        String content= mr.getResponse().getContentAsString();
+        UserInfoVo result= mapper.readValue(content, UserInfoVo.class);
+        assertEquals(name, result.getName());
+    }
+    @Test
+    @WithMockUser
+    void getReservationTest() throws Exception {
+        UserMyPageDto dto= new UserMyPageDto();
+        List<ReservationVo> list= new ArrayList<>();
+        ReservationVo vo1= new ReservationVo();
+        vo1.setIreser(100);
+        list.add(vo1);
+        ReservationVo vo2= new ReservationVo();
+        vo2.setIreser(200);
+        list.add(vo2);
+        given(service.getReservation(any())).willReturn(list);
+        MvcResult mr= mvc.perform(MockMvcRequestBuilders.get("/api/user/reservation")
+                                                        .with(csrf())
+                                                        .param("page","1"))
+                         .andExpect(status().isOk())
+                         .andDo(print())
+                         .andReturn();
+        verify(service).getReservation(any());
+        String content= mr.getResponse().getContentAsString();
+        List<ReservationVo> result= mapper.readValue(content, new TypeReference<>() {});
+
+        for(int i=0; i<result.size(); i++) {
+            assertEquals(list.get(i).getIreser(),result.get(i).getIreser());
+        }
+    }
+    @Test
+    @WithMockUser
+    void checkNickNameTest() throws Exception {}
+    @Test
+    @WithMockUser
+    void getUserReviewTest() throws Exception {
+        UserMyPageDto dto= new UserMyPageDto();
+    }
+    @Test
+    @WithMockUser
+    void getUserBookmark() throws Exception {
+        UserMyPageDto dto= new UserMyPageDto();
+    }
+    @Test
+    @WithMockUser
+    void delShopReview() throws Exception {}
+
 }
