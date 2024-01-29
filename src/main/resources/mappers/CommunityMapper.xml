@@ -47,7 +47,7 @@
                 a.title like CONCAT('%',#{search},'%')
             </if>
         </where>
-        ORDER BY a.created_at DESC
+        ORDER a.iboard DESC
         limit #{startIdx}, #{rowCount}
     </select>
 
@@ -146,21 +146,21 @@
     </select>
     
     <select id="beforeTitleNextTitle">
-        (SELECT
-        iboard, title
-        FROM t_community
-        WHERE iboard <![CDATA[<=]]> #{iboard}
-        ORDER BY iboard DESC
-        LIMIT 1)
-        UNION
-        (SELECT
-        iboard, title
-        FROM t_community
-        WHERE iboard >= #{iboard}
-        ORDER BY iboard
-        LIMIT 1)
+<!--        (SELECT-->
+<!--        iboard, title-->
+<!--        FROM t_community-->
+<!--        WHERE iboard <![CDATA[<=]]> #{iboard}-->
+<!--        ORDER BY iboard DESC-->
+<!--        LIMIT 1)-->
+<!--        UNION-->
+<!--        (SELECT-->
+<!--        iboard, title-->
+<!--        FROM t_community-->
+<!--        WHERE iboard >= #{iboard}-->
+<!--        ORDER BY iboard-->
+<!--        LIMIT 1)-->
     </select>
-<!-- Test Xml  -->
+
 
     <select id="selCommunityDel1">
         select iboard
@@ -178,4 +178,23 @@
         delete from t_commu_pics
         where iboard = #{iboard}
     </delete>
+
+    <select id="beforeTitle">
+        SELECT
+        iboard, title
+        FROM t_community
+        WHERE iboard <![CDATA[<]]> #{iboard}
+        ORDER BY iboard desc
+        LIMIT 1
+    </select>
+
+    <select id="afterTitle">
+        SELECT
+        iboard, title
+        FROM t_community
+        WHERE iboard > #{iboard}
+        ORDER BY iboard desc
+        LIMIT 1
+    </select>
+
 </mapper>
