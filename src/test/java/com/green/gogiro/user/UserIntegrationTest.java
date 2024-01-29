@@ -27,8 +27,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
         String json = om.writeValueAsString(dto);
         MvcResult mr = mvc.perform(MockMvcRequestBuilders.post("/api/user/signin")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-                        .with(csrf()))
+                        .content(json))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -56,8 +55,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
                         .file(file)
                         .file(request)
                         .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
-                        .with(csrf()))
+                        .contentType(MediaType.MULTIPART_FORM_DATA))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -75,8 +73,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
 
         MvcResult mr = mvc.perform(MockMvcRequestBuilders.post("/api/user/signin")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-                        .with(csrf()))
+                        .content(json))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -89,8 +86,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
 
     @Test
     void signoutTest() throws Exception {
-        MvcResult mr = mvc.perform(MockMvcRequestBuilders.post("/api/user/signout")
-                        .with(csrf()))
+        MvcResult mr = mvc.perform(MockMvcRequestBuilders.post("/api/user/signout"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -104,8 +100,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     void getRefreshToken() throws Exception {
         final UserSignVo vo = UserSignVo.builder().result(123).build();
 
-        MvcResult mr = mvc.perform(MockMvcRequestBuilders.get("/api/user/refresh-token")
-                        .with(csrf()))
+        MvcResult mr = mvc.perform(MockMvcRequestBuilders.get("/api/user/refresh-token"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -130,7 +125,6 @@ public class UserIntegrationTest extends BaseIntegrationTest {
                         .file(request)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.MULTIPART_FORM_DATA)
-                        .with(csrf())
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -144,7 +138,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     @Test
     void getUserInfoTest() throws Exception {
         MvcResult mr = mvc.perform(MockMvcRequestBuilders.get("/api/user")
-                        .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -173,7 +167,6 @@ public class UserIntegrationTest extends BaseIntegrationTest {
 
         String nickname = "test";
         MvcResult mr = mvc.perform(MockMvcRequestBuilders.post("/api/user/signup/" + nickname)
-                        .with(csrf())
                         .param("nickname", nickname))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -191,7 +184,6 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     @Test
     void getUserReviewTest() throws Exception {
         MvcResult mr = mvc.perform(MockMvcRequestBuilders.get("/api/user/review")
-                        .with(csrf())
                         .param("page", "1").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -206,7 +198,6 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     @Test
     void getUserBookmark() throws Exception {
         MvcResult mr = mvc.perform(MockMvcRequestBuilders.get("/api/user/bookmark")
-                        .with(csrf())
                         .param("page", "1").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -228,7 +219,7 @@ public class UserIntegrationTest extends BaseIntegrationTest {
             MvcResult mr = mvc.perform(MockMvcRequestBuilders.delete("/api/user/review")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(om.writeValueAsString(dto))
-                            .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn();

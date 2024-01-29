@@ -45,7 +45,7 @@
         t_pickup
         SET
             confirm= 1
-        WHERE ipickup= #{ipickup}
+        WHERE ipickup= #{ireser}
         AND iuser= #{iuser}
     </update>
 
