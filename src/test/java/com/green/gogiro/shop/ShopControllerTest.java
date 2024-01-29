@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.gogiro.MockMvcConfig;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.security.JwtTokenProvider;
+import com.green.gogiro.shop.model.ShopBookmarkDto;
 import com.green.gogiro.shop.model.ShopReviewDto;
 import com.green.gogiro.shop.model.ShopReviewPicsInsDto;
 import com.green.gogiro.shop.model.ShopSelVo;
@@ -105,7 +106,24 @@ public class ShopControllerTest {
     }
 
     @Test
+    @WithMockUser
     void toggleShopBookmark() throws Exception{
+        ShopBookmarkDto dto = new ShopBookmarkDto();
+        dto.setIshop(1);
+        dto.setOn(false);
+        ResVo vo = new ResVo(1);
+        given(service.toggleShopBookmark(dto)).willReturn(vo);
+
+        mvc.perform(
+                MockMvcRequestBuilders.post("/api/shop/bookmark")
+                .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dto))
+                        .with(csrf())
+        ).andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(vo)))
+                .andDo(print());
+        verify(service).toggleShopBookmark(any());
+
 
     }
 

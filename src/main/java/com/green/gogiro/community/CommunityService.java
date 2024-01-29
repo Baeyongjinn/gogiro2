@@ -62,7 +62,8 @@ public class CommunityService {
     public CommunityPicsInsVo updCommunity(CommunityUpdDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
         //게시글여부 확인
-        int i = mapper.selByCommunityPics(dto.getIboard()).size() + dto.getFiles().size() - dto.getIcommuPics().size();
+        int i = mapper.selByCommunityPics(dto.getIboard())!=null?mapper.selByCommunityPics(dto.getIboard()).size(): dto.getFiles() !=null?dto.getFiles().size():0
+                - dto.getIcommuPics().size();
         if (check == null) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         } else if (i > 5) {
