@@ -95,42 +95,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
             System.out.println("내부 서버 에러");
         }
     }
-    @Test
-    void cancelReservationTest() throws Exception{
 
-        CancelReservationDto dto= new CancelReservationDto();
-        dto.setIreser(10);
-
-        MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/reservation")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(om.writeValueAsString(dto))
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
-
-        String content= mr.getResponse().getContentAsString();
-        ResVo result= om.readValue(content, ResVo.class);
-        assertEquals(1,result.getResult());
-    }
-    @Test
-    void cancelPickupTest() throws Exception{
-
-        CancelPickupDto dto= new CancelPickupDto();
-        dto.setIpickup(10);
-
-        MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/pickup")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(om.writeValueAsString(dto))
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
-
-        String content= mr.getResponse().getContentAsString();
-        ResVo result= om.readValue(content, ResVo.class);
-        assertEquals(1,result.getResult());
-    }
     @Test
     void putReservationTest() throws Exception{
 

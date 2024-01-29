@@ -2,7 +2,6 @@ package com.green.gogiro.reservation;
 
 import static com.green.gogiro.common.Const.*;
 
-import com.green.gogiro.common.Const;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
@@ -12,8 +11,6 @@ import com.green.gogiro.shop.ShopMapper;
 import com.green.gogiro.shop.model.ShopEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service
@@ -57,15 +54,10 @@ public class ReservationService {
         return new ResVo(dto.getIpickup());
     }
 
-    public ResVo cancelReservation(CancelReservationDto dto) {
+    public ResVo cancelReservation(CancelDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        mapper.cancelReservation(dto);
-        return new ResVo(SUCCESS);
-    }
-
-    public ResVo cancelPickup(CancelPickupDto dto) {
-        dto.setIuser(authenticationFacade.getLoginUserPk());
-        mapper.cancelPickup(dto);
+        if(dto.isReservation()){mapper.cancelReservation(dto);}
+        else{mapper.cancelPickup(dto);}
         return new ResVo(SUCCESS);
     }
 

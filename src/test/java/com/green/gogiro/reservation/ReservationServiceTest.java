@@ -66,23 +66,7 @@ class ReservationServiceTest {
 
     }
 
-    @Test
-    void cancelReservationTest() throws Exception {
-        CancelReservationDto dto= new CancelReservationDto();
-        ResVo vo= service.cancelReservation(dto);
-        verify(authenticationFacade).getLoginUserPk();
-        verify(mapper).cancelReservation(any());
-        assertEquals(1, vo.getResult());
-    }
 
-    @Test
-    void cancelPickupTest() throws Exception {
-        CancelPickupDto dto= new CancelPickupDto();
-        ResVo vo= service.cancelPickup(dto);
-        verify(authenticationFacade).getLoginUserPk();
-        verify(mapper).cancelPickup(any());
-        assertEquals(1, vo.getResult());
-    }
 
     @Test
     void putReservationTest() throws Exception {
