@@ -62,24 +62,19 @@ public class CommunityService {
     public CommunityPicsInsVo updCommunity(CommunityUpdDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
         //게시글여부 확인
+        int i = mapper.selByCommunityPics(dto.getIboard()).size() + dto.getFiles().size() - dto.getIcommuPics().size();
         if (check == null) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
+        } else if (i > 5) {
+            throw new RestApiException(MUST_PHOTO);
         }
-//        //제목을 입력하지 않는 경우
-//        if(dto.getTitle() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getTitle())) {
-//            throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_TITLE);
-//        }
-//        //내용을 입력하지 않는 경우
-//        if(dto.getContents() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getContents())) {
-//            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
-//        }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updCommunity(dto);
         String target = "/community/" + dto.getIboard();
         if (dto.getIcommuPics() != null && !dto.getIcommuPics().isEmpty()) {
             List<CommunityBySelPicsDto> cDto = mapper.selCommunityPics(dto.getIcommuPics());
             for (CommunityBySelPicsDto pics : cDto) {
-                log.info("pics: {}", pics.getPic());
+                log.info("pics: {}" , pics.getPic());
                 myFileUtils.delFolderTrigger2(target + "/" + pics.getPic());
             }
             mapper.delCommunityPic(dto.getIcommuPics());
@@ -131,16 +126,18 @@ public class CommunityService {
 
     public CommunityDetailVo getDetailCommunity(int iboard) {
         CommunityEntity entity = mapper.entityCommunity(iboard);
-        if(entity == null) {
+        if (entity == null) {
             throw new RestApiException(VALID_BOARD);
         }
-        List<CommunitySelBeAfDto> bDto = mapper.beforeTitleNextTitle(iboard);
+        CommunitySelBeAfDto bDto = mapper.beforeTitle(iboard);
+        CommunitySelBeAfDto aDto = mapper.afterTitle(iboard);
         CommunityDetailVo vo = mapper.selDetailCommunity(iboard);
         List<CommunityBySelPicsDto> pics = mapper.selByCommunityPics(iboard);
         vo.setPics(pics);
         List<CommunityCommentVo> comments = mapper.selCommunityComments(iboard);
         vo.setComments(comments);
-        vo.setBeAf(bDto);
+        vo.setBe(bDto);
+        vo.setAf(aDto);
         return vo;
     }
 

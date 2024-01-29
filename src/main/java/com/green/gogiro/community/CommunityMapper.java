@@ -22,7 +22,11 @@ public interface CommunityMapper {
 
     int selCommunityCount();
 
-    List<CommunitySelBeAfDto> beforeTitleNextTitle(int iboard);
+   // List<CommunitySelBeAfDto> beforeTitleNextTitle(int iboard);
+
+    CommunitySelBeAfDto beforeTitle(int iboard);
+
+    CommunitySelBeAfDto afterTitle(int iboard);
 
     List<CommunityBySelPicsDto> selCommunityPics(List<Integer> icommuPics);
 
