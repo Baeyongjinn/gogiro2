@@ -193,7 +193,7 @@
         iboard, title
         FROM t_community
         WHERE iboard > #{iboard}
-        ORDER BY iboard desc
+        ORDER BY iboard
         LIMIT 1
     </select>
 
