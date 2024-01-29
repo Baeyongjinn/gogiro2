@@ -31,6 +31,7 @@ public class ShopReviewDto {
     @Size(min = 1, max = 1000, message = "내용은 1000자 초과할 수 없습니다.")
     private String review;
 
+    @JsonIgnore
     @Schema(title = "사진",description = "최대 5장")
     private List<MultipartFile> pics;
 }
