@@ -154,7 +154,7 @@ public class CommunityService {
         myFileUtils.delFolderTrigger(target);
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.delCommunityAllComment(dto);
-        mapper.delCommunityPic(dto.getIboard());
+        mapper.delCommunityDel(dto.getIboard());
         mapper.delCommunity(dto);
         return new ResVo(SUCCESS);
     }

@@ -38,7 +38,7 @@
     </select>
 
     <select id="selCommunity">
-        SELECT a.iboard, a.iuser, b.nickname AS name,b.pic as writerPic, a.title, a.contents, date(a.created_at) AS createdAt
+        SELECT a.iboard, a.iuser, b.nickname AS writerName,b.pic as writerPic, a.title, a.contents, date(a.created_at) AS createdAt
         FROM t_community a
         JOIN t_user b
         ON a.iuser = b.iuser
