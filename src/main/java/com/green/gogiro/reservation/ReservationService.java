@@ -22,7 +22,6 @@ public class ReservationService {
     private final AuthenticationFacade authenticationFacade;
     private final ShopMapper shopMapper;
 
-
     public ResVo postReservation(ReservationInsDto dto) {
         ShopEntity entity = shopMapper.selShopEntity(dto.getIshop());
         if(entity == null){
