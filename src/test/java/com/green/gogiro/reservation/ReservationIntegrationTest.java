@@ -27,8 +27,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
         String json = om.writeValueAsString(dto);
         MvcResult mr = mvc.perform(MockMvcRequestBuilders.post("/api/user/signin")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-                        .with(csrf()))
+                        .content(json))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -47,7 +46,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
             MvcResult mr= mvc.perform(MockMvcRequestBuilders.post("/api/reservation")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(om.writeValueAsString(dto))
-                            .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn();
@@ -80,7 +79,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
             MvcResult mr= mvc.perform(MockMvcRequestBuilders.post("/api/pickup")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(om.writeValueAsString(dto))
-                            .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn();
@@ -105,7 +104,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
         MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/reservation")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(om.writeValueAsString(dto))
-                        .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -123,7 +122,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
         MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/pickup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(om.writeValueAsString(dto))
-                        .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -143,7 +142,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
         MvcResult mr= mvc.perform(MockMvcRequestBuilders.put("/api/reservation")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(om.writeValueAsString(dto))
-                        .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
