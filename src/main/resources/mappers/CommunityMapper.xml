@@ -47,7 +47,7 @@
                 a.title like CONCAT('%',#{search},'%')
             </if>
         </where>
-        ORDER a.iboard DESC
+        ORDER BY a.iboard DESC
         limit #{startIdx}, #{rowCount}
     </select>
 
