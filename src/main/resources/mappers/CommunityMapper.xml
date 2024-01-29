@@ -104,8 +104,7 @@
     <delete id="delCommunityAllComment">
         DELETE
         FROM t_community_comment
-        WHERE iuser= #{iuser}
-        AND iboard= #{iboard}
+        WHERE iboard= #{iboard}
     </delete>
 
     <select id="checkCommunity">
