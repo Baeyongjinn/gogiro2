@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
@@ -28,6 +29,7 @@ public class CommunityService {
     private final MyFileUtils myFileUtils;
     private final AuthenticationFacade authenticationFacade;
 
+    @Transactional
     public CommunityPicsInsVo insCommunity(CommunityInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
 //        //제목을 입력하지 않는 경우
@@ -59,6 +61,7 @@ public class CommunityService {
         return vo;
     }
 
+    @Transactional
     public CommunityPicsInsVo updCommunity(CommunityUpdDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
         //게시글여부 확인
@@ -142,6 +145,7 @@ public class CommunityService {
         return vo;
     }
 
+    @Transactional
     public ResVo delCommunity(CommunityDelDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
         //게시글 여부 확인
@@ -156,6 +160,7 @@ public class CommunityService {
         mapper.delCommunity(dto);
         return new ResVo(SUCCESS);
     }
+
 
     public ResVo postCommunityComment(CommunityCommentInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
