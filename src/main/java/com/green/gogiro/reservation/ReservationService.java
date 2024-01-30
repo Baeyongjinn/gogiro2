@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -50,6 +52,19 @@ public class ReservationService {
             throw new RestApiException(AuthErrorCode.INVALID_MENU_OR_COUNT);
         } else {
             List<Integer> menuList= butMapper.selButcherMenu(dto.getIbutcher());
+            /*
+            List<Integer> list= menuList.stream().filter(item->{
+                for(PickupMenuDto menu: dto.getMenus()){
+                    if(item==menu.getIbutMenu()){
+                        return true;
+                    }
+                }
+                return false;
+            }).toList();
+            if(list.size()!=dto.getMenus().size()){
+                throw new RestApiException(AuthErrorCode.INVALID_MENU_OR_COUNT);
+            }
+            */
             List<Boolean> check= new ArrayList<>();
             for(PickupMenuDto menu: dto.getMenus()) {
                 for(Integer menuPk:menuList) {
