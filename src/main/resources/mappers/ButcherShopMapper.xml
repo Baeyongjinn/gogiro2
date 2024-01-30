@@ -74,6 +74,19 @@
         AND D.iuser= #{iuser}
         WHERE A.ibutcher = #{ibutcher}
     </select>
+    <select id="selButcherMenu">
+        SELECT
+        ibut_menu
+        FROM t_but_menu
+        WHERE ibutcher = #{ibutcher}
+    </select>
+    <select id="selButcherMenuAndPk">
+        SELECT
+        ibut_menu as ibutMenu,
+        menu
+        FROM t_but_menu
+        WHERE ibutcher = #{ibutcher}
+    </select>
 
     <select id="selMenuDetail">
         SELECT ibutcher,menu,price,pic

@@ -22,8 +22,11 @@ public interface ButcherShopMapper {
 
     int selListCount();
 
-
     ButcherShopDetailVo selButcherShopDetail(ButDto dto);
+
+    List<Integer> selButcherMenu(int ibutcher);
+
+    List<ButcherMenuVo> selButcherMenuAndPk(int ibutcher);
 
     List<DetailMenu> selMenuDetail(int ibutcher);
 

@@ -2,6 +2,7 @@ package com.green.gogiro.reservation;
 
 import static com.green.gogiro.common.Const.*;
 
+import com.green.gogiro.butchershop.ButcherShopMapper;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
@@ -13,12 +14,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ReservationService {
     private final ReservationMapper mapper;
     private final AuthenticationFacade authenticationFacade;
     private final ShopMapper shopMapper;
+    private final ButcherShopMapper butMapper;
 
 
     public ResVo postReservation(ReservationInsDto dto) {
@@ -43,7 +48,21 @@ public class ReservationService {
         }
         if(dto.getMenus() == null||dto.getMenus().isEmpty()) {
             throw new RestApiException(AuthErrorCode.INVALID_MENU_OR_COUNT);
+        } else {
+            List<Integer> menuList= butMapper.selButcherMenu(dto.getIbutcher());
+            List<Boolean> check= new ArrayList<>();
+            for(PickupMenuDto menu: dto.getMenus()) {
+                for(Integer menuPk:menuList) {
+                    if(menu.getIbutMenu()==menuPk) {
+                        check.add(true);
+                    }
+                }
+            }
+            if(check.size()!=dto.getMenus().size()){
+                throw new RestApiException(AuthErrorCode.INVALID_MENU_OR_COUNT);
+            }
         }
+
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.insPickup(dto);
             for (PickupMenuDto m: dto.getMenus()) {

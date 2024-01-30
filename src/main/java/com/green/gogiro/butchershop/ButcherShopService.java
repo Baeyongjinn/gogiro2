@@ -49,6 +49,8 @@ public class ButcherShopService {
             pk.add(vo.getIbutcher());
             butMap.put(vo.getIbutcher(), vo);
             vo.setCount(count);
+            List<ButcherMenuVo> menuList= mapper.selButcherMenuAndPk(vo.getIbutcher());
+            vo.setMenuList(menuList);
         }
         List<ButcherPicsVo> pics = mapper.selButcherShopPicList(pk);
         for (ButcherPicsVo pic : pics) {
