@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class ButcherShopService {
         return list;
     }
 
+    @Transactional
     public ButcherReviewPIcsInsDto postButReview(ButcherReviewDto dto) {
         ButcherEntity entity = mapper.selButcherEntity(dto.getIbutcher());
         dto.setIuser(authenticationFacade.getLoginUserPk());

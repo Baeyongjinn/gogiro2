@@ -10,6 +10,7 @@ import com.green.gogiro.shop.model.*;
 import lombok.RequiredArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class ShopService {
         shopDetailList.setReviews(reviewList);
         return shopDetailList;
     }
-
+    @Transactional
     public ShopReviewPicsInsDto postShopReview(ShopReviewDto dto) {
         ShopEntity entity = mapper.selShopEntity(dto.getIshop());
         dto.setIuser(authenticationFacade.getLoginUserPk());

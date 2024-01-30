@@ -11,6 +11,7 @@ import com.green.gogiro.shop.ShopMapper;
 import com.green.gogiro.shop.model.ShopEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -18,6 +19,7 @@ public class ReservationService {
     private final ReservationMapper mapper;
     private final AuthenticationFacade authenticationFacade;
     private final ShopMapper shopMapper;
+
 
     public ResVo postReservation(ReservationInsDto dto) {
         ShopEntity entity = shopMapper.selShopEntity(dto.getIshop());
@@ -34,6 +36,7 @@ public class ReservationService {
         return new ResVo(dto.getIreser());
     }
 
+    @Transactional
     public ResVo postPickup(PickupInsDto dto) {
         if(dto.getDate() == null || dto.getDate().equals("0000-00-00 00:00:00")){
             throw new RestApiException(AuthErrorCode.REGEXP_DATE_TYPE);
