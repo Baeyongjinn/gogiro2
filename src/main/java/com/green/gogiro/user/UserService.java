@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class UserService {
     private final MyFileUtils myFileUtils;
 
 
+    @Transactional
     public ResVo signup(UserSignupDto dto) {
         if(mapper.checkNickname(dto.getNickname()) != null){
             throw new RestApiException(UserErrorCode.NEED_NICK_NAME_CHECK);
