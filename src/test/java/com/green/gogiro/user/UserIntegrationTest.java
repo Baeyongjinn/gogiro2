@@ -165,16 +165,17 @@ public class UserIntegrationTest extends BaseIntegrationTest {
     @Test
     void checkNickNameTest() throws Exception {
 
-        String nickname = "test";
-        MvcResult mr = mvc.perform(MockMvcRequestBuilders.post("/api/user/signup/" + nickname)
-                        .param("nickname", nickname))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
 
-        String content = mr.getResponse().getContentAsString();
-        ResVo result = om.readValue(content, ResVo.class);
         try {
+            String nickname = "test123123";
+            MvcResult mr = mvc.perform(MockMvcRequestBuilders.post("/api/user/signup/" + nickname)
+                            .param("nickname", nickname))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andReturn();
+
+            String content = mr.getResponse().getContentAsString();
+            ResVo result = om.readValue(content, ResVo.class);
             assertEquals(1, result.getResult());
         } catch (Exception e) {
             System.out.println("중복된 닉네임입니다");
