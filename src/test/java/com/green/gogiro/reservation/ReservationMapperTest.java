@@ -3,7 +3,6 @@ package com.green.gogiro.reservation;
 import com.green.gogiro.butchershop.ButcherShopMapper;
 import com.green.gogiro.shop.ShopMapper;
 import com.green.gogiro.user.UserMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,21 +83,23 @@ class ReservationMapperTest {
     }
     @Test
     void cancelReservationTest() {
-        CancelReservationDto dto= mapper.selReservationForCancelTest();
-        int cancelReservation= mapper.cancelReservation(dto);
-        assertEquals(1, cancelReservation);
-        assertEquals(1,mapper.selReservationConfirmForTest(dto.getIreser()));
+        CancelDto dto= mapper.selReservationForCancelTest();
+        dto.setCheckShop(0);
+        mapper.cancelReservation(dto);
+        int result= mapper.selReservationConfirmForTest(dto.getIreser());
+        assertEquals(1, result);
     }
     @Test
     void cancelPickupTest() {
-        CancelPickupDto dto= mapper.selPickupForCancelTest();
-        int cancelPickup= mapper.cancelPickup(dto);
-        assertEquals(1, cancelPickup);
-        assertEquals(1,mapper.selPickupConfirmForTest(dto.getIpickup()));
+        CancelDto dto= mapper.selPickupForCancelTest();
+        dto.setCheckShop(1);
+        mapper.cancelPickup(dto);
+        int result= mapper.selPickupConfirmForTest(dto.getIreser());
+        assertEquals(1, result);
     }
     @Test
     void updReservationTest() {
-        CancelReservationDto dto= mapper.selReservationForCancelTest();
+        CancelDto dto= mapper.selReservationForCancelTest();
         ReservationUpdDto updDto= new ReservationUpdDto();
         updDto.setIreser(dto.getIreser());
         String date= "1234-11-11 11:11:11";

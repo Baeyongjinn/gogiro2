@@ -2,7 +2,6 @@ package com.green.gogiro.reservation;
 
 import static com.green.gogiro.common.Const.*;
 
-import com.green.gogiro.common.Const;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.exception.AuthErrorCode;
 import com.green.gogiro.exception.RestApiException;
@@ -12,8 +11,7 @@ import com.green.gogiro.shop.ShopMapper;
 import com.green.gogiro.shop.model.ShopEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.regex.Pattern;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -21,6 +19,7 @@ public class ReservationService {
     private final ReservationMapper mapper;
     private final AuthenticationFacade authenticationFacade;
     private final ShopMapper shopMapper;
+
 
     public ResVo postReservation(ReservationInsDto dto) {
         ShopEntity entity = shopMapper.selShopEntity(dto.getIshop());
@@ -37,6 +36,7 @@ public class ReservationService {
         return new ResVo(dto.getIreser());
     }
 
+    @Transactional
     public ResVo postPickup(PickupInsDto dto) {
         if(dto.getDate() == null || dto.getDate().equals("0000-00-00 00:00:00")){
             throw new RestApiException(AuthErrorCode.REGEXP_DATE_TYPE);
@@ -57,15 +57,16 @@ public class ReservationService {
         return new ResVo(dto.getIpickup());
     }
 
-    public ResVo cancelReservation(CancelReservationDto dto) {
-        dto.setIuser(authenticationFacade.getLoginUserPk());
-        mapper.cancelReservation(dto);
-        return new ResVo(SUCCESS);
-    }
 
-    public ResVo cancelPickup(CancelPickupDto dto) {
+    public ResVo cancelReservation(CancelDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        mapper.cancelPickup(dto);
+        Integer checkReservation = mapper.checkReservation(dto);
+        if(checkReservation == null){
+            throw new RestApiException(AuthErrorCode.INVALID_RESERVATION);
+        }
+        if(dto.isReservation()){
+            mapper.cancelReservation(dto);}
+        else{mapper.cancelPickup(dto);}
         return new ResVo(SUCCESS);
     }
 

@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 
 @Tag(name = "예약(픽업)",description = "예약(픽업) API")
@@ -31,14 +30,8 @@ public class ReservationController {
 
     @PatchMapping("/reservation")
     @Operation(summary = "예약 취소",description = "예약 취소 처리")
-    public ResVo cancelReservation(@RequestBody @Valid CancelReservationDto dto){
+    public ResVo cancelReservation(@RequestBody @Valid CancelDto dto){
         return service.cancelReservation(dto);
-    }
-
-    @PatchMapping("/pickup")
-    @Operation(summary = "픽업 취소",description = "픽업 취소 처리")
-    public ResVo cancelPickup(@RequestBody @Valid CancelPickupDto dto){
-        return service.cancelPickup(dto);
     }
 
     @PutMapping("/reservation")

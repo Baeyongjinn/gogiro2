@@ -94,9 +94,10 @@ class ReservationControllerTest {
     @WithMockUser
     void cancelReservationTest() throws Exception{
         ResVo vo= new ResVo(EXPECTED);
-        CancelReservationDto dto= new CancelReservationDto();
-        dto.setIreser(10);
-        given(service.cancelReservation(any())).willReturn(vo);
+        CancelDto dto= new CancelDto();
+        dto.setCheckShop(0);
+        dto.setIreser(1);
+        given(service.cancelReservation(dto)).willReturn(vo);
         MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/reservation")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto))
@@ -104,29 +105,9 @@ class ReservationControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        verify(service).cancelReservation(any());
         String content= mr.getResponse().getContentAsString();
         ResVo result= mapper.readValue(content, ResVo.class);
-        assertEquals(EXPECTED,result.getResult());
-    }
-    @Test
-    @WithMockUser
-    void cancelPickupTest() throws Exception{
-        ResVo vo= new ResVo(EXPECTED);
-        CancelPickupDto dto= new CancelPickupDto();
-        dto.setIpickup(10);
-        given(service.cancelPickup(any())).willReturn(vo);
-        MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/pickup")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(dto))
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
-        verify(service).cancelPickup(any());
-        String content= mr.getResponse().getContentAsString();
-        ResVo result= mapper.readValue(content, ResVo.class);
-        assertEquals(EXPECTED,result.getResult());
+        assertEquals(vo, result);
     }
     @Test
     @WithMockUser

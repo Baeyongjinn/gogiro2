@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,8 +28,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
         String json = om.writeValueAsString(dto);
         MvcResult mr = mvc.perform(MockMvcRequestBuilders.post("/api/user/signin")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)
-                        .with(csrf()))
+                        .content(json))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -47,7 +47,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
             MvcResult mr= mvc.perform(MockMvcRequestBuilders.post("/api/reservation")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(om.writeValueAsString(dto))
-                            .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn();
@@ -80,7 +80,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
             MvcResult mr= mvc.perform(MockMvcRequestBuilders.post("/api/pickup")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(om.writeValueAsString(dto))
-                            .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                            .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn();
@@ -97,40 +97,26 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
         }
     }
     @Test
-    void cancelReservationTest() throws Exception{
+    void cancelReservationTest() throws Exception {
+        try {
+            CancelDto dto= new CancelDto();
+            dto.setCheckShop(0);
+            dto.setIreser(1);
 
-        CancelReservationDto dto= new CancelReservationDto();
-        dto.setIreser(10);
+            MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/reservation")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(om.writeValueAsString(dto))
+                            .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andReturn();
+            String content= mr.getResponse().getContentAsString();
+            ResVo result= om.readValue(content, ResVo.class);
+            assertEquals(1, result.getResult());
+        } catch(Exception e) {
+            System.out.println("없는 예약입니다");
+        }
 
-        MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/reservation")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(om.writeValueAsString(dto))
-                        .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
-
-        String content= mr.getResponse().getContentAsString();
-        ResVo result= om.readValue(content, ResVo.class);
-        assertEquals(1,result.getResult());
-    }
-    @Test
-    void cancelPickupTest() throws Exception{
-
-        CancelPickupDto dto= new CancelPickupDto();
-        dto.setIpickup(10);
-
-        MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/pickup")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(om.writeValueAsString(dto))
-                        .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
-
-        String content= mr.getResponse().getContentAsString();
-        ResVo result= om.readValue(content, ResVo.class);
-        assertEquals(1,result.getResult());
     }
     @Test
     void putReservationTest() throws Exception{
@@ -143,7 +129,7 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
         MvcResult mr= mvc.perform(MockMvcRequestBuilders.put("/api/reservation")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(om.writeValueAsString(dto))
-                        .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();

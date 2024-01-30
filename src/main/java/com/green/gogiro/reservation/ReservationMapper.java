@@ -13,9 +13,9 @@ public interface ReservationMapper {
 
     int insPickupMenu(PickupMenuDto dto);
 
-    int cancelReservation(CancelReservationDto dto);
+    int cancelReservation(CancelDto dto);
 
-    int cancelPickup(CancelPickupDto dto);
+    int cancelPickup(CancelDto dto);
 
     int updReservation(ReservationUpdDto dto);
 
@@ -23,11 +23,13 @@ public interface ReservationMapper {
 
     int selPickupMenusForTest(int ipickup);
 
-    CancelReservationDto selReservationForCancelTest();
+    CancelDto selReservationForCancelTest();
+
+    Integer checkReservation(CancelDto dto);
 
     int selReservationConfirmForTest(int ireser);
 
-    CancelPickupDto selPickupForCancelTest();
+    CancelDto selPickupForCancelTest();
 
     int selPickupConfirmForTest(int ipickup);
 }

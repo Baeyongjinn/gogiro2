@@ -38,11 +38,11 @@ public class ShopController {
 
     @PostMapping
     @Operation(summary = "후기 등록",description = "후기 등록 처리")
-    public ShopReviewPicsInsDto postShopReview(@Valid @RequestPart(required = false) List<MultipartFile> pics, @Valid @RequestPart ShopReviewDto dto) {
-        dto.setPics(pics);
-        if (dto.getPics() == null || dto.getPics().isEmpty()) {
+    public ShopReviewPicsInsDto postShopReview(@Valid @RequestPart List<MultipartFile> pics, @Valid @RequestPart ShopReviewDto dto) {
+        if (pics == null || pics.isEmpty()) {
             throw new RestApiException(MUST_PHOTO);
         }
+        dto.setPics(pics);
         return service.postShopReview(dto);
     }
 
