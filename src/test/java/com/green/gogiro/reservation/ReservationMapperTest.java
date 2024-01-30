@@ -81,7 +81,22 @@ class ReservationMapperTest {
         }
         assertEquals(menus.size(), mapper.selPickupMenusForTest(dto.getIpickup()));
     }
-
+    @Test
+    void cancelReservationTest() {
+        CancelDto dto= mapper.selReservationForCancelTest();
+        dto.setCheckShop(0);
+        mapper.cancelReservation(dto);
+        int result= mapper.selReservationConfirmForTest(dto.getIreser());
+        assertEquals(1, result);
+    }
+    @Test
+    void cancelPickupTest() {
+        CancelDto dto= mapper.selPickupForCancelTest();
+        dto.setCheckShop(1);
+        mapper.cancelPickup(dto);
+        int result= mapper.selPickupConfirmForTest(dto.getIreser());
+        assertEquals(1, result);
+    }
     @Test
     void updReservationTest() {
         CancelDto dto= mapper.selReservationForCancelTest();

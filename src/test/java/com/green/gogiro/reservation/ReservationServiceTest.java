@@ -66,7 +66,19 @@ class ReservationServiceTest {
 
     }
 
-
+    @Test
+    void cancelReservationTest() throws Exception{
+        CancelDto dto1= new CancelDto();
+        dto1.setCheckShop(0);
+        CancelDto dto2= new CancelDto();
+        dto2.setCheckShop(1);
+        ResVo vo1= service.cancelReservation(dto1);
+        ResVo vo2= service.cancelReservation(dto2);
+        verify(mapper).cancelReservation(dto1);
+        verify(mapper).cancelPickup(dto2);
+        assertEquals(1,vo1.getResult());
+        assertEquals(1,vo2.getResult());
+    }
 
     @Test
     void putReservationTest() throws Exception {

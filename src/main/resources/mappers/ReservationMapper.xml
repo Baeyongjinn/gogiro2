@@ -80,7 +80,7 @@
             iuser
         FROM t_reservation
         WHERE confirm= 0
-        LIMIT 0, 1
+        LIMIT 1
     </select>
     <select id="selReservationConfirmForTest">
         SELECT
@@ -90,16 +90,16 @@
     </select>
     <select id="selPickupForCancelTest">
         SELECT
-            ipickup,
+            ipickup as ireser,
             iuser
         FROM t_pickup
         WHERE confirm= 0
-        LIMIT 0, 1
+        LIMIT 1
     </select>
     <select id="selPickupConfirmForTest">
         SELECT
             confirm
         FROM t_pickup
-        where ipickup= #{ipickup}
+        where ipickup= #{ireser}
     </select>
 </mapper>
