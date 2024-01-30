@@ -29,7 +29,7 @@ public interface ReservationMapper {
 
     int selReservationConfirmForTest(int ireser);
 
-    CancelPickupDto selPickupForCancelTest();
+    CancelDto selPickupForCancelTest();
 
     int selPickupConfirmForTest(int ipickup);
 }

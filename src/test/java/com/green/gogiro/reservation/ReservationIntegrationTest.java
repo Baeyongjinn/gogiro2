@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -95,7 +96,28 @@ public class ReservationIntegrationTest extends BaseIntegrationTest {
             System.out.println("내부 서버 에러");
         }
     }
+    @Test
+    void cancelReservationTest() throws Exception {
+        try {
+            CancelDto dto= new CancelDto();
+            dto.setCheckShop(0);
+            dto.setIreser(1);
 
+            MvcResult mr= mvc.perform(MockMvcRequestBuilders.patch("/api/reservation")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(om.writeValueAsString(dto))
+                            .with(csrf()).header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken()))
+                    .andExpect(status().isOk())
+                    .andDo(print())
+                    .andReturn();
+            String content= mr.getResponse().getContentAsString();
+            ResVo result= om.readValue(content, ResVo.class);
+            assertEquals(1, result.getResult());
+        } catch(Exception e) {
+            System.out.println("없는 예약입니다");
+        }
+
+    }
     @Test
     void putReservationTest() throws Exception{
 
