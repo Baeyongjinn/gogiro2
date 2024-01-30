@@ -57,9 +57,15 @@ public class ReservationService {
         return new ResVo(dto.getIpickup());
     }
 
+
     public ResVo cancelReservation(CancelDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        if(dto.isReservation()){mapper.cancelReservation(dto);}
+        Integer checkReservation = mapper.checkReservation(dto);
+        if(checkReservation == null){
+            throw new RestApiException(AuthErrorCode.INVALID_RESERVATION);
+        }
+        if(dto.isReservation()){
+            mapper.cancelReservation(dto);}
         else{mapper.cancelPickup(dto);}
         return new ResVo(SUCCESS);
     }
