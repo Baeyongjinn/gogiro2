@@ -82,7 +82,7 @@
         b.name,
         a.date,
         a.request,
-        if(a.confirm = 0,if(TIMESTAMPDIFF(minute,a.`date`,NOW()) >= 0,2,0),a.confirm) AS confirm,
+        if(TIMESTAMPDIFF(minute,a.`date`,NOW()) >= 0,2,a.confirm) AS confirm,
         a.created_at AS createdAt,
         a.head_count AS headCount,
         if(c.iuser IS NULL, 0 , 1) AS isBook,
@@ -94,17 +94,17 @@
         ON a.ishop= c.ishop AND a.iuser= c.iuser
         LEFT JOIN t_shop_pic d
         ON a.ishop= d.ishop
-        WHERE a.iuser = #{iuser}
+        WHERE a.iuser = #{iuser} AND a.confirm = 0
         GROUP BY a.ireser
         UNION
         SELECT
-        distinct 1 AS checkShop,
+        1 AS checkShop,
         e.ipickup AS ireser,
         e.ibutcher AS ishop,
         b.name,
         e.date,
         e.request,
-        if(e.confirm = 0,if(TIMESTAMPDIFF(minute,e.`date`,NOW()) >= 0 , 2, 0),e.confirm) AS confirm,
+        if(TIMESTAMPDIFF(minute,e.`date`,NOW()) >= 0 ,2 ,e.confirm) AS confirm,
         e.created_at AS createdAt,
         1 AS headCount,
         if(c.iuser IS NULL, 0 , 1) AS isBook,
@@ -116,7 +116,7 @@
         ON e.ibutcher= c.ibutcher AND e.iuser= c.iuser
         LEFT JOIN t_butcher_pic d
         ON e.ibutcher= d.ibutcher
-        WHERE e.iuser = #{iuser}
+        WHERE e.iuser = #{iuser} AND e.confirm = 0
         GROUP BY e.ipickup
         ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
@@ -138,47 +138,41 @@
     <select id="selUserReview">
         SELECT
         0 AS checkShop,
-        a.ireser,
+        a.ireview,
         a.ishop,
         b.name,
-        a.date,
-        a.request,
-        if(TIMESTAMPDIFF(minute,a.`date`,NOW()) >= 0,2,a.confirm) AS confirm,
+        a.review,
+        a.star,
         a.created_at AS createdAt,
-        a.head_count AS headCount,
-        if(c.iuser IS NULL, 0 , 1) AS isBook,
+        if(c.iuser IS NULL, 0, 1) AS isBook,
         d.pic
-        FROM t_reservation a
+        FROM t_shop_review a
         JOIN t_shop b
         ON a.ishop= b.ishop
         LEFT JOIN t_shop_bookmark c
-        ON a.ishop= c.ishop AND a.iuser= c.iuser
+        ON a.ishop= c.ishop
         LEFT JOIN t_shop_pic d
         ON a.ishop= d.ishop
-        WHERE a.iuser = #{iuser} AND a.confirm = 0
-        GROUP BY a.ireser
+        WHERE a.iuser = #{iuser}
         UNION
         SELECT
-        distinct 1 AS checkShop,
-        e.ipickup AS ireser,
-        e.ibutcher AS ishop,
+        1 AS checkShop,
+        a.ireview,
+        a.ibutcher AS ishop,
         b.name,
-        e.date,
-        e.request,
-        if(TIMESTAMPDIFF(minute,e.`date`,NOW()) >= 0 ,2 ,e.confirm) AS confirm,
-        e.created_at AS createdAt,
-        1 AS headCount,
-        if(c.iuser IS NULL, 0 , 1) AS isBook,
+        a.review,
+        a.star,
+        a.created_at AS createdAt,
+        if(c.iuser IS NULL, 0, 1) AS isBook,
         d.pic
-        FROM t_pickup e
+        FROM t_but_review a
         JOIN t_butcher_shop b
-        ON e.ibutcher= b.ibutcher
+        ON a.ibutcher= b.ibutcher
         LEFT JOIN t_but_bookmark c
-        ON e.ibutcher= c.ibutcher AND e.iuser= c.iuser
+        ON a.ibutcher= c.ibutcher
         LEFT JOIN t_butcher_pic d
-        ON e.ibutcher= d.ibutcher
-        WHERE e.iuser = #{iuser} AND e.confirm = 0
-        GROUP BY e.ipickup
+        ON a.ibutcher= d.ibutcher
+        WHERE a.iuser = #{iuser}
         ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
