@@ -45,15 +45,27 @@ class CommunityMapperTest {
         //insCommunityPics 확인
         assertEquals(pics.size(), mapper.insCommunityPics(dto));
 
-        //beforeTitleNextTitle 테스트
+        //beforeAfterTitle 테스트
+        CommunitySelBeAfDto result = mapper.beforeTitle(dto.getIboard());
+        CommunitySelBeAfDto result2 = mapper.afterTitle(result.getIboard());
+        assertEquals(result2.getTitle(), dto.getTitle());
 
-
+        //selByCommunityPics 테스트
         List<CommunityBySelPicsDto> list = mapper.selByCommunityPics(dto.getIboard());
         List<Integer> i = new ArrayList<>();
         for(CommunityBySelPicsDto z : list){
             i.add(z.getIcommuPics());
         }
+
+        //selCommunityPics 테스트
         List<CommunityBySelPicsDto> list2 = mapper.selCommunityPics(i);
+        assertEquals(list.size(), pics.size());
+        assertEquals(list2.size(), pics.size());
+        for(int j = 0; j < pics.size(); j++) {
+            assertEquals(pics.get(j), list.get(j).getPic());
+            assertEquals(pics.get(j), list2.get(j).getPic());
+        }
+
     }
 
     @Test
