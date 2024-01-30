@@ -25,7 +25,7 @@ public class ButcherReviewDto {
     private int star;
     @Schema(title = "리뷰")
     @NotBlank
-    @Size(min = 1,max = 50)
+    @Size(min = 1, max = 50, message = "50자 초과 작성 할 수 없습니다.")
     private String review;
     @Schema(title = "리뷰 사진",description = "최대 5장")
     @JsonIgnore
