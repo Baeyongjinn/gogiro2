@@ -20,7 +20,7 @@ public interface CommunityMapper {
 
     int delCommunityPic(List<Integer> icommuPics);
 
-    int selCommunityCount();
+    int selCommunityCount(String search);
 
    // List<CommunitySelBeAfDto> beforeTitleNextTitle(int iboard);
 

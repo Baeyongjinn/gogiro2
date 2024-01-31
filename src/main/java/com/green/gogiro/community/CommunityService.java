@@ -116,13 +116,10 @@ public class CommunityService {
         }
         List<Integer> iboard = new ArrayList<>();
         Map<Integer, CommunitySelVo> boardMap = new HashMap<>();
-        int count = mapper.selCommunityCount();
+        int count = mapper.selCommunityCount(dto.getSearch());
         for (CommunitySelVo vo : list) {
             iboard.add(vo.getIboard());
             boardMap.put(vo.getIboard(), vo);
-        if(!dto.getSearch().isEmpty()){
-            vo.setCount(list.size());
-        }else
             vo.setCount(count);
         }
 

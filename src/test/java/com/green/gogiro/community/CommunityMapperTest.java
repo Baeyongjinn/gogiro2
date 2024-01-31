@@ -99,11 +99,11 @@ class CommunityMapperTest {
         assertEquals(0, selicommuPics2.size());
     }
 
-    @Test
-    void selCommunityCount() {
-        int result = mapper.selCommunityCount();
-
-    }
+//    @Test
+//    void selCommunityCount() {
+//        int result = mapper.selCommunityCount();
+//
+//    }
 
 
     @Test
