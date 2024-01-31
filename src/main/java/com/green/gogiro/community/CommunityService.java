@@ -66,15 +66,15 @@ public class CommunityService {
         Integer check = mapper.checkCommunity(dto.getIboard());
         List<CommunityBySelPicsDto> bDto = mapper.selByCommunityPics(dto.getIboard());
         //게시글여부 확인
-        int e = bDto != null ? bDto.size() : 0;
-        int b = dto.getFiles() != null ? dto.getFiles().size() : 0;
-        int c = dto.getIcommuPics() != null ? dto.getIcommuPics().size() : 0;
+        int boardSize = bDto != null ? bDto.size() : 0;
+        int fileSize = dto.getFiles() != null ? dto.getFiles().size() : 0;
+        int delSize = dto.getIcommuPics() != null ? dto.getIcommuPics().size() : 0;
 //        int i = mapper.selByCommunityPics(dto.getIboard())!=null?mapper.selByCommunityPics(dto.getIboard()).size(): dto.getFiles() !=null?dto.getFiles().size(): 0
 //                - dto.getIcommuPics().size();
-        int i = e + b - c;
+        int totalSize = boardSize + fileSize - delSize;
         if (check == null) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
-        } else if (i > 5) {
+        } else if (totalSize > 5) {
             throw new RestApiException(SIZE_PHOTO);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
