@@ -56,6 +56,6 @@ public class ReservationController {
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
         dto.setPics(pics);
-        return null;
+        return service.postReview(dto);
     }
 }
