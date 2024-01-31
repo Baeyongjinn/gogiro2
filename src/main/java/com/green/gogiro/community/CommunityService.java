@@ -66,12 +66,9 @@ public class CommunityService {
         Integer check = mapper.checkCommunity(dto.getIboard());
         List<CommunityBySelPicsDto> bDto = mapper.selByCommunityPics(dto.getIboard());
         //게시글여부 확인
-        int e = 0;
-        int b = 0;
-        int c = 0;
-        if (bDto != null) { e = bDto.size(); }
-        if (dto.getFiles() != null) { b = dto.getFiles().size(); }
-        if(dto.getIcommuPics() != null){ c = dto.getIcommuPics().size(); }
+        int e = bDto != null ? bDto.size() : 0;
+        int b = dto.getFiles() != null ? dto.getFiles().size() : 0;
+        int c = dto.getIcommuPics() != null ? dto.getIcommuPics().size() : 0;
 //        int i = mapper.selByCommunityPics(dto.getIboard())!=null?mapper.selByCommunityPics(dto.getIboard()).size(): dto.getFiles() !=null?dto.getFiles().size(): 0
 //                - dto.getIcommuPics().size();
         int i = e + b - c;
