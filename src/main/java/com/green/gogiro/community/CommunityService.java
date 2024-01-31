@@ -78,7 +78,7 @@ public class CommunityService {
         if (check == null) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         } else if (i > 5) {
-            throw new RestApiException(MUST_PHOTO);
+            throw new RestApiException(SIZE_PHOTO);
         }
         dto.setIuser(authenticationFacade.getLoginUserPk());
         mapper.updCommunity(dto);
