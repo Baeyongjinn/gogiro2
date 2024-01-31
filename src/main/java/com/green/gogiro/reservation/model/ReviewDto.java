@@ -1,4 +1,4 @@
-package com.green.gogiro.butchershop.model;
+package com.green.gogiro.reservation.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,13 +12,21 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Data
-public class ButcherReviewDto {
-    @JsonIgnore
-    private int ireview;
+public class ReviewDto {
     @JsonIgnore
     private int iuser;
-    @Schema(title = "정육점pk")
-    private int ibutcher;
+    @JsonIgnore
+    private int ireview;
+
+    @Schema(title = "고기집 0,정육점 1")
+    @Min(value = 0)
+    @Max(value = 1)
+    private int checkShop;
+    @Schema(title = "예약pk")
+    @Min(value = 1)
+    private int ireser;
+    @Schema(title = "")
+    private int ishop;
     @Schema(title = "별점")
     @Min(value = 1)
     @Max(value = 5,message = "별점은 최대 5점 입니다")

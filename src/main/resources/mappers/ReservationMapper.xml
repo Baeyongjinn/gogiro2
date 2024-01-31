@@ -66,6 +66,32 @@
         </choose>
     </select>
 
+    <insert id="insReview" useGeneratedKeys="true" keyProperty="ireview">
+        <choose>
+            <when test="checkShop == 0">
+                INSERT INTO
+                t_shop_review
+                SET
+                ishop = #{ishop},
+                iuser = #{iuser},
+                star = #{star},
+                <if test="review != null != ' '">
+                    , review = #{review}
+                </if>
+            </when>
+            <when test="checkShop == 1">
+                INSERT INTO t_but_review
+                SET iuser = #{iuser}
+                , ibutcher = #{ibutcher}
+                , star = #{star}
+                <if test="review != null != ' '">
+                    , review = #{review}
+                </if>
+            </when>
+        </choose>
+
+    </insert>
+
     <update id="updReservation">
         <choose>
             <when test="checkShop == 0">
@@ -130,4 +156,41 @@
         FROM t_pickup
         where ipickup= #{ireser}
     </select>
+
+    <select id="checkReservationController">
+        <choose>
+            <when test="checkShop == 0">
+        SELECT iuser
+        FROM t_reservation
+        WHERE ireser = #{ireser}
+            </when>
+            <when test="checkShop == 1">
+                SELECT iuser
+                FROM t_pickup
+                WHERE ipickup = #{ireser}
+            </when>
+        </choose>
+    </select>
+
+    <insert id="insReviewPics">
+        <choose>
+            <when test="checkShop == 0">
+                INSERT INTO
+                t_shop_review_pic
+                (ireview, pic)
+                VALUES
+                <foreach collection="pics" item="pic" open="(" close=")" separator="),( ">
+                    #{ireview}, #{pic}
+                </foreach>
+            </when>
+            <when test="checkShop == 1">
+                INSERT INTO t_but_review_pic
+                (ireview,pic)
+                VALUES
+                <foreach collection="pics" item="pic" open="(" close=")" separator="),( ">
+                    #{ireview}, #{pic}
+                </foreach>
+            </when>
+        </choose>
+    </insert>
 </mapper>

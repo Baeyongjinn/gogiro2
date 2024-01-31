@@ -1,14 +1,10 @@
 package com.green.gogiro.shop;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.gogiro.MockMvcConfig;
 import com.green.gogiro.common.ResVo;
 import com.green.gogiro.security.JwtTokenProvider;
 import com.green.gogiro.shop.model.ShopBookmarkDto;
-import com.green.gogiro.shop.model.ShopReviewDto;
-import com.green.gogiro.shop.model.ShopReviewPicsInsDto;
-import com.green.gogiro.shop.model.ShopSelVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +19,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -73,37 +68,7 @@ public class ShopControllerTest {
 //        }
 
 
-    @Test
-    @WithMockUser
-    void postShopReview() throws Exception{
-        ShopReviewDto dto = new ShopReviewDto();
-        dto.setIshop(1);
-        dto.setReview("리뷰");
-        dto.setStar(1);
-        MockMultipartFile file1 = new MockMultipartFile("pics", "a.jpg", "multipart/form-data", "pics".getBytes(StandardCharsets.UTF_8));
-        MockMultipartFile file2 = new MockMultipartFile("pics", "a.jpg", "multipart/form-data", "pics".getBytes(StandardCharsets.UTF_8));
-        MockMultipartFile request = new MockMultipartFile("dto", null, "application/json", mapper.writeValueAsString(dto).getBytes(StandardCharsets.UTF_8));
-        ShopReviewPicsInsDto dto1 = new ShopReviewPicsInsDto();
-        dto1.setIreview(1);
-        List<String> pics = new ArrayList<>();
-        pics.add("pic.jpg");
-        dto1.setPics(pics);
-        given(service.postShopReview(any())).willReturn(dto1);
-        MvcResult mr= mvc.perform(MockMvcRequestBuilders.multipart(HttpMethod.POST,"/api/shop")
-                                                        .file(file1).file(file2)
-                                                        .file(request)
-                                                        .accept(MediaType.APPLICATION_JSON)
-                                                        .contentType(MediaType.MULTIPART_FORM_DATA)
-                                                        .with(csrf()))
-                         .andExpect(status().isOk())
-                         .andDo(print())
-                         .andReturn();
-        verify(service).postShopReview(any());
-        String content= mr.getResponse().getContentAsString();
-        ShopReviewPicsInsDto result= mapper.readValue(content,ShopReviewPicsInsDto.class);
-        assertEquals(dto1.getIreview(), result.getIreview());
-        assertEquals(dto1.getPics().get(0), result.getPics().get(0));
-    }
+
 
     @Test
     @WithMockUser

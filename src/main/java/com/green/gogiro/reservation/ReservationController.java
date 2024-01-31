@@ -1,12 +1,19 @@
 package com.green.gogiro.reservation;
 
+import com.green.gogiro.butchershop.model.ReviewPicVo;
+import com.green.gogiro.common.Const;
 import com.green.gogiro.common.ResVo;
+import com.green.gogiro.exception.AuthErrorCode;
+import com.green.gogiro.exception.RestApiException;
 import com.green.gogiro.reservation.model.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @Tag(name = "예약(픽업)",description = "예약(픽업) API")
@@ -38,5 +45,17 @@ public class ReservationController {
     @Operation(summary = "예약 변경",description = "예약 변경 처리")
     public ResVo putReservation(@RequestBody @Valid ReservationUpdDto dto) {
         return service.putReservation(dto);
+    }
+
+    @PostMapping("/review")
+    @Operation(summary = "후기 등록",description = "후기 등록 처리")
+    public ReviewPicsInsVo postReview(@Valid @RequestPart(required = false) List<MultipartFile> pics, @Valid @RequestPart ReviewDto dto){
+        if(dto.getPics() == null || dto.getPics().isEmpty()){
+            throw new RestApiException(AuthErrorCode.MUST_PHOTO);
+        } else if(dto.getPics().size() > Const.PIC_MAX){
+            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
+        }
+        dto.setPics(pics);
+        return null;
     }
 }

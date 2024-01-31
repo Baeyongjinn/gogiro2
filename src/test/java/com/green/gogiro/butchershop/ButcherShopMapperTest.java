@@ -48,20 +48,6 @@ class ButcherShopMapperTest {
         assertEquals(count,pics.size());
     }
 
-    @Test
-    void insButcherReviewTest() throws Exception {
-        List<String> pics= new ArrayList<>();
-        pics.add("testPic.jpg");
-        pics.add("testPic2.jpg");
-        ButcherReviewDto dto = new ButcherReviewDto();
-        dto.setIuser(5);
-        dto.setStar(5);
-        dto.setReview("굿");
-        dto.setIbutcher(1);
-        mapper.insButcherReview(dto);
-        int affectedRows = mapper.insButcherReview(dto);
-        assertEquals(1, affectedRows);
-    }
 
 
     @Test

@@ -103,15 +103,7 @@
         review = #{review}
     </insert>
 
-    <insert id="insShopReviewPic">
-        INSERT INTO
-        t_shop_review_pic
-        (ireview, pic)
-        VALUES
-        <foreach collection="pics" item="pic" open="(" close=")" separator="),( ">
-            #{ireview}, #{pic}
-        </foreach>
-    </insert>
+
 
     <select id="selShopBookmark">
         SELECT

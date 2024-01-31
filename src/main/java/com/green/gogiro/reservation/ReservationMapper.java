@@ -27,6 +27,12 @@ public interface ReservationMapper {
 
     Integer checkReservation(CancelDto dto);
 
+    Integer checkReservationController(ReviewDto dto);
+
+    int insReview(ReviewDto dto);
+
+    int insReviewPics(ReviewDto dto);
+
     int selReservationConfirmForTest(int ireser);
 
     CancelDto selPickupForCancelTest();

@@ -59,38 +59,7 @@ public class ButcherShopService {
         return list;
     }
 
-    @Transactional
-    public ButcherReviewPIcsInsDto postButReview(ButcherReviewDto dto) {
-        ButcherEntity entity = mapper.selButcherEntity(dto.getIbutcher());
-        dto.setIuser(authenticationFacade.getLoginUserPk());
 
-        //없는 가게일 경우
-        if (entity == null) {
-            throw new RestApiException(AuthErrorCode.VALID_SHOP);
-        }
-        //입력한 가게와 동일한 가게인지 확인
-        if (entity.getIbutcher() != dto.getIbutcher()) {
-            throw new RestApiException(AuthErrorCode.CHECK_SHOP);
-        }
-        //리뷰가 공백인지 아닌지 체크
-        if(dto.getReview() == null || Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR,dto.getReview())){
-            throw new RestApiException(AuthErrorCode.NOT_CONTENT);
-        }
-        //사진 크기가 5장 이하 인지 체크
-        if(dto.getPics().size() > Const.PIC_MAX){
-            throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
-        }
-        mapper.insButcherReview(dto);
-        String target = "/butcher/"+dto.getIbutcher()+"/review/" + dto.getIreview();
-        ButcherReviewPIcsInsDto pDto = new ButcherReviewPIcsInsDto();
-        pDto.setIreview(dto.getIreview());
-        for(MultipartFile file : dto.getPics()){
-            String saveFileNm = myFileUtils.transferTo(file,target);
-            pDto.getPics().add(saveFileNm);
-        }
-        mapper.insButcherReviewPic(pDto);
-        return pDto;
-    }
 
     public ButcherShopDetailVo getShopDetail(int ibutcher) {
         if(mapper.selButcherEntity(ibutcher) == null) {

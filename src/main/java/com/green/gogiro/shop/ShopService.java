@@ -101,41 +101,7 @@ public class ShopService {
         shopDetailList.setReviews(reviewList);
         return shopDetailList;
     }
-    @Transactional
-    public ShopReviewPicsInsDto postShopReview(ShopReviewDto dto) {
-        ShopEntity entity = mapper.selShopEntity(dto.getIshop());
-        dto.setIuser(authenticationFacade.getLoginUserPk());
 
-        if(entity == null) {
-            throw new RestApiException(VALID_SHOP);
-        }
-        if (entity.getIshop() != dto.getIshop()) {
-            throw new RestApiException(CHECK_SHOP);
-        }
-
-        mapper.insShopReview(dto);
-
-//        if (Pattern.matches(Const.REGEXP_PATTERN_SPACE_CHAR, dto.getReview())){
-////            throw new RestApiException(NOT_CONTENT);
-////        }
-
-        String target = "/shop/"+dto.getIshop()+"/review/" + dto.getIreview() + "/";
-        ShopReviewPicsInsDto pDto = new ShopReviewPicsInsDto();
-
-        pDto.setIreview(dto.getIreview());
-
-        for (MultipartFile file : dto.getPics()) {
-            String saveFileNm = myFileUtils.transferTo(file,target);
-            pDto.getPics().add(saveFileNm);
-        }
-
-        mapper.insShopReviewPic(pDto);
-
-        if (dto.getPics().size() > Const.PIC_MAX) {
-            throw new RestApiException(SIZE_PHOTO);
-        }
-        return pDto;
-    }
 
     public ResVo toggleShopBookmark(ShopBookmarkDto dto) {
         ShopEntity entity = mapper.selShopEntity(dto.getIshop());

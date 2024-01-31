@@ -36,15 +36,7 @@ public class ShopController {
         return service.getShopDetail(ishop);
     }
 
-    @PostMapping
-    @Operation(summary = "후기 등록",description = "후기 등록 처리")
-    public ShopReviewPicsInsDto postShopReview(@Valid @RequestPart List<MultipartFile> pics, @Valid @RequestPart ShopReviewDto dto) {
-        if (pics == null || pics.isEmpty()) {
-            throw new RestApiException(MUST_PHOTO);
-        }
-        dto.setPics(pics);
-        return service.postShopReview(dto);
-    }
+
 
     @PostMapping("/bookmark")
     @Operation(summary = "고기집 북마크 ON/OFF",description = "고기집 북마크 토글 처리")

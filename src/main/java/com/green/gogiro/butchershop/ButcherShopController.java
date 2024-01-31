@@ -32,15 +32,7 @@ public class ButcherShopController {
         return service.getButList(dto);
     }
 
-    @PostMapping
-    @Operation(summary = "후기 등록",description = "후기 등록 처리")
-    public ButcherReviewPIcsInsDto postButReview(@Valid @RequestPart(required = false) List<MultipartFile> pics, @Valid @RequestPart ButcherReviewDto dto){
-        dto.setPics(pics);
-        if(dto.getPics() == null || dto.getPics().isEmpty()){
-            throw new RestApiException(AuthErrorCode.MUST_PHOTO);
-        }
-        return service.postButReview(dto);
-    }
+
 
     @GetMapping("/{ibutcher}")
     @Operation(summary = "정육점 상세 보기",description = "정육점 상세 보기 처리")

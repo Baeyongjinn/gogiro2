@@ -52,14 +52,6 @@
         </if>
     </insert>
 
-    <insert id="insButcherReviewPic">
-        INSERT INTO t_but_review_pic
-        (ireview,pic)
-        VALUES
-        <foreach collection="pics" item="pic" open="(" close=")" separator="),( ">
-            #{ireview}, #{pic}
-        </foreach>
-    </insert>
 
     <select id="selButcherShopDetail">
         SELECT A.ibutcher, A.NAME, A.location, A.open, A.tel, ROUND(ifnull(AVG(C.star),0)) AS star,A.`x`, A.`y`

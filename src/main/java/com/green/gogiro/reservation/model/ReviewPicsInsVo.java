@@ -1,4 +1,4 @@
-package com.green.gogiro.shop.model;
+package com.green.gogiro.reservation.model;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ShopReviewPicsInsDto {
+public class ReviewPicsInsVo {
     private int ireview;
     private List<String> pics = new ArrayList<>();
 }

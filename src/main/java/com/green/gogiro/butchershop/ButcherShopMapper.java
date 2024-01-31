@@ -14,9 +14,6 @@ public interface ButcherShopMapper {
 
     List<String> selButcherShopPics(int ibutcher);
 
-    int insButcherReview(ButcherReviewDto dto);
-
-    int insButcherReviewPic(ButcherReviewPIcsInsDto dto);
 
     int selReviewCount(int ibutcher);
 
