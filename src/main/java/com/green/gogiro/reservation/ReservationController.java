@@ -50,9 +50,9 @@ public class ReservationController {
     @PostMapping("/review")
     @Operation(summary = "후기 등록",description = "후기 등록 처리")
     public ReviewPicsInsVo postReview(@Valid @RequestPart(required = false) List<MultipartFile> pics, @Valid @RequestPart ReviewDto dto){
-        if(dto.getPics() == null || dto.getPics().isEmpty()){
+        if(pics == null || pics.isEmpty()){
             throw new RestApiException(AuthErrorCode.MUST_PHOTO);
-        } else if(dto.getPics().size() > Const.PIC_MAX){
+        } if(pics.size() > Const.PIC_MAX){
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
         dto.setPics(pics);
