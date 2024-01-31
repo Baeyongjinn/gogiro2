@@ -121,9 +121,10 @@ public class ReservationService {
         mapper.updReservation(dto);
         return new ResVo(SUCCESS);
     }
-
+    @Transactional
     public ReviewPicsInsVo postReview(ReviewDto dto) {
         ReviewPicsInsVo vo = new ReviewPicsInsVo();
+        vo.setCheckShop(dto.getCheckShop());
         dto.setIuser(authenticationFacade.getLoginUserPk());
 
         Integer check = mapper.checkReservationController(dto);
@@ -139,7 +140,6 @@ public class ReservationService {
                     String saveFileNm = myFileUtils.transferTo(file, target);
                     vo.getPics().add(saveFileNm);
                 }
-
                 mapper.insReviewPics(vo);
             }
             return vo;
