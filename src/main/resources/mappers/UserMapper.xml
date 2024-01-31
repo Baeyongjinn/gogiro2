@@ -106,7 +106,7 @@
         e.request,
         if(TIMESTAMPDIFF(minute,e.`date`,NOW()) >= 0 ,2 ,e.confirm) AS confirm,
         e.created_at AS createdAt,
-        1 AS headCount,
+        0 AS headCount,
         if(c.iuser IS NULL, 0 , 1) AS isBook,
         d.pic
         FROM t_pickup e

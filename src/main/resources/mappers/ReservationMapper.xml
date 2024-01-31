@@ -67,12 +67,23 @@
     </select>
 
     <update id="updReservation">
+        <choose>
+            <when test="checkShop == 0">
         UPDATE t_reservation
         SET
         date = #{date},
         request = #{request},
         head_count = #{headCount}
         WHERE ireser = #{ireser}
+            </when>
+            <when test="checkShop == 1">
+                UPDATE t_pickup
+                SET
+                date = #{date}
+                ,request = #{request}
+                WHERE ipickup = #{ireser}
+            </when>
+        </choose>
     </update>
 
     <select id="selReservationForTest">

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.green.gogiro.common.Const;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -13,6 +14,11 @@ import lombok.Data;
 public class ReservationUpdDto {
     @JsonIgnore
     private int iuser;
+
+    @Schema(title = "가게 구분 0:고기 1:정육")
+    @Min(value = 0)
+    @Max(value = 1)
+    private int checkShop;
     @Schema(title = "예약pk")
     @Min(value = 1)
     private int ireser;
