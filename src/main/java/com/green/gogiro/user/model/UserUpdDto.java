@@ -27,6 +27,8 @@ public class UserUpdDto {
     @Schema(title = "주소")
     @NotBlank
     private String address;
+
+    @JsonIgnore
     @Schema(title = "프로필 사진")
     @Nullable
     private String pic;
