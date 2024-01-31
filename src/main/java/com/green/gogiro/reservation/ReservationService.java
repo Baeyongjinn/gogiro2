@@ -135,12 +135,12 @@ public class ReservationService {
 
                 vo.setIreview(dto.getIreview());
 
-                for (MultipartFile file : dto.getPics()) {
+                for (MultipartFile file : dto.getFiles()) {
                     String saveFileNm = myFileUtils.transferTo(file, target);
                     vo.getPics().add(saveFileNm);
                 }
 
-                mapper.insReviewPics(dto);
+                mapper.insReviewPics(vo);
             }
             return vo;
         } else

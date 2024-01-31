@@ -31,7 +31,7 @@ public interface ReservationMapper {
 
     int insReview(ReviewDto dto);
 
-    int insReviewPics(ReviewDto dto);
+    int insReviewPics(ReviewPicsInsVo dto);
 
     int selReservationConfirmForTest(int ireser);
 

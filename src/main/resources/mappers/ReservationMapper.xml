@@ -82,7 +82,7 @@
             <when test="checkShop == 1">
                 INSERT INTO t_but_review
                 SET iuser = #{iuser}
-                , ibutcher = #{ibutcher}
+                , ibutcher = #{ishop}
                 , star = #{star}
                 <if test="review != null != ' '">
                     , review = #{review}

@@ -55,7 +55,7 @@ public class ReservationController {
         } if(pics.size() > Const.PIC_MAX){
             throw new RestApiException(AuthErrorCode.SIZE_PHOTO);
         }
-        dto.setPics(pics);
+        dto.setFiles(pics);
         return service.postReview(dto);
     }
 }

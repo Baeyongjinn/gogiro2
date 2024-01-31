@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -37,5 +38,8 @@ public class ReviewDto {
     private String review;
     @Schema(title = "리뷰 사진",description = "최대 5장")
     @JsonIgnore
-    private List<MultipartFile> pics;
+    private List<String> pics = new ArrayList<>();
+
+    @JsonIgnore
+    private List<MultipartFile> files = new ArrayList<>();
 }
