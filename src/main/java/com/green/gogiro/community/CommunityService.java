@@ -64,16 +64,17 @@ public class CommunityService {
     @Transactional
     public CommunityPicsInsVo updCommunity(CommunityUpdDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
+        List<CommunityBySelPicsDto> bDto = mapper.selByCommunityPics(dto.getIboard());
         //게시글여부 확인
         int e = 0;
-        List<CommunityBySelPicsDto>  bDto = mapper.selByCommunityPics(dto.getIboard());
-        if( bDto != null){
-            e = bDto.size();
-
-        }
+        int b = 0;
+        int c = 0;
+        if (bDto != null) { e = bDto.size(); }
+        if (dto.getFiles() != null) { b = dto.getFiles().size(); }
+        if(dto.getIcommuPics() != null){ c = dto.getIcommuPics().size(); }
 //        int i = mapper.selByCommunityPics(dto.getIboard())!=null?mapper.selByCommunityPics(dto.getIboard()).size(): dto.getFiles() !=null?dto.getFiles().size(): 0
 //                - dto.getIcommuPics().size();
-        int i = e + dto.getFiles().size() - dto.getIcommuPics().size();
+        int i = e + b - c;
         if (check == null) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         } else if (i > 5) {
@@ -85,7 +86,7 @@ public class CommunityService {
         if (dto.getIcommuPics() != null && !dto.getIcommuPics().isEmpty()) {
             List<CommunityBySelPicsDto> cDto = mapper.selCommunityPics(dto.getIcommuPics());
             for (CommunityBySelPicsDto pics : cDto) {
-                log.info("pics: {}" , pics.getPic());
+                log.info("pics: {}", pics.getPic());
                 myFileUtils.delFolderTrigger2(target + "/" + pics.getPic());
             }
             mapper.delCommunityPic(dto.getIcommuPics());
