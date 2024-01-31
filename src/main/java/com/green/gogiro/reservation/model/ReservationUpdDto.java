@@ -22,7 +22,7 @@ public class ReservationUpdDto {
     @Schema(title = "예약pk")
     @Min(value = 1)
     private int ireser;
-    @Schema(title = "예약날짜")
+    @Schema(title = "예약날짜",example = "0000-00-00 00:00:00")
     @Pattern(regexp= Const.REGEXP_DATE_TYPE5, message= "날짜 형식이 올바르지 않습니다")
     @NotBlank(message = "예약날짜를 입력해 주세요.")
     private String date;
