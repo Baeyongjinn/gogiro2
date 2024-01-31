@@ -114,12 +114,16 @@ public class CommunityService {
         if (list.isEmpty()) {
             throw new RestApiException(SEARCH_COMMUNITY);
         }
+        List<CommunitySelVo> vo2 = mapper.selCommunity(dto);
         List<Integer> iboard = new ArrayList<>();
         Map<Integer, CommunitySelVo> boardMap = new HashMap<>();
         int count = mapper.selCommunityCount();
         for (CommunitySelVo vo : list) {
             iboard.add(vo.getIboard());
             boardMap.put(vo.getIboard(), vo);
+        if(!dto.getSearch().isEmpty()){
+            vo.setCount(vo2.size());
+        }else
             vo.setCount(count);
         }
 
