@@ -152,7 +152,10 @@ public class UserService {
     //유저 정보 수정
     public ResVo updateUser(UserUpdDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-
+        String check= mapper.checkNickname(dto.getNickname());
+        if(check!=null && !check.equals(dto.getNickname())) {
+            throw new RestApiException(UserErrorCode.DUPLICATION_NICK_NAME);
+        }
         if (dto.getFile() != null) {
             String path = "/user/" + dto.getIuser()+"/";
             myFileUtils.delFolderTrigger2(path);

@@ -27,7 +27,6 @@
         FROM t_user
     </select>
 
-
     <update id="updateUser">
         update t_user
         set nickname = #{nickname},
