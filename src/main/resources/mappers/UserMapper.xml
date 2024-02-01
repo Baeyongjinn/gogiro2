@@ -32,7 +32,9 @@
         update t_user
         set nickname = #{nickname},
         address = #{address},
-        pic = #{pic},
+        <if test="pic!=null">
+            pic = #{pic},
+        </if>
         tel = #{tel}
         where iuser = #{iuser}
     </update>
