@@ -154,8 +154,8 @@ public class UserService {
         dto.setIuser(authenticationFacade.getLoginUserPk());
 
         if (dto.getFile() != null) {
-            String path = "/user/" + dto.getIuser();
-            myFileUtils.delFolderTrigger(path);
+            String path = "/user/" + dto.getIuser()+"/";
+            myFileUtils.delFolderTrigger2(path);
             String savedPicFileNm = myFileUtils.transferTo(dto.getFile(), path);
             dto.setPic(savedPicFileNm);
         }

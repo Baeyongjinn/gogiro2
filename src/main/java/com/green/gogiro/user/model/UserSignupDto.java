@@ -5,6 +5,7 @@ import com.green.gogiro.common.Const;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class UserSignupDto {
     private String name;
     @Schema(title = "닉네임")
     @NotBlank(message = "닉네임을 입력해 주세요")
+    @Size(min=1, max= 10, message = "닉네임은 한 글자 이상 10자 이하 이여야 합니다")
     private String nickname;
     @Schema(title = "생년월일")
     @NotBlank(message = "생년월일을 입력해 주세요")
