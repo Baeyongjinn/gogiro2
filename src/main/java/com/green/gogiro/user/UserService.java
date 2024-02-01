@@ -168,7 +168,9 @@ public class UserService {
     }
 
     public UserInfoVo selUserInfo() {
-        return mapper.selUserInfo(authenticationFacade.getLoginUserPk());
+       UserInfoVo vo = mapper.selUserInfo(authenticationFacade.getLoginUserPk());
+       vo.setIuser(authenticationFacade.getLoginUserPk());
+        return vo;
     }
 
     public List<ReservationVo> getReservation(UserMyPageDto dto) {

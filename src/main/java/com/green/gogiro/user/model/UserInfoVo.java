@@ -6,6 +6,8 @@ import lombok.Data;
 @Data
 @Schema(title = "유저정보Vo")
 public class UserInfoVo {
+    @Schema(title = "유저pk")
+    private int iuser;
     @Schema(title = "이메일")
     private String email;
     @Schema(title = "이름")
