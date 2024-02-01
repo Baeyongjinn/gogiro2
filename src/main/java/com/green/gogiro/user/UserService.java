@@ -152,10 +152,13 @@ public class UserService {
     //유저 정보 수정
     public ResVo updateUser(UserUpdDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-
+        String check= mapper.checkNicknameBeforeUpdate(dto.getIuser());
+        if(check!=null && !check.equals(dto.getNickname())) {
+            throw new RestApiException(UserErrorCode.DUPLICATION_NICK_NAME);
+        }
         if (dto.getFile() != null) {
-            String path = "/user/" + dto.getIuser();
-            myFileUtils.delFolderTrigger(path);
+            String path = "/user/" + dto.getIuser()+"/";
+            myFileUtils.delFolderTrigger2(path);
             String savedPicFileNm = myFileUtils.transferTo(dto.getFile(), path);
             dto.setPic(savedPicFileNm);
         }
@@ -165,7 +168,9 @@ public class UserService {
     }
 
     public UserInfoVo selUserInfo() {
-        return mapper.selUserInfo(authenticationFacade.getLoginUserPk());
+       UserInfoVo vo = mapper.selUserInfo(authenticationFacade.getLoginUserPk());
+       vo.setIuser(authenticationFacade.getLoginUserPk());
+        return vo;
     }
 
     public List<ReservationVo> getReservation(UserMyPageDto dto) {

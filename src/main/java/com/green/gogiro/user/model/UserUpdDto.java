@@ -22,15 +22,12 @@ public class UserUpdDto {
 
     @Schema(title = "닉네임")
     @NotBlank
-    @Size( min = 1,message = "닉네임은 한자 이상 이여야 합니다")
+    @Size( min = 1,max= 10,message = "닉네임은 한 글자 이상 10자 이하 이여야 합니다")
     private String nickname;
     @Schema(title = "주소")
     @NotBlank
     private String address;
-
     @JsonIgnore
-    @Schema(title = "프로필 사진")
-    @Nullable
     private String pic;
     @Schema(title = "전화번호")
     @Pattern(regexp = Const.REGEXP_USER_TEL , message = "전화번호 형식을 맞춰 주세요")
