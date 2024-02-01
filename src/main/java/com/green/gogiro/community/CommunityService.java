@@ -65,13 +65,12 @@ public class CommunityService {
     public CommunityPicsInsVo updCommunity(CommunityUpdDto dto) {
         Integer check = mapper.checkCommunity(dto.getIboard());
         List<CommunityBySelPicsDto> bDto = mapper.selByCommunityPics(dto.getIboard());
-        //게시글여부 확인
+
         int boardSize = bDto != null ? bDto.size() : 0;
         int fileSize = dto.getFiles() != null ? dto.getFiles().size() : 0;
         int delSize = dto.getIcommuPics() != null ? dto.getIcommuPics().size() : 0;
-//        int i = mapper.selByCommunityPics(dto.getIboard())!=null?mapper.selByCommunityPics(dto.getIboard()).size(): dto.getFiles() !=null?dto.getFiles().size(): 0
-//                - dto.getIcommuPics().size();
         int totalSize = boardSize + fileSize - delSize;
+
         if (check == null) {
             throw new RestApiException(AuthErrorCode.NOT_COMMUNITY_CHECK);
         } else if (totalSize > 5) {

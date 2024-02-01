@@ -150,7 +150,7 @@
         )
     </select>
     
-    <select id="beforeTitleNextTitle">
+<!--    <select id="beforeTitleNextTitle">-->
 <!--        (SELECT-->
 <!--        iboard, title-->
 <!--        FROM t_community-->
@@ -164,7 +164,7 @@
 <!--        WHERE iboard >= #{iboard}-->
 <!--        ORDER BY iboard-->
 <!--        LIMIT 1)-->
-    </select>
+<!--    </select>-->
 
 
     <select id="selCommunityDel1">
