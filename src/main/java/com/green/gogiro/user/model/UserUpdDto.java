@@ -27,10 +27,7 @@ public class UserUpdDto {
     @Schema(title = "주소")
     @NotBlank
     private String address;
-
     @JsonIgnore
-    @Schema(title = "프로필 사진")
-    @Nullable
     private String pic;
     @Schema(title = "전화번호")
     @Pattern(regexp = Const.REGEXP_USER_TEL , message = "전화번호 형식을 맞춰 주세요")
