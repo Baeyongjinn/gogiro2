@@ -27,6 +27,12 @@
         FROM t_user
     </select>
 
+    <select id="checkNicknameBeforeUpdate">
+        SELECT
+        nickname
+        FROM t_user
+        WHERE iuser= #{iuser}
+    </select>
     <update id="updateUser">
         update t_user
         set nickname = #{nickname},

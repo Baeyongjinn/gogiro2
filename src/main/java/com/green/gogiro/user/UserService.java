@@ -152,7 +152,7 @@ public class UserService {
     //유저 정보 수정
     public ResVo updateUser(UserUpdDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        String check= mapper.checkNickname(dto.getNickname());
+        String check= mapper.checkNicknameBeforeUpdate(dto.getIuser());
         if(check!=null && !check.equals(dto.getNickname())) {
             throw new RestApiException(UserErrorCode.DUPLICATION_NICK_NAME);
         }

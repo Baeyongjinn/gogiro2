@@ -14,7 +14,7 @@ public interface UserMapper {
     int updUserPic(UserSignupDto dto);
 
     int selIuserForTest();
-
+    String checkNicknameBeforeUpdate(int iuser);
     int updateUser(UserUpdDto dto);
 
     UserInfoVo selUserInfo(int iuser);
