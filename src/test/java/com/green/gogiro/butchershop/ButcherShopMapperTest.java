@@ -156,7 +156,6 @@ class ButcherShopMapperTest {
     vo.setY("35.1804742090837");
     vo.setStar(5);
     vo.setIsBook(0);
-    vo.setCount(0);
     ButDto dto = new ButDto(0,1);
     ButcherShopDetailVo vo2 = mapper.selButcherShopDetail(dto);
     assertEquals(vo,vo2);
