@@ -48,16 +48,16 @@ public class UserService {
 
     @Transactional
     public ResVo signup(UserSignupDto dto) {
-        if(mapper.checkNickname(dto.getNickname()) != null){
+        if (mapper.checkNickname(dto.getNickname()) != null) {
             throw new RestApiException(UserErrorCode.NEED_NICK_NAME_CHECK);
         }
-        if(!dto.getUpw().equals(dto.getCheckUpw())){
+        if (!dto.getUpw().equals(dto.getCheckUpw())) {
             throw new RestApiException(UserErrorCode.NOT_PASSWORD_CHECK);
         }
         String hashedPw = passwordEncoder.encode(dto.getUpw());
         dto.setUpw(hashedPw);
 
-        if(mapper.checkEmail(dto.getEmail()) != null){
+        if (mapper.checkEmail(dto.getEmail()) != null) {
             throw new RestApiException(UserErrorCode.DUPLICATION_EMAIL);
         }
 
@@ -77,8 +77,8 @@ public class UserService {
         return new ResVo(dto.getIuser());
     }
 
-    public ResVo checkNickName(String nickName){
-        if(mapper.checkNickname(nickName) != null || Pattern.matches(nickName + REGEXP_PATTERN_SPACE_CHAR,nickName)){
+    public ResVo checkNickName(String nickName) {
+        if (mapper.checkNickname(nickName) != null || Pattern.matches(nickName + REGEXP_PATTERN_SPACE_CHAR, nickName)) {
             throw new RestApiException(UserErrorCode.DUPLICATION_NICK_NAME);
         }
         return new ResVo(SUCCESS);
@@ -152,33 +152,34 @@ public class UserService {
     //유저 정보 수정
     public ResVo updateUser(UserUpdDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        String check= mapper.checkNicknameBeforeUpdate(dto.getIuser());
-        if(check!=null && !check.equals(dto.getNickname())) {
+
+        //null이 아닌데(이미있다) 본인이 아닐 때
+        if (mapper.checkNickname(dto.getNickname()) != null
+                && !mapper.checkNicknameBeforeUpdate(dto.getIuser()).equals(dto.getNickname())) {
             throw new RestApiException(UserErrorCode.DUPLICATION_NICK_NAME);
         }
         if (dto.getFile() != null) {
-            String path = "/user/" + dto.getIuser()+"/";
+            String path = "/user/" + dto.getIuser() + "/";
             myFileUtils.delFolderTrigger2(path);
             String savedPicFileNm = myFileUtils.transferTo(dto.getFile(), path);
             dto.setPic(savedPicFileNm);
         }
-
         mapper.updateUser(dto);
         return new ResVo(SUCCESS);
     }
 
     public UserInfoVo selUserInfo() {
-       UserInfoVo vo = mapper.selUserInfo(authenticationFacade.getLoginUserPk());
-       vo.setIuser(authenticationFacade.getLoginUserPk());
+        UserInfoVo vo = mapper.selUserInfo(authenticationFacade.getLoginUserPk());
+        vo.setIuser(authenticationFacade.getLoginUserPk());
         return vo;
     }
 
     public List<ReservationVo> getReservation(UserMyPageDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        int count= mapper.selUserReservationCount(dto.getIuser());
-        List<ReservationVo> list= mapper.selReservation(dto);
-        if(!list.isEmpty()) {
-            for(ReservationVo vo: list) {
+        int count = mapper.selUserReservationCount(dto.getIuser());
+        List<ReservationVo> list = mapper.selReservation(dto);
+        if (!list.isEmpty()) {
+            for (ReservationVo vo : list) {
                 vo.setCount(count);
             }
         }
@@ -188,7 +189,7 @@ public class UserService {
     public List<ReviewVo> getUserReview(UserMyPageDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         List<ReviewVo> reviews = mapper.selUserReview(dto);
-        int count= mapper.selUserReviewCount(dto.getIuser());
+        int count = mapper.selUserReviewCount(dto.getIuser());
         List<ReviewPk> reviewPkList = new ArrayList<>();
         Map<ReviewPk, ReviewVo> reviewMap = new HashMap<>();
         for (ReviewVo vo : reviews) {
@@ -207,21 +208,21 @@ public class UserService {
 
     public List<BookmarkShopVo> getUserBookmark(UserMyPageDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
-        List<BookmarkShopVo> list= mapper.selUserBookmark(dto);
-        List<Integer> ishopList= new ArrayList<>();
-        Map<Integer, BookmarkShopVo> shopMap= new HashMap<>();
-        int count= mapper.selUserBookmarkCount(dto.getIuser());
-        for(BookmarkShopVo vo: list) {
+        List<BookmarkShopVo> list = mapper.selUserBookmark(dto);
+        List<Integer> ishopList = new ArrayList<>();
+        Map<Integer, BookmarkShopVo> shopMap = new HashMap<>();
+        int count = mapper.selUserBookmarkCount(dto.getIuser());
+        for (BookmarkShopVo vo : list) {
             vo.setCount(count);
-            if(vo.getImeat()!=0){
+            if (vo.getImeat() != 0) {
                 ishopList.add(vo.getIshop());
-                shopMap.put(vo.getIshop(),vo);
+                shopMap.put(vo.getIshop(), vo);
             }
         }
 
-        List<ShopFacilityVo> facilityList= shopMapper.selShopFacility(ishopList);
-        for(ShopFacilityVo vo: facilityList) {
-            if(shopMap.get(vo.getIshop()).getImeat() != 0) {
+        List<ShopFacilityVo> facilityList = shopMapper.selShopFacility(ishopList);
+        for (ShopFacilityVo vo : facilityList) {
+            if (shopMap.get(vo.getIshop()).getImeat() != 0) {
                 shopMap.get(vo.getIshop()).getFacilities().add(vo.getFacility());
             }
         }
