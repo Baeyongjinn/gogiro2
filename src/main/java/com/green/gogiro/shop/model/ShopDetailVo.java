@@ -28,7 +28,6 @@ public class ShopDetailVo {
     private int isBook;
     @Schema(title = "편의 시설")
     private List<String> facilities;
-    private int count;
     @Schema(title = "가게 사진")
     private List<String> pics = new ArrayList<>();
     @Schema(title = "상세 메뉴")
@@ -36,3 +35,8 @@ public class ShopDetailVo {
     @Schema(title = "식당 리뷰")
     private List<ShopReviewDetail> reviews = new ArrayList<>();
 }
+
+
+
+
+
