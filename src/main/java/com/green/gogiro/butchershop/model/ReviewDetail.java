@@ -15,6 +15,10 @@ import java.util.List;
 public class ReviewDetail {
     @JsonIgnore
     private int ibutcher;
+    @Schema(title = "유저pk")
+    private int iuser;
+    @Schema(title = "작성자 사진")
+    private String writerPic;
     @Schema(title = "리뷰pk")
     private int ireview;
     @Schema(title = "닉네임")

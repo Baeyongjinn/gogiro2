@@ -75,7 +75,6 @@ public class ShopService {
         }
         ShopDto dto = new ShopDto(i,ishop);
         ShopDetailVo shopDetailList = mapper.selShopDetail(dto);
-        shopDetailList.setCount(mapper.selReviewCount(ishop));
         List<String> facilityList = mapper.shopFacilities(ishop);
         List<ShopDetailMenu> menuList = mapper.selMenuDetail(ishop);
         List<String> picList = mapper.selShopPics(ishop);

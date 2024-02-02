@@ -71,7 +71,6 @@ public class ButcherShopService {
         } catch(Exception e) {
             i= 0;
         }
-        int count = mapper.selReviewCount(ibutcher);
         ButDto dto= new ButDto(i, ibutcher);
         ButcherShopDetailVo vo = mapper.selButcherShopDetail(dto);
         List<DetailMenu> menus = mapper.selMenuDetail(ibutcher);
@@ -90,7 +89,6 @@ public class ButcherShopService {
             map.get(pic.getIreview()).getPics().add(pic.getPic());
         }
         vo.setReviews(reviews);
-        vo.setCount(count);
         return vo;
     }
 

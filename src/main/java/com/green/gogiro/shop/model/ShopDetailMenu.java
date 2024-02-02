@@ -12,7 +12,10 @@ import lombok.NoArgsConstructor;
 public class ShopDetailMenu {
     @JsonIgnore
     private int ishop;
+    @Schema(title = "가격")
     private int price;
+    @Schema(title = "메뉴")
     private String menu;
+    @Schema(title = "메뉴 사진")
     private String pic;
 }
