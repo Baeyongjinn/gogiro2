@@ -14,9 +14,9 @@ public class ShopDetailVo {
     private String name;
     @Schema(title = "위치")
     private String location;
-    @Schema(title = "영업시간")
+    @Schema(title = "영업 시간")
     private String open;
-    @Schema(title = "영업시간")
+    @Schema(title = "전화 번호")
     private String tel;
     @Schema(title = "경도")
     private String x;
