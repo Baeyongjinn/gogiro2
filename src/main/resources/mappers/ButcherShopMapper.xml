@@ -81,7 +81,7 @@
     </select>
 
     <select id="selMenuDetail">
-        SELECT ibutcher,menu,price,pic
+        SELECT ibutcher,ibut_menu as ibutMenu ,menu,price,pic
         FROM t_but_menu
         WHERE ibutcher = #{ibutcher}
     </select>
