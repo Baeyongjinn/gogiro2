@@ -131,7 +131,7 @@ public class ReservationService {
         if (check != null) {
             if (check == dto.getIuser()) {
                 mapper.insReview(dto);
-                String target = dto.getCheckShop() == 0 ? "/shop/" : "/butcher/"
+                String target = (dto.getCheckShop() == 0 ? "/shop/" : "/butcher/")
                         + dto.getIshop() + "/review/" + dto.getIreview() + "/";
 
                 vo.setIreview(dto.getIreview());
