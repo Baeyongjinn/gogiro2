@@ -74,6 +74,7 @@ public class ButcherShopService {
         ButDto dto= new ButDto(i, ibutcher);
         ButcherShopDetailVo vo = mapper.selButcherShopDetail(dto);
         List<DetailMenu> menus = mapper.selMenuDetail(ibutcher);
+        List<Integer> menuPkList= mapper.selButcherMenu(ibutcher);
         vo.setMenus(menus);
         List<String> shopPics = mapper.selButcherShopPics(ibutcher);
         vo.setPics(shopPics);

@@ -161,6 +161,7 @@
         LEFT JOIN t_shop_pic d
         ON a.ishop= d.ishop
         WHERE a.iuser = #{iuser}
+        GROUP BY a.ireview
         UNION
         SELECT
         1 AS checkShop,
@@ -180,6 +181,7 @@
         LEFT JOIN t_butcher_pic d
         ON a.ibutcher= d.ibutcher
         WHERE a.iuser = #{iuser}
+        GROUP BY a.ireview
         ORDER BY createdAt DESC
         LIMIT #{startIdx}, #{rowCount}
     </select>
