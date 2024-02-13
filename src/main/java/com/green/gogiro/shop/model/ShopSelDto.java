@@ -14,9 +14,13 @@ public class ShopSelDto {
 
     @Schema(title = "고기 분류",defaultValue = "0")
     private int category;
+    @Schema(title="필터링 구분", defaultValue = "0")
+    private int filter;//0: 등록 순, 1: 별점 순, 2: 북마크 순
 
     @JsonIgnore
     private int startIdx;
+
+
 
     @JsonIgnore
     private final int rowCount = 10;

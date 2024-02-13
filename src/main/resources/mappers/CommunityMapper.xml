@@ -47,12 +47,25 @@
         FROM t_community a
         JOIN t_user b
         ON a.iuser = b.iuser
+        <if test="filter==1">
+            LEFT JOIN t_community_fav c
+            ON a.iboard= c.iboard
+        </if>
         <where>
             <if test="search != null and search != '' ">
                 a.title like CONCAT('%',#{search},'%')
             </if>
         </where>
-        ORDER BY a.iboard DESC
+        <choose>
+            <when test="filter==0">
+                ORDER BY a.iboard DESC
+            </when>
+            <when test="filter==1">
+                GROUP BY a.iboard
+                ORDER BY COUNT(c.iuser) DESC, a.iboard desc
+            </when>
+        </choose>
+
         limit #{startIdx}, #{rowCount}
     </select>
 
