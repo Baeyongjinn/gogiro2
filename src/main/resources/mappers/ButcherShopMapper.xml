@@ -3,13 +3,33 @@
 <mapper namespace="com.green.gogiro.butchershop.ButcherShopMapper">
 
     <select id="selButcherShopAll">
-        SELECT ibutcher, name, location
-        FROM t_butcher_shop
+        SELECT a.ibutcher, a.name, a.location
+        FROM t_butcher_shop a
+        <choose>
+            <when test="filter==1">
+                left join t_but_review b
+                on a.ibutcher = b.ibutcher
+            </when>
+            <when test="filter==2">
+                left join t_but_bookmark b
+                on a.ibutcher = b.ibutcher
+            </when>
+        </choose>
         <where>
             <if test="search != null and search != '' ">
                 name like CONCAT('%',#{search},'%')
             </if>
         </where>
+        <choose>
+            <when test="filter==1">
+                group by a.ibutcher
+                order by IFNULL(ROUND(avg(b.star)),0) DESC, a.ibutcher desc
+            </when>
+            <when test="filter==2">
+                GROUP BY a.ibutcher
+                ORDER BY count(b.iuser) DESC, a.ibutcher desc
+            </when>
+        </choose>
         LIMIT #{startIdx}, #{rowCount}
     </select>
 
