@@ -166,6 +166,7 @@ public class CommunityService {
     }
 
 
+
     public ResVo postCommunityComment(CommunityCommentInsDto dto) {
         dto.setIuser(authenticationFacade.getLoginUserPk());
 //        //내용을 입력하지 않는 경우
