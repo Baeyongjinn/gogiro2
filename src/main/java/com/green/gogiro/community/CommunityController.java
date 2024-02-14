@@ -78,5 +78,10 @@ public class CommunityController {
         return service.delCommunityComment(dto);
     }
 
+    @GetMapping("/fav")
+    @Operation(summary = "좋아요 기능", description = "좋아요 처리(1), 좋아요 삭제(0)")
+    public ResVo favCommunity(@RequestBody CommunityInsFavDto dto) {
+        return service.favCommunity(dto);
+    }
 
 }

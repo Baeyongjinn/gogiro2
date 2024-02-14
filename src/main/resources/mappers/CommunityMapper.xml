@@ -202,4 +202,17 @@
         LIMIT 1
     </select>
 
+    <!--커뮤니티 좋아요 삽입 -->
+    <insert id="insCommunityFav">
+        INSERT INTO t_community_fav
+        SET iuser = #{iuser},
+        iboard = #{iboard}
+    </insert>
+
+    <!--커뮤니티 좋아요 해제 -->
+    <delete id="delCommunityFav">
+        DELETE FROM t_community_fav
+        WHERE iuser = #{iuser}
+        AND iboard = #{iboard}
+    </delete>
 </mapper>

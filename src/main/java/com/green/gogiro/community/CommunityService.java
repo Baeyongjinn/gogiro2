@@ -179,4 +179,14 @@ public class CommunityService {
         dto.setIuser(authenticationFacade.getLoginUserPk());
         return new ResVo(mapper.delCommunityComment(dto));
     }
+
+    //커뮤니티 좋아요 삽입 시 1 해제 시 0
+    public ResVo favCommunity(CommunityInsFavDto dto) {
+        int delCommunityFav = mapper.delCommunityFav(dto);
+        if(delCommunityFav == 1) {
+            return new ResVo(0);
+        }
+        mapper.insCommunityFav(dto);
+        return new ResVo(1);
+    }
 }

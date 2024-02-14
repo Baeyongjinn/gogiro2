@@ -54,6 +54,12 @@ public interface CommunityMapper {
 
     int delCommunityComment(CommunityCommentDelDto dto);
 
+    //커뮤니티 좋아요 삽입
+    int insCommunityFav(CommunityInsFavDto dto);
+
+    //커뮤니티 좋아요 해제
+    int delCommunityFav(CommunityInsFavDto dto);
+
     //-------------test
 
     CommunityUpdDto selIuserIboardForTest();
@@ -63,5 +69,6 @@ public interface CommunityMapper {
     List<Integer> selCommunityDel2(int iboard);
 
     int delCommunityDel(int iboard);
+
 
 }
