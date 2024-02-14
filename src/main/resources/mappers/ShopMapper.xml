@@ -3,16 +3,36 @@
 <mapper namespace="com.green.gogiro.shop.ShopMapper">
 
     <select id="selShopAll">
-        SELECT ishop, name, location
-        FROM t_shop
+        SELECT a.ishop, a.name, a.location
+        FROM t_shop a
+        <choose>
+            <when test="filter==1">
+                left join t_shop_review b
+                on a.ishop= b.ishop
+            </when>
+            <when test="filter==2">
+                left join t_shop_bookmark b
+                on a.ishop= b.ishop
+            </when>
+        </choose>
         <where>
             <if test="search != null and search != '' ">
-                name like CONCAT('%',#{search},'%')
+                a.name like CONCAT('%',#{search},'%')
             </if>
             <if test="category != 0">
-                and imeat = #{category}
+                and a.imeat = #{category}
             </if>
         </where>
+        <choose>
+            <when test="filter==1">
+                group by a.ishop
+                order by IFNULL(ROUND(avg(b.star)),0) DESC, a.ishop desc
+            </when>
+            <when test="filter==2">
+                GROUP BY a.ishop
+                ORDER BY count(b.iuser) DESC, a.ishop desc
+            </when>
+        </choose>
         LIMIT #{startIdx}, #{rowCount}
     </select>
 

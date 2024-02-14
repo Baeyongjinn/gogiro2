@@ -12,7 +12,8 @@ public class CommunitySelDto {
 
     @Schema(title = "검색", defaultValue = " ")
     private String search;
-
+    @Schema(title="필터링 구분", defaultValue = "0")
+    private int filter;//0: 작성 순, 1: 추천 순
     @JsonIgnore
     private int startIdx;
 

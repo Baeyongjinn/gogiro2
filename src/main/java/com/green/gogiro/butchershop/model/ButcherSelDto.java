@@ -13,7 +13,8 @@ public class ButcherSelDto {
     @Schema(title = "검색",defaultValue = " ")
     private String search;
 
-
+    @Schema(title = "필터링 구분", description = "0")
+    private int filter; // 0: 등록순, 1: 별점순, 2: 북마크순
 
     @JsonIgnore
     private int startIdx;
